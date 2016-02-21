@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ Hibernate, Relational Persistence for Idiomatic Java ~ ~ License: 
+	GNU Lesser General Public License (LGPL), version 2.1 or later. ~ See the 
+	lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>. -->
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+	<class name="model.Organisateur" table="organisateur">
+		<id name="id" type="long" column="id">
+			<generator class="native" />
+		</id>
+		<property name="nom_orga" type="string" column="nom_orga"
+			not-null="true" />
+		<property name="prenom_orga" type="string" column="prenom_orga"
+			not-null="true" />
+		<property name="civi_orga" type="string" column="civi_orga"
+			not-null="false" />
+			<property name="entreprise_orga" type="string" column="entreprise_orga"
+			not-null="false" />
+		<property name="adresse_entreprise_orga" type="string" column="adresse_entreprise_orga"
+			not-null="false" />
+		<property name="tel_orga" type="long" column="tel_orga"
+			not-null="true" />
+		<property name="fax_orga" type="long" column="fax_orga"
+			not-null="false" />
+		<property name="mail_orga" type="string" column="mail_orga"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

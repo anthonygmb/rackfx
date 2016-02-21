@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ Hibernate, Relational Persistence for Idiomatic Java ~ ~ License: 
+	GNU Lesser General Public License (LGPL), version 2.1 or later. ~ See the 
+	lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>. -->
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+	<class name="model.Rencontre" table="rencontre">
+		<id name="id" type="long" column="id">
+			<generator class="native" />
+		</id>
+		<property name="nom_renc" type="string" column="nom_renc"
+			not-null="true" />
+		<property name="ville_renc" type="string" column="ville_renc"
+			not-null="true" />
+		<property name="lieu_renc" type="string" column="lieu_renc"
+			not-null="false" />
+		<property name="date_deb_renc" type="date" column="date_deb_renc"
+			not-null="false" />
+		<property name="date_fin_renc" type="date" column="date_fin_renc"
+			not-null="false" />
+		<property name="periodicite_renc" type="string" column="periodicite_renc"
+			not-null="false" />
+		<property name="nb_pers_attendues" type="long" column="nb_pers_attendues"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

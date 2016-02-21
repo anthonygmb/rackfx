@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ Hibernate, Relational Persistence for Idiomatic Java ~ ~ License: 
+	GNU Lesser General Public License (LGPL), version 2.1 or later. ~ See the 
+	lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>. -->
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+	<class name="model.Groupe" table="groupe">
+		<id name="id" type="long" column="id">
+			<generator class="native" />
+		</id>
+		<property name="nom_groupe" type="string" column="nom_groupe"
+			not-null="true" />
+		<property name="carac_groupe" type="string" column="carac_groupe"
+			not-null="false" />
+		<property name="pays_groupe" type="string" column="pays_groupe"
+			not-null="false" />
+		<property name="region_groupe" type="string" column="region_groupe"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

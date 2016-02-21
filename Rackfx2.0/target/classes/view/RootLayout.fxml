@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="620.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RootLayoutController">
+   <top>
+      <Pane fx:id="pane_bandeau" prefHeight="40.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar fx:id="mnb_menu" maxWidth="300.0" minWidth="300.0" prefHeight="40.0" prefWidth="300.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox alignment="TOP_RIGHT" layoutX="321.0" layoutY="6.0" prefHeight="28.0" prefWidth="765.0">
+               <children>
+                  <Label fx:id="lb_connection" prefHeight="28.0">
+                     <opaqueInsets>
+                        <Insets right="5.0" />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="tf_login" prefHeight="28.0" prefWidth="150.0" promptText="login">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <PasswordField fx:id="pwf_mdp" prefHeight="28.0" prefWidth="150.0" promptText="mot de passe">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </PasswordField>
+                  <Button fx:id="btn_connect" mnemonicParsing="false" onAction="#connection" onKeyPressed="#connection" prefHeight="26.0" prefWidth="118.0" text="Connection">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </top>
+</BorderPane>

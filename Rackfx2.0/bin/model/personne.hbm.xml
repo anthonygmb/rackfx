@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ Hibernate, Relational Persistence for Idiomatic Java ~ ~ License: 
+	GNU Lesser General Public License (LGPL), version 2.1 or later. ~ See the 
+	lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>. -->
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+	<class name="model.Personne" table="personne">
+		<id name="id" type="long" column="id">
+			<generator class="native" />
+		</id>
+		<property name="nom_membre" type="string" column="nom_membre"
+			not-null="true" />
+		<property name="prenom_membre" type="string" column="prenom_membre"
+			not-null="true" />
+		<property name="civi_membre" type="string" column="civi_membre"
+			not-null="false" />
+		<property name="date_naiss_membre" type="date" column="date_naiss_membre"
+			not-null="false" />
+		<property name="spe_membre" type="string" column="spe_membre"
+			not-null="false" />
+		<property name="instru_membre" type="string" column="instru_membre"
+			not-null="false" />
+		<property name="respon_membre" type="string" column="respon_membre"
+			not-null="false" />
+		<property name="correspondant" type="boolean" column="correspondant"
+			not-null="false" />
+		<property name="adresse_cor" type="string" column="adresse_cor"
+			not-null="false" />
+		<property name="tel_cor" type="long" column="tel_cor"
+			not-null="false" />
+		<property name="fax_cor" type="long" column="fax_cor"
+			not-null="false" />
+		<property name="mail_cor" type="string" column="mail_cor"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

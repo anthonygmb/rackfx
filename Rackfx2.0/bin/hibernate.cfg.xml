@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- ~ Hibernate, Relational Persistence for Idiomatic Java ~ ~ License: 
+	GNU Lesser General Public License (LGPL), version 2.1 or later. ~ See the 
+	lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>. -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost/rackfx</property>
+		<property name="connection.username">user1</property>
+		<property name="connection.password">admin1</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+		<!-- <property name="connection.pool_size">1</property> -->
+
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		<!-- Disable the second-level cache -->
+		<!-- <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property> -->
+
+		<!-- Echo all executed SQL to stdout -->
+		<!-- <property name="show_sql">true</property> -->
+		<!-- <property name="hibernate.format_sql">true</property> -->
+		<!-- <property name="use_sql_comments">true</property> -->
+
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">update</property>
+
+	<!-- validate: valide le schéma, aucune modification n’est faite sur la 
+		structure de la base ; -->
+	<!-- update: met à jour le schéma existant ; -->
+	<!-- create: crée le schéma en supprimant les données préalablement existantes 
+		; -->
+	<!-- create-drop: même comportement que create avec suppression du schéma 
+		en fin de session. -->
+		
+
+		<!-- Names the annotated entity class -->
+		<mapping class="model.Groupe"/>
+		<mapping resource="model/groupe.hbm.xml" />
+		<mapping class="model.Rencontre"/>
+		<mapping resource="model/rencontre.hbm.xml" />
+		<mapping class="model.Personne"/>
+		<mapping resource="model/personne.hbm.xml" />
+		<mapping class="model.Organisateur"/>
+		<mapping resource="model/organisateur.hbm.xml" />
+		<mapping class="model.Titre"/>
+		<mapping resource="model/titre.hbm.xml" />
+
+	</session-factory>
+
+</hibernate-configuration>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainViewController">
+	<children>
+		<BorderPane layoutX="166.0" layoutY="141.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<top>
+				<Pane fx:id="pn_bandeau" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+					<children>
+						<TextField fx:id="tf_login" layoutX="638.0" layoutY="7.0" prefHeight="26.0" prefWidth="150.0" promptText=" login">
+							<padding>
+								<Insets right="5.0" />
+							</padding>
+						</TextField>
+						<PasswordField fx:id="pwf_mdp" layoutX="805.0" layoutY="7.0" prefHeight="26.0" prefWidth="150.0" promptText=" mot de passe">
+							<padding>
+								<Insets right="5.0" />
+							</padding>
+						</PasswordField>
+						<Button fx:id="btn_connect" layoutX="968.0" layoutY="7.0" mnemonicParsing="false" onAction="#connection" onKeyPressed="#connection" prefHeight="26.0" prefWidth="118.0" styleClass="lion-default" text="Connection">
+							<padding>
+								<Insets right="5.0" />
+							</padding>
+						</Button>
+                  <Label fx:id="lb_connection" layoutX="14.0" layoutY="12.0" />
+					</children>
+				</Pane>
+			</top>
+			<center>
+				<TabPane fx:id="tabpane_onglets" prefHeight="529.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+					<tabs>
+						<Tab fx:id="tab_accueil" text="Accueil">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									<children>
+										<Label layoutX="252.0" layoutY="78.0" text="Bienvenue dans RackFx" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="78.0">
+											<font>
+												<Font size="50.0" />
+											</font>
+											<effect>
+												<Reflection />
+											</effect>
+										</Label>
+										<TextField fx:id="tf_search" alignment="CENTER" layoutX="350.0" layoutY="251.0" prefHeight="26.0" prefWidth="400.0" promptText="Rechercher" AnchorPane.topAnchor="251.0" />
+										<Label layoutX="325.0" layoutY="487.0" text="(c) Copyright Rack contributors 2015. All rights reserved. Version 1.0" AnchorPane.bottomAnchor="24.0" />
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+						<Tab fx:id="tab_repertoire" text="Repertoire">
+							<content>
+								<AnchorPane>
+									<children>
+										<SplitPane dividerPositions="0.29797979797979796" prefHeight="527.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+											<items>
+												<AnchorPane>
+													<children>
+														<TableView fx:id="groupeTable" prefHeight="525.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+															<columns>
+																<TableColumn fx:id="nom_groupeColumn" prefWidth="75.0" text="Nom du groupe" />
+															</columns>
+															<columnResizePolicy>
+																<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+															</columnResizePolicy>
+														</TableView>
+													</children>
+												</AnchorPane>
+												<AnchorPane>
+													<children>
+														<Label layoutX="32.0" layoutY="14.0" text="Détails:" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="15.0">
+															<font>
+																<Font size="20.0" />
+															</font>
+														</Label>
+														<GridPane layoutX="39.0" layoutY="30.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="50.0">
+															<columnConstraints>
+																<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+																<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+															</columnConstraints>
+															<rowConstraints>
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+															</rowConstraints>
+															<children>
+																<Label text="Nom du groupe" />
+																<Label text="Caractéristique du groupe" GridPane.rowIndex="1" />
+																<Label text="Pays du groupe" GridPane.rowIndex="2" />
+																<Label text="Region du groupe" GridPane.rowIndex="3" />
+																<Label fx:id="lb_nom_groupe" text="Label" GridPane.columnIndex="1" />
+																<Label fx:id="lb_carac_groupe" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+																<Label fx:id="lb_pays_groupe" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+																<Label fx:id="lb_region_groupe" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+															</children>
+														</GridPane>
+														<ButtonBar layoutX="324.0" layoutY="471.0" prefHeight="40.0" prefWidth="348.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+															<buttons>
+																<Button fx:id="btn_new_groupe" mnemonicParsing="false" onAction="#nouveauGroupe" styleClass="lion-default" text="Nouveau" />
+																<Button fx:id="btn_edit_groupe" mnemonicParsing="false" onAction="#editGroupe" styleClass="lion" text="Editer" />
+																<Button fx:id="btn_supp_groupe" mnemonicParsing="false" onAction="#supprimerGroupe" prefHeight="24.0" prefWidth="151.0" styleClass="lion" text="Supprimer" />
+															</buttons>
+														</ButtonBar>
+													</children>
+												</AnchorPane>
+											</items>
+										</SplitPane>
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+						<Tab fx:id="tab_planification" text="Planification">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									<children>
+										<SplitPane dividerPositions="0.29797979797979796" prefHeight="527.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+											<items>
+												<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+													<children>
+														<TableView fx:id="tv_planif" prefHeight="527.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+															<columns>
+																<TableColumn fx:id="col_event" prefWidth="75.0" text="Evenement" />
+																<TableColumn fx:id="col_ville" prefWidth="75.0" text="Ville" />
+															</columns>
+															<columnResizePolicy>
+																<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+															</columnResizePolicy>
+														</TableView>
+													</children>
+												</AnchorPane>
+												<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+													<children>
+														<Label text="Détails:" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="15.0">
+															<font>
+																<Font size="20.0" />
+															</font>
+														</Label>
+														<GridPane layoutX="68.0" layoutY="70.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="50.0">
+															<columnConstraints>
+																<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+																<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+															</columnConstraints>
+															<rowConstraints>
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+															</rowConstraints>
+															<children>
+																<Label text="Lieu" />
+																<Label text="Date de début" GridPane.rowIndex="1" />
+																<Label text="Date de fin" GridPane.rowIndex="2" />
+																<Label text="Périodicité" GridPane.rowIndex="3" />
+																<Label text="Nombre de personnes attendues" GridPane.rowIndex="4" />
+																<Label fx:id="lb_lieu" text="Label" GridPane.columnIndex="1" />
+																<Label fx:id="lb_date_deb" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+																<Label fx:id="lb_date_fin" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+																<Label fx:id="lb_perio" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+																<Label fx:id="lb_nb_pers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+															</children>
+														</GridPane>
+														<ButtonBar layoutX="207.0" layoutY="335.0" prefHeight="40.0" prefWidth="348.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+															<buttons>
+																<Button fx:id="btn_new_event" defaultButton="true" mnemonicParsing="false" onAction="#nouvelEvent" styleClass="lion-default" text="Nouveau" />
+																<Button fx:id="btn_edit_event" mnemonicParsing="false" onAction="#editEvent" styleClass="lion" text="Editer" />
+																<Button fx:id="btn_supp_event" mnemonicParsing="false" onAction="#supprimerEvent" prefHeight="24.0" prefWidth="151.0" styleClass="lion" text="Supprimer" />
+															</buttons>
+														</ButtonBar>
+													</children>
+												</AnchorPane>
+											</items>
+										</SplitPane>
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+						<Tab fx:id="tab_administration" text="Administration">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									<children>
+										<TableView fx:id="tv_admin" layoutX="404.0" layoutY="64.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="50.0">
+											<columns>
+												<TableColumn fx:id="col_login" prefWidth="75.0" text="Login" />
+												<TableColumn fx:id="col_mdp" prefWidth="75.0" text="Mot de passe" />
+											</columns>
+											<columnResizePolicy>
+												<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+											</columnResizePolicy>
+										</TableView>
+										<ButtonBar layoutX="337.0" layoutY="415.0" prefHeight="40.0" prefWidth="413.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0">
+											<buttons>
+												<Button fx:id="btn_admin_creer" defaultButton="true" mnemonicParsing="false" text="Créer" />
+												<Button fx:id="btn_admin_modif" mnemonicParsing="false" text="Modifier" />
+												<Button fx:id="btn_admin_supp" mnemonicParsing="false" text="Supprimer" />
+											</buttons>
+											<padding>
+												<Insets right="60.0" />
+											</padding>
+										</ButtonBar>
+										<TextField fx:id="tf_admin_login" layoutX="350.0" layoutY="401.0" prefHeight="26.0" prefWidth="190.0" promptText=" login" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="350.0">
+											<padding>
+												<Insets right="10.0" />
+											</padding>
+										</TextField>
+										<TextField fx:id="tf_admin_mdp" layoutX="560.0" layoutY="401.0" prefHeight="26.0" prefWidth="190.0" promptText=" mot de passe" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="560.0">
+											<padding>
+												<Insets right="10.0" />
+											</padding>
+										</TextField>
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+					</tabs>
+				</TabPane>
+			</center>
+		</BorderPane>
+	</children>
+</AnchorPane>
