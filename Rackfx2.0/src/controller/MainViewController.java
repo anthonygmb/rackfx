@@ -43,8 +43,6 @@ import sql.HibernateSetUp;
 import utilities.CryptEtDecrypt;
 
 public final class MainViewController {
-	
-	//test
 
 	/*
 	 * =========================================================================
