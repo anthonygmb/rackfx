@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PackageAnalysis>
+    <Package name="controller" x="356" y="193">
+        <DependencyLink destination="model"/>
+        <DependencyLink destination="utilities"/>
+        <DependencyLink destination="sql"/>
+    </Package>
+    <Package name="img" x="207" y="155"/>
+    <Package name="model" x="503" y="104"/>
+    <Package name="sql" x="533" y="261">
+        <DependencyLink destination="controller"/>
+        <DependencyLink destination="model"/>
+    </Package>
+    <Package name="utilities" x="295" y="304"/>
+    <Package name="view" x="336" y="65"/>
+</PackageAnalysis>
