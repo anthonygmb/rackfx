@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="controller.MainApp" x="-442" y="16">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="controller.FicheEventEditController"/>
+        <Communication destinationClassName="controller.FicheGroupeEditController"/>
+    </Class>
+    <Class name="model.Rencontre" x="842" y="84">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.Representation"
+            endpointName="liste_repre" kind="Simple"/>
+        <Association destinationClassName="model.Organisateur"
+            endpointName="liste_orga" kind="Simple"/>
+    </Class>
+    <Class name="sql.CRUD" x="-34" y="142">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="sql.HibernateSetUp"/>
+    </Class>
+    <Class name="model.User" x="1828" y="170">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="model.Organisateur" x="1228" y="568">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.Rencontre"
+            endpointName="rencontre" kind="Simple"/>
+    </Class>
+    <Class name="controller.RootLayoutController" x="94" y="18">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="controller.MainViewController"/>
+    </Class>
+    <Class name="model.Representation" x="603" y="658">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.Rencontre"
+            endpointName="rencontre" kind="Simple"/>
+    </Class>
+    <Class name="model.Groupe" x="137" y="932">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.Personne"
+            endpointName="liste_personne" kind="Simple"/>
+        <Association destinationClassName="model.Titre"
+            endpointName="liste_titre" kind="Simple"/>
+    </Class>
+    <Class name="model.Titre" x="-18" y="551">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.Groupe"
+            endpointName="groupe" kind="Simple"/>
+    </Class>
+    <Class name="model.Personne" x="77" y="1278">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.Groupe"
+            endpointName="groupe" kind="Simple"/>
+    </Class>
+    <Class name="sql.HibernateSetUp" x="-37" y="20">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="controller.FicheEventEditController" x="982" y="1043">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.Organisateur"
+            endpointName="organisateur" kind="Simple"/>
+        <Association destinationClassName="model.Rencontre"
+            endpointName="rencontre" kind="Simple"/>
+        <Association destinationClassName="model.Representation"
+            endpointName="representation" kind="Simple"/>
+        <Communication destinationClassName="controller.MainApp"/>
+        <Communication destinationClassName="model.Organisateur"/>
+        <Communication destinationClassName="model.Rencontre"/>
+        <Communication destinationClassName="sql.CRUD"/>
+        <Communication destinationClassName="model.Representation"/>
+        <Communication destinationClassName="sql.HibernateSetUp"/>
+        <Communication destinationClassName="controller.MainViewController"/>
+    </Class>
+    <Class name="controller.FicheGroupeEditController" x="-445" y="556">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.Personne"
+            endpointName="personne" kind="Simple"/>
+        <Association destinationClassName="model.Titre"
+            endpointName="titre" kind="Simple"/>
+        <Association destinationClassName="model.Groupe"
+            endpointName="groupe" kind="Simple"/>
+        <Communication destinationClassName="sql.CRUD"/>
+        <Communication destinationClassName="model.Groupe"/>
+        <Communication destinationClassName="model.Titre"/>
+        <Communication destinationClassName="model.Personne"/>
+        <Communication destinationClassName="sql.HibernateSetUp"/>
+        <Communication destinationClassName="controller.MainViewController"/>
+    </Class>
+    <Class name="utilities.CryptEtDecrypt" x="-34" y="79">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="controller.MainViewController" x="1797" y="467">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.User"
+            endpointName="user" kind="Simple"/>
+        <Communication destinationClassName="controller.MainApp"/>
+        <Communication destinationClassName="model.Organisateur"/>
+        <Communication destinationClassName="model.Rencontre"/>
+        <Communication destinationClassName="sql.CRUD"/>
+        <Communication destinationClassName="controller.RootLayoutController"/>
+        <Communication destinationClassName="model.Groupe"/>
+        <Communication destinationClassName="model.Titre"/>
+        <Communication destinationClassName="model.User"/>
+        <Communication destinationClassName="model.Personne"/>
+        <Communication destinationClassName="sql.HibernateSetUp"/>
+    </Class>
+</ClassDiagram>
