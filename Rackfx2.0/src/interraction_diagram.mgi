@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <CommunicationClass name="controller.MainApp" x="373" y="219">
+        <Communication destinationClassName="controller.FicheEventEditController"/>
+        <Communication destinationClassName="controller.FicheGroupeEditController"/>
+    </CommunicationClass>
+    <CommunicationClass name="model.Rencontre" x="18" y="398">
+        <Association destinationClassName="model.Representation"
+            endpointName="liste_repre" kind="Simple"/>
+        <Association destinationClassName="model.Organisateur"
+            endpointName="liste_orga" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="sql.CRUD" x="560" y="428">
+        <Communication destinationClassName="sql.HibernateSetUp"/>
+    </CommunicationClass>
+    <CommunicationClass name="model.User" x="281" y="-175"/>
+    <CommunicationClass name="model.Organisateur" x="179" y="332">
+        <Association destinationClassName="model.Rencontre"
+            endpointName="rencontre" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="controller.RootLayoutController" x="-108" y="-14">
+        <Communication destinationClassName="controller.MainViewController"/>
+    </CommunicationClass>
+    <CommunicationClass name="model.Representation" x="609" y="554">
+        <Association destinationClassName="model.Rencontre"
+            endpointName="rencontre" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="model.Groupe" x="377" y="8">
+        <Association destinationClassName="model.Personne"
+            endpointName="liste_personne" kind="Simple"/>
+        <Association destinationClassName="model.Titre"
+            endpointName="liste_titre" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="model.Titre" x="386" y="-82">
+        <Association destinationClassName="model.Groupe"
+            endpointName="groupe" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="model.Personne" x="425" y="-190">
+        <Association destinationClassName="model.Groupe"
+            endpointName="groupe" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="sql.HibernateSetUp" x="521" y="315"/>
+    <CommunicationClass name="controller.FicheEventEditController"
+        x="282" y="584">
+        <Association destinationClassName="model.Organisateur"
+            endpointName="organisateur" kind="Simple"/>
+        <Association destinationClassName="model.Rencontre"
+            endpointName="rencontre" kind="Simple"/>
+        <Association destinationClassName="model.Representation"
+            endpointName="representation" kind="Simple"/>
+        <Communication destinationClassName="controller.MainApp"/>
+        <Communication destinationClassName="model.Organisateur"/>
+        <Communication destinationClassName="model.Rencontre"/>
+        <Communication destinationClassName="sql.CRUD"/>
+        <Communication destinationClassName="model.Representation"/>
+        <Communication destinationClassName="sql.HibernateSetUp"/>
+        <Communication destinationClassName="controller.MainViewController"/>
+    </CommunicationClass>
+    <CommunicationClass name="controller.FicheGroupeEditController"
+        x="810" y="163">
+        <Association destinationClassName="model.Personne"
+            endpointName="personne" kind="Simple"/>
+        <Association destinationClassName="model.Titre"
+            endpointName="titre" kind="Simple"/>
+        <Association destinationClassName="model.Groupe"
+            endpointName="groupe" kind="Simple"/>
+        <Communication destinationClassName="sql.CRUD"/>
+        <Communication destinationClassName="model.Groupe"/>
+        <Communication destinationClassName="model.Titre"/>
+        <Communication destinationClassName="model.Personne"/>
+        <Communication destinationClassName="sql.HibernateSetUp"/>
+        <Communication destinationClassName="controller.MainViewController"/>
+    </CommunicationClass>
+    <CommunicationClass name="utilities.CryptEtDecrypt" x="45" y="557"/>
+    <CommunicationClass name="controller.MainViewController" x="-101" y="178">
+        <Association destinationClassName="model.User"
+            endpointName="user" kind="Simple"/>
+        <Communication destinationClassName="controller.MainApp"/>
+        <Communication destinationClassName="model.Organisateur"/>
+        <Communication destinationClassName="model.Rencontre"/>
+        <Communication destinationClassName="sql.CRUD"/>
+        <Communication destinationClassName="controller.RootLayoutController"/>
+        <Communication destinationClassName="model.Groupe"/>
+        <Communication destinationClassName="model.Titre"/>
+        <Communication destinationClassName="model.User"/>
+        <Communication destinationClassName="model.Personne"/>
+        <Communication destinationClassName="sql.HibernateSetUp"/>
+    </CommunicationClass>
+</ClassDiagram>
