@@ -89,7 +89,6 @@ public class FicheGroupeEditController {
 					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
 			titreData.addAll(CRUD.getAllWhere("Titre", "groupeId",
 					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
-
 		}
 		cmbox_membre.setItems(personneData);
 		tbv_titre.getItems().addAll(titreData);

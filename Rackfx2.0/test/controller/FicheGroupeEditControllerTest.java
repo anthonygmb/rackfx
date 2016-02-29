@@ -18,7 +18,7 @@ public class FicheGroupeEditControllerTest {
 
 	@Test
 	public void testGeleTab() {
-		fail("Not yet implemented");
+		fail("Not yet implemented");			
 	}
 
 	@Test
