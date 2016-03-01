@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
@@ -40,6 +42,7 @@ public class Rencontre {
 	private LongProperty nb_pers_attendues;
 	private Set<Organisateur> liste_orga = new HashSet<Organisateur>();
 	private Set<Representation> liste_repre = new HashSet<Representation>();
+	private Groupe groupe;
 
 	public Rencontre() {
 		this(null, null);
@@ -69,7 +72,7 @@ public class Rencontre {
 
 	// =================================================================================================
 	@NotNull
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getNom_renc() {
 		return nom_renc.get();
 	}
@@ -84,7 +87,7 @@ public class Rencontre {
 
 	// =================================================================================================
 	@NotNull
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getVille_renc() {
 		return ville_renc.get();
 	}
@@ -111,7 +114,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public Date getDate_deb_renc() {
 		return date_deb_renc.get();
 	}
@@ -138,7 +141,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getPeriodicite_renc() {
 		return periodicite_renc.get();
 	}
@@ -184,5 +187,16 @@ public class Rencontre {
 
 	public void setListe_repre(Set<Representation> liste_repre) {
 		this.liste_repre = liste_repre;
+	}
+
+	// =================================================================================================
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "groupeId", nullable = true)
+	public Groupe getGroupe() {
+		return groupe;
+	}
+
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
 	}
 }

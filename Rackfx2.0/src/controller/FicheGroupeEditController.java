@@ -55,7 +55,7 @@ public class FicheGroupeEditController {
 	private DateFormat formatAnnee = new SimpleDateFormat("yyyy");
 	private Date auj = new Date();
 	private String annee = "";
-	// private Rencontre rencontreF;
+	private ObservableList<Rencontre> rencontreDataTri = FXCollections.observableArrayList();
 
 	/**
 	 * Constructeur.
@@ -207,43 +207,37 @@ public class FicheGroupeEditController {
 		col_ville_event_f.setCellValueFactory(cellData -> cellData.getValue().ville_rencProperty());
 		col_deb_event_f.setCellValueFactory(cellData -> cellData.getValue().date_deb_rencProperty());
 		col_fin_event_f.setCellValueFactory(cellData -> cellData.getValue().date_fin_rencProperty());
+		
+		/* formatte le tableau d'événement passés */
+		col_event_event_p.setCellValueFactory(cellData -> cellData.getValue().nom_rencProperty());
+		col_ville_event_p.setCellValueFactory(cellData -> cellData.getValue().ville_rencProperty());
+		col_deb_event_p.setCellValueFactory(cellData -> cellData.getValue().date_deb_rencProperty());
+		col_fin_event_p.setCellValueFactory(cellData -> cellData.getValue().date_fin_rencProperty());
 
 		/*
 		 * récupération de la liste de rencontres pour les placer dans les
 		 * tableaux d'événements futurs et passés
 		 */
-		// if
-		// (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
-		// &&
-		// !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty())
-		// {
-		// repreDataF.addAll(CRUD.getAllWhereArg("Representation",
-		// "groupe_joue",
-		// MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getNom_groupe()));
-		// // repreDataP.addAll(CRUD.getAllWhereArg("Representation",
-		// // "groupe_joue",
-		// //
-		// MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getNom_groupe()));//TODO
-		//
-		// Session s = HibernateSetUp.getSession();
-		// s.beginTransaction();
-		// for (Representation repreF : repreDataF) {
-		// Rencontre rencontreF = (Rencontre) s.load(Rencontre.class,
-		// repreF.getRencontre().getRencontreId());
-		// rencontreDataF.add(rencontreF);
-		// }
-		// // for (Representation repreP : repreDataP) {
-		// // Rencontre rencontreP = (Rencontre) s.load(Rencontre.class,
-		// // repreP.getRencontre().getRencontreId());
-		// // rencontreDataP.add(rencontreP);
-		// // }
-		// s.getTransaction().commit();
-		// s.close();
-		// tbv_event_f.getItems().addAll(rencontreDataF);
-		// // tbv_event_p.getItems().addAll(rencontreDataP);
-		//
-		// }
+		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) {
+			
+			// if
+			// (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
+			// &&
+			// !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty())
+			// {
+			rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre", "groupeId",
+					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
 
+			for (Rencontre rencTri : rencontreDataTri) {
+				if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {
+					rencontreDataF.add(rencTri);
+				} else {
+					rencontreDataP.add(rencTri);
+				}
+			}
+		}
+		tbv_event_f.getItems().addAll(rencontreDataF);
+		tbv_event_p.getItems().addAll(rencontreDataP);
 	}
 
 	/**
@@ -572,7 +566,7 @@ public class FicheGroupeEditController {
 				ckbox_corres_membre.setSelected(true);
 				activeCorrespondant(true);
 				tf_adress_cor.setText(personne.getAdresse_cor());
-				
+
 				if (personne.getTel_cor() == 0) {
 					tf_tel_cor.clear();
 				} else {
@@ -955,7 +949,7 @@ public class FicheGroupeEditController {
 	 */
 	@FXML
 	private Tab tab_event_f_groupe;
-	public ObservableList<Rencontre> rencontreDataF = FXCollections.observableArrayList();
+	private ObservableList<Rencontre> rencontreDataF = FXCollections.observableArrayList();
 	@FXML
 	public TableView<Rencontre> tbv_event_f = new TableView<>(rencontreDataF);
 	@FXML
@@ -981,7 +975,7 @@ public class FicheGroupeEditController {
 	@FXML
 	private TableColumn<Rencontre, String> col_ville_event_p;
 	@FXML
-	private TableColumn<Rencontre, String> col_deb_event_p;
+	private TableColumn<Rencontre, java.sql.Date> col_deb_event_p;
 	@FXML
-	private TableColumn<Rencontre, String> col_fin_event_p;
+	private TableColumn<Rencontre, java.sql.Date> col_fin_event_p;
 }

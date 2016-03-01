@@ -743,9 +743,9 @@ public class FicheEventEditController {
 						.getSelectionModel().getSelectedItem().getRencontreId());
 				representation.setRencontre(rencontreH);
 				rencontreH.getListe_repre().add(representation);
-				
-//				FicheGroupeEditController.getInstance().rencontreDataF.add(rencontreH);//TODO
-
+				Groupe groupeH = (Groupe) s.load(Groupe.class, cmbox_groupe_event.getSelectionModel().getSelectedItem().getGroupeId());
+				rencontreH.setGroupe(groupeH);
+				groupeH.getListe_rencontre().add(rencontreH);
 				s.save(representation);
 				s.getTransaction().commit();
 				s.close();

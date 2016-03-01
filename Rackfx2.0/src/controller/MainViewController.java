@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.controlsfx.control.ToggleSwitch;
 import org.controlsfx.control.textfield.CustomTextField;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.search.FullTextSession;
@@ -424,7 +425,17 @@ public final class MainViewController {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());
+			
+			Session s = HibernateSetUp.getSession();
+			s.beginTransaction();
+			
+			Query query = s.createQuery("delete from Representation where groupe_joue = " + "'" + tv_reper.getSelectionModel().getSelectedItem().getNom_groupe() + "'");
+			query.executeUpdate();
+			s.getTransaction().commit();
+			s.close();
+			
+			
+			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());//TODO
 			tv_reper.getItems().remove(selectedIndex);
 		}
 	}
