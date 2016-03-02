@@ -42,7 +42,7 @@ public class Rencontre {
 	private LongProperty nb_pers_attendues;
 	private Set<Organisateur> liste_orga = new HashSet<Organisateur>();
 	private Set<Representation> liste_repre = new HashSet<Representation>();
-	private Groupe groupe;
+//	private Groupe groupe;
 
 	public Rencontre() {
 		this(null, null);
@@ -190,13 +190,13 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "groupeId", nullable = true)
-	public Groupe getGroupe() {
-		return groupe;
-	}
-
-	public void setGroupe(Groupe groupe) {
-		this.groupe = groupe;
-	}
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "groupeId", nullable = true)
+//	public Groupe getGroupe() {
+//		return groupe;
+//	}
+//
+//	public void setGroupe(Groupe groupe) {
+//		this.groupe = groupe;
+//	}
 }

@@ -33,9 +33,9 @@
 										<TextField fx:id="tf_ville_event" promptText="Ville" GridPane.rowIndex="1" />
                               <TextField fx:id="tf_lieu_event" promptText="Lieu" GridPane.rowIndex="2" />
                               <Label text="Nombre de personnes attendues" GridPane.rowIndex="3" />
-                              <TextField fx:id="tf_nb_pers_event" minWidth="240.0" prefHeight="26.0" prefWidth="240.0" GridPane.rowIndex="3">
+                              <TextField fx:id="tf_nb_pers_event" prefHeight="26.0" GridPane.rowIndex="3">
                                  <GridPane.margin>
-                                    <Insets left="260.0" />
+                                    <Insets left="300.0" />
                                  </GridPane.margin>
                               </TextField>
                               <Label text="Date de début" GridPane.rowIndex="4">

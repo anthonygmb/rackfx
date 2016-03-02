@@ -218,26 +218,26 @@ public class FicheGroupeEditController {
 		 * récupération de la liste de rencontres pour les placer dans les
 		 * tableaux d'événements futurs et passés
 		 */
-		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) {
-			
-			// if
-			// (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
-			// &&
-			// !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty())
-			// {
-			rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre", "groupeId",
-					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
-
-			for (Rencontre rencTri : rencontreDataTri) {
-				if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {
-					rencontreDataF.add(rencTri);
-				} else {
-					rencontreDataP.add(rencTri);
-				}
-			}
-		}
-		tbv_event_f.getItems().addAll(rencontreDataF);
-		tbv_event_p.getItems().addAll(rencontreDataP);
+//		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) {
+//			
+//			// if
+//			// (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
+//			// &&
+//			// !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty())
+//			// {
+//			rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre", "groupeId",
+//					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
+//
+//			for (Rencontre rencTri : rencontreDataTri) {
+//				if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {
+//					rencontreDataF.add(rencTri);
+//				} else {
+//					rencontreDataP.add(rencTri);
+//				}
+//			}
+//		}
+//		tbv_event_f.getItems().addAll(rencontreDataF);
+//		tbv_event_p.getItems().addAll(rencontreDataP);
 	}
 
 	/**

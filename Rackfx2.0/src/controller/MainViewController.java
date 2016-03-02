@@ -429,10 +429,10 @@ public final class MainViewController {
 			Session s = HibernateSetUp.getSession();
 			s.beginTransaction();
 			
-			Query query = s.createQuery("delete from Representation where groupe_joue = " + "'" + tv_reper.getSelectionModel().getSelectedItem().getNom_groupe() + "'");
-			query.executeUpdate();
-			s.getTransaction().commit();
-			s.close();
+//			Query query = s.createQuery("delete from Representation where groupe_joue = " + "'" + tv_reper.getSelectionModel().getSelectedItem().getNom_groupe() + "'");
+//			query.executeUpdate();
+//			s.getTransaction().commit();
+//			s.close();
 			
 			
 			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());//TODO

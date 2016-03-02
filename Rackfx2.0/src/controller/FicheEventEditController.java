@@ -160,7 +160,7 @@ public class FicheEventEditController {
 
 		/* formatte le tableau de représentation */
 		col_groupe_prog.setCellValueFactory(cellData -> cellData.getValue().nom_groupeProperty());
-		col_titre_prog.setCellValueFactory(cellData -> cellData.getValue().nom_titreProperty());
+//		col_titre_prog.setCellValueFactory(cellData -> cellData.getValue().nom_titreProperty());
 		col_deb_prog.setCellValueFactory(cellData -> cellData.getValue().heure_debutProperty());
 		col_fin_prog.setCellValueFactory(cellData -> cellData.getValue().heure_fintProperty());
 		tbv_prog.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setProg());
@@ -701,10 +701,10 @@ public class FicheEventEditController {
 			List<Groupe> groupe = s
 					.createQuery("from Groupe where nom_groupe = " + "'" + representation.getNom_Groupe() + "'").list();
 			cmbox_groupe_event.getSelectionModel().select(groupe.get(0));// TODO
-			@SuppressWarnings("unchecked")
-			List<Titre> titre = s.createQuery("from Titre where titre = " + "'" + representation.getNom_Titre() + "'")
-					.list();
-			cmbox_titre_event.getSelectionModel().select(titre.get(0));// TODO
+//			@SuppressWarnings("unchecked")
+//			List<Titre> titre = s.createQuery("from Titre where titre = " + "'" + representation.getNom_Titre() + "'")
+//					.list();
+//			cmbox_titre_event.getSelectionModel().select(titre.get(0));// TODO
 			s.getTransaction().commit();
 			s.close();
 			ltp_h_deb_prog.setLocalTime(representation.getHeure_debut().toLocalTime());
@@ -731,7 +731,7 @@ public class FicheEventEditController {
 				representation = tbv_prog.getSelectionModel().getSelectedItem();
 			}
 			representation.setNom_Groupe(cmbox_groupe_event.getSelectionModel().getSelectedItem().getNom_groupe());
-			representation.setNom_Titre(cmbox_titre_event.getSelectionModel().getSelectedItem().getTitre());
+//			representation.setNom_Titre(cmbox_titre_event.getSelectionModel().getSelectedItem().getTitre());
 			representation.setHeure_debut(java.sql.Time.valueOf(ltp_h_deb_prog.getLocalTime()));
 			representation.setHeure_fin(java.sql.Time.valueOf(ltp_h_fin_prog.getLocalTime()));
 
@@ -743,9 +743,15 @@ public class FicheEventEditController {
 						.getSelectionModel().getSelectedItem().getRencontreId());
 				representation.setRencontre(rencontreH);
 				rencontreH.getListe_repre().add(representation);
-				Groupe groupeH = (Groupe) s.load(Groupe.class, cmbox_groupe_event.getSelectionModel().getSelectedItem().getGroupeId());
-				rencontreH.setGroupe(groupeH);
-				groupeH.getListe_rencontre().add(rencontreH);
+			
+//				Groupe groupeH = (Groupe) s.load(Groupe.class, cmbox_groupe_event.getSelectionModel().getSelectedItem().getGroupeId());
+//				rencontreH.setGroupe(groupeH);
+//				groupeH.getListe_rencontre().add(rencontreH);
+				
+				Titre titreH = (Titre) s.load(Titre.class, cmbox_titre_event.getSelectionModel().getSelectedItem().getTitreId());
+				representation.setTitre(titreH);
+				titreH.getListe_representation().add(representation);
+				
 				s.save(representation);
 				s.getTransaction().commit();
 				s.close();

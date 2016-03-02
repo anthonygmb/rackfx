@@ -70,29 +70,6 @@ public abstract class CRUD {
 		s.close();
 	}
 
-//	/**
-//	 * Methode de suppression d'entité hibernate
-//	 * 
-//	 * @param obj
-//	 */
-//	public static <T> void delete(T obj) {
-//		Session s = HibernateSetUp.getSession();
-//		s.beginTransaction();
-//		if (obj instanceof Groupe) {
-//			Groupe groupeH = (Groupe) s.load(Groupe.class,
-//					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
-//			s.delete(groupeH);
-//		} else if (obj instanceof Rencontre) {
-//			Rencontre rencontreH = (Rencontre) s.load(Rencontre.class,
-//					MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId());
-//			s.delete(rencontreH);
-//		} else {
-//			s.delete(obj);
-//		}
-//		s.getTransaction().commit();
-//		s.close();
-//	}
-	
 	/**
 	 * Methode de suppression d'entité hibernate
 	 * 
@@ -104,12 +81,6 @@ public abstract class CRUD {
 		if (obj instanceof Groupe) {
 			Groupe groupeH = (Groupe) s.load(Groupe.class,
 					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
-			
-			List<Rencontre> listRenc = getAllWhere("Rencontre", "groupeId", groupeH.getGroupeId());
-			for (Rencontre rencontre : listRenc) {
-				s.delete(rencontre.getGroupe());
-			}//TODO
-			
 			s.delete(groupeH);
 		} else if (obj instanceof Rencontre) {
 			Rencontre rencontreH = (Rencontre) s.load(Rencontre.class,
@@ -121,4 +92,33 @@ public abstract class CRUD {
 		s.getTransaction().commit();
 		s.close();
 	}
+	
+//	/**
+//	 * Methode de suppression d'entité hibernate
+//	 * 
+//	 * @param obj
+//	 */
+//	public static <T> void delete(T obj) {
+//		Session s = HibernateSetUp.getSession();
+//		s.beginTransaction();
+//		if (obj instanceof Groupe) {
+//			Groupe groupeH = (Groupe) s.load(Groupe.class,
+//					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
+//			
+//			List<Rencontre> listRenc = getAllWhere("Rencontre", "groupeId", groupeH.getGroupeId());
+//			for (Rencontre rencontre : listRenc) {
+////				s.delete(rencontre.getGroupe());
+//			}//TODO
+//			
+//			s.delete(groupeH);
+//		} else if (obj instanceof Rencontre) {
+//			Rencontre rencontreH = (Rencontre) s.load(Rencontre.class,
+//					MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId());
+//			s.delete(rencontreH);
+//		} else {
+//			s.delete(obj);
+//		}
+//		s.getTransaction().commit();
+//		s.close();
+//	}
 }

@@ -1,13 +1,17 @@
 package model;
 
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyzer;
@@ -34,6 +38,7 @@ public class Titre {
 	private BooleanProperty reprise_titre;
 	private StringProperty auteur;
 	private Groupe groupe;
+	private Set<Representation> liste_representation = new HashSet<Representation>();
 
 	public Titre() {
 		this(null, null);
@@ -154,5 +159,15 @@ public class Titre {
 
 	public void setGroupe(Groupe groupe) {
 		this.groupe = groupe;
+	}
+	
+	// =================================================================================================
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "titre")
+	public Set<Representation> getListe_representation() {
+		return liste_representation;
+	}
+
+	public void setListe_representation(Set<Representation> liste_representation) {
+		this.liste_representation = liste_representation;
 	}
 }

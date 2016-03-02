@@ -27,16 +27,17 @@ public class Representation {
 	private ObjectProperty<Time> heure_debut;
 	private ObjectProperty<Time> heure_fin;
 	private StringProperty nom_groupe;
-	private StringProperty nom_titre;
+//	private StringProperty nom_titre;
 	private Rencontre rencontre;
+	private Titre titre;
 
 	public Representation() {
-		this(null, null, null, null);
+		this(null, null,/* null,*/ null);
 	}
 
-	public Representation(String nom_groupe, String nom_titre, Time heure_debut, Time heure_fin) {
+	public Representation(String nom_groupe, /*String nom_titre, */Time heure_debut, Time heure_fin) {
 		this.nom_groupe = new SimpleStringProperty(nom_groupe);
-		this.nom_titre = new SimpleStringProperty(nom_titre);
+//		this.nom_titre = new SimpleStringProperty(nom_titre);
 		this.heure_debut = new SimpleObjectProperty<Time>();
 		this.heure_fin = new SimpleObjectProperty<Time>();
 	}
@@ -96,19 +97,19 @@ public class Representation {
 	}
 
 	// =================================================================================================
-	@NotNull
-	@Column(name = "titre_joue")
-	public String getNom_Titre() {
-		return nom_titre.get();
-	}
-
-	public void setNom_Titre(String nom_titre) {
-		this.nom_titre.set(nom_titre);
-	}
-
-	public StringProperty nom_titreProperty() {
-		return nom_titre;
-	}
+//	@NotNull
+//	@Column(name = "titre_joue")
+//	public String getNom_Titre() {
+//		return nom_titre.get();
+//	}
+//
+//	public void setNom_Titre(String nom_titre) {
+//		this.nom_titre.set(nom_titre);
+//	}
+//
+//	public StringProperty nom_titreProperty() {
+//		return nom_titre;
+//	}
 
 	// =================================================================================================
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -119,5 +120,16 @@ public class Representation {
 
 	public void setRencontre(Rencontre rencontre) {
 		this.rencontre = rencontre;
+	}
+
+	// =================================================================================================
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "titreId", nullable = false)
+	public Titre getTitre() {
+		return titre;
+	}
+
+	public void setTitre(Titre titre) {
+		this.titre = titre;
 	}
 }
