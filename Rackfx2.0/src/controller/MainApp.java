@@ -118,7 +118,7 @@ public final class MainApp extends Application {
 	 * @param tab
 	 * @return true si l'utilisateur valide, sinon false.
 	 */
-	public boolean showFicheGroupeEditDialog(Groupe groupe, boolean modif, int tab) {
+	public void showFicheGroupeEditDialog(Groupe groupe, boolean modif, int tab) {
 		try {
 			/* charge le fichier fxml et crée un nouveau stage pour le popup */
 			FXMLLoader loader = new FXMLLoader();
@@ -141,11 +141,8 @@ public final class MainApp extends Application {
 			controller.geleTab(modif);
 			/* lance la dialogbox et attend que user ferme */
 			stageGroupe.showAndWait();
-
-			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
 		}
 	}
 
@@ -163,7 +160,7 @@ public final class MainApp extends Application {
 	 *            mode création ou modification)
 	 * @return true si l'utilisateur valide, sinon false.
 	 */
-	public boolean showFicheEventEditDialog(Rencontre rencontre, boolean modif, int tab) {
+	public void showFicheEventEditDialog(Rencontre rencontre, boolean modif, int tab) {
 		try {
 			/* charge le fichier fxml et crée un nouveau stage pour le popup */
 			FXMLLoader loader2 = new FXMLLoader();
@@ -187,11 +184,8 @@ public final class MainApp extends Application {
 
 			/* lance la dialogbox et attend que user ferme */
 			stageEvent.showAndWait();
-
-			return controller2.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
 		}
 	}
 

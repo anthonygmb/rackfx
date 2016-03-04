@@ -47,9 +47,6 @@ public class FicheEventEditController {
 	@FXML
 	private TabPane tp_fiche_event;
 	private Stage dialogStage;
-	private boolean okClicked = false;
-	private boolean modifOrga = false;
-	private boolean modifProg = false;
 	private String NbPers;
 	private String telNumber = "";
 	private String faxNumber = "";
@@ -354,9 +351,9 @@ public class FicheEventEditController {
 	 * 
 	 * @return
 	 */
-	public boolean isOkClicked() {
-		return okClicked;
-	}
+//	public boolean isOkClicked() {
+//		return okClicked;
+//	}
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
@@ -377,8 +374,20 @@ public class FicheEventEditController {
 			} else {
 				rencontre.setPeriodicite_renc(cmbox_perio_event.getSelectionModel().getSelectedItem().toString());
 			}
-			okClicked = true;
-			dialogStage.close();
+//			okClicked = true;
+//			dialogStage.close();
+			if (dialogStage.getTitle().equals("Nouvelle rencontre *")) {
+				geleTab(true);
+				dialogStage.setTitle(rencontre.getNom_renc());
+				MainApp.getInstance().getRencontreData().add(rencontre);
+				CRUD.save(rencontre);
+				MainViewController.getInstance().tv_planif.getSelectionModel().selectLast();
+			} else {
+				CRUD.update(rencontre);
+				dialogStage.setTitle(rencontre.getNom_renc());
+				MainViewController.getInstance().showEventDetails(rencontre);
+				MainApp.getInstance().getRencontreData().setAll(CRUD.getAll("Rencontre"));
+			}
 		}
 	}
 
@@ -486,7 +495,6 @@ public class FicheEventEditController {
 		if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
 			annulerOrganisateur();
 		} else {
-			modifOrga = true;
 			organisateur = cmbox_orga.getSelectionModel().getSelectedItem();
 			if (organisateur.getCivi_orga().equals("Monsieur")) {
 				ckbox_mr_civi_orga.setSelected(true);
@@ -513,7 +521,7 @@ public class FicheEventEditController {
 			}
 
 			tf_mail_orga.setText(organisateur.getMail_orga());
-			btn_creer_orga.setText((modifOrga) ? "Appliquer" : "Créer");
+			btn_creer_orga.setText("Appliquer");
 			btn_supp_orga.setDisable((MainViewController.getInstance().connectAdmin) ? false : true);
 		}
 	}
@@ -589,8 +597,7 @@ public class FicheEventEditController {
 		ckbox_mme_civi_orga.setSelected(false);
 		cmbox_orga.getSelectionModel().clearSelection();
 		btn_supp_orga.setDisable(true);
-		modifOrga = false;
-		btn_creer_orga.setText((modifOrga) ? "Appliquer" : "Créer");
+		btn_creer_orga.setText("Créer");
 	}
 
 	/**
@@ -693,7 +700,6 @@ public class FicheEventEditController {
 		if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 			annulerProg();
 		} else {
-			modifProg = true;
 			representation = tbv_prog.getSelectionModel().getSelectedItem();
 			Session s = HibernateSetUp.getSession();
 			s.beginTransaction();
@@ -709,7 +715,7 @@ public class FicheEventEditController {
 			s.close();
 			ltp_h_deb_prog.setLocalTime(representation.getHeure_debut().toLocalTime());
 			ltp_h_fin_prog.setLocalTime(representation.getHeure_fin().toLocalTime());
-			btn_creer_prog.setText((modifProg) ? "Appliquer" : "Créer");
+			btn_creer_prog.setText("Appliquer");
 			btn_supp_prog.setDisable((MainViewController.getInstance().connectAdmin) ? false : true);
 		}
 	}
@@ -775,8 +781,7 @@ public class FicheEventEditController {
 		ltp_h_fin_prog.setLocalTime(MainApp.getInstance().def_time);
 		btn_supp_prog.setDisable(true);
 		tbv_prog.getSelectionModel().clearSelection();
-		modifProg = false;
-		btn_creer_prog.setText((modifProg) ? "Appliquer" : "Créer");
+		btn_creer_prog.setText("Créer");
 	}
 
 	/**

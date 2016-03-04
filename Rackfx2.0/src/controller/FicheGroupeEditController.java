@@ -40,6 +40,7 @@ import sql.CRUD;
 import sql.HibernateSetUp;
 
 public class FicheGroupeEditController {
+	
 	/*
 	 * =========================================================================
 	 * GENERAL
@@ -47,9 +48,6 @@ public class FicheGroupeEditController {
 	@FXML
 	private TabPane tp_fiche_groupe;
 	private Stage dialogStage;
-	private boolean okClicked = false;
-	private boolean modifMembre = false;
-	private boolean modifTitre = false;
 	private String telNumber = "";
 	private String faxNumber = "";
 	private DateFormat formatAnnee = new SimpleDateFormat("yyyy");
@@ -84,7 +82,7 @@ public class FicheGroupeEditController {
 		 * récupération de la liste de personnes et de titres si le groupe est
 		 * existant ou pas
 		 */
-		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) {
+		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null && !dialogStage.getTitle().equals("Nouveau groupe *")) {
 			personneData.addAll(CRUD.getAllWhere("Personne", "groupeId",
 					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
 			titreData.addAll(CRUD.getAllWhere("Titre", "groupeId",
@@ -352,15 +350,6 @@ public class FicheGroupeEditController {
 	}
 
 	/**
-	 * retourne true si l'utilisateur clique OK retourne false sinon
-	 * 
-	 * @return
-	 */
-	public boolean isOkClicked() {
-		return okClicked;
-	}
-
-	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
 	 * Renseigne les attributs de l'objet Groupe et passe le booleen
 	 * <code>okClicked</code> à true. Elle fait appel à la méthode
@@ -377,8 +366,18 @@ public class FicheGroupeEditController {
 				groupe.setPays_groupe(cmbox_pays_groupe.getSelectionModel().getSelectedItem().toString());
 			}
 			groupe.setRegion_groupe(tf_region_groupe.getText());
-			okClicked = true;
-			dialogStage.close();
+			if (dialogStage.getTitle().equals("Nouveau groupe *")) {
+				geleTab(true);
+				dialogStage.setTitle(groupe.getNom_groupe());
+				MainApp.getInstance().getGroupeData().add(groupe);
+				CRUD.save(groupe);
+				MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
+			} else {
+				CRUD.update(groupe);
+				dialogStage.setTitle(groupe.getNom_groupe());
+				MainViewController.getInstance().showGroupeDetails(groupe);
+				MainApp.getInstance().getGroupeData().setAll(CRUD.getAll("Groupe"));
+			}
 		}
 	}
 
@@ -531,7 +530,6 @@ public class FicheGroupeEditController {
 		if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
 			annulerPersonne();
 		} else {
-			modifMembre = true;
 			personne = cmbox_membre.getSelectionModel().getSelectedItem();
 			tf_nom_membre.setText(personne.getNom_membre());
 			tf_prenom_membre.setText(personne.getPrenom_membre());
@@ -583,8 +581,7 @@ public class FicheGroupeEditController {
 				ckbox_corres_membre.setSelected(false);
 				activeCorrespondant(false);
 			}
-
-			btn_creer_membre.setText((modifMembre) ? "Appliquer" : "Créer");
+			btn_creer_membre.setText("Appliquer");
 			btn_supp_membre.setDisable((MainViewController.getInstance().connectAdmin) ? false : true);
 		}
 	}
@@ -681,8 +678,7 @@ public class FicheGroupeEditController {
 		activeCorrespondant(true);
 		cmbox_membre.getSelectionModel().clearSelection();
 		btn_supp_membre.setDisable(true);
-		modifMembre = false;
-		btn_creer_membre.setText((modifMembre) ? "Appliquer" : "Créer");
+		btn_creer_membre.setText("Créer");
 	}
 
 	/**
@@ -806,7 +802,6 @@ public class FicheGroupeEditController {
 		if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
 			annulerTitre();
 		} else {
-			modifTitre = true;
 			titre = tbv_titre.getSelectionModel().getSelectedItem();
 			tf_titre.setText(titre.getTitre());
 			if (titre.getAnnee().equals("")) {
@@ -826,7 +821,7 @@ public class FicheGroupeEditController {
 				tf_auteur_titre.setText(MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem()
 						.getNom_groupe());
 			}
-			btn_creer_titre.setText((modifTitre) ? "Appliquer" : "Créer");
+			btn_creer_titre.setText("Appliquer");
 			btn_supp_titre.setDisable((MainViewController.getInstance().connectAdmin) ? false : true);
 		}
 	}
@@ -892,8 +887,7 @@ public class FicheGroupeEditController {
 		tf_auteur_titre.clear();
 		btn_supp_titre.setDisable(true);
 		tbv_titre.getSelectionModel().clearSelection();
-		modifTitre = false;
-		btn_creer_titre.setText((modifTitre) ? "Appliquer" : "Créer");
+		btn_creer_titre.setText("Créer");
 	}
 
 	/**

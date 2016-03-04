@@ -55,8 +55,7 @@ public final class MainViewController {
 	@FXML
 	public TabPane tabpane_onglets;
 	private Stage dialogStage;
-	public boolean modifGroupe = false;
-	private boolean modifRencontre = false;
+	// private boolean modifRencontre = false;
 	public boolean connectAdmin = false;
 	public boolean connectUser = false;
 	public String login_admin = "root";
@@ -414,12 +413,7 @@ public final class MainViewController {
 	 */
 	private void linkGroupe(Groupe groupeTemp, int tab) {
 		Groupe selectedGroupe = groupeTemp;
-		modifGroupe = true;
-		boolean okClicked = MainApp.getInstance().showFicheGroupeEditDialog(selectedGroupe, modifGroupe, tab);
-		if (okClicked) {
-			showGroupeDetails(selectedGroupe);
-			CRUD.update(selectedGroupe);
-		}
+		MainApp.getInstance().showFicheGroupeEditDialog(selectedGroupe, true, tab);
 	}
 
 	/**
@@ -434,12 +428,7 @@ public final class MainViewController {
 	 */
 	private void linkEvent(Rencontre rencontreTemp, int tab) {
 		Rencontre selectedRencontre = rencontreTemp;
-		modifRencontre = true;
-		boolean okClicked = MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, modifRencontre, tab);
-		if (okClicked) {
-			showEventDetails(selectedRencontre);
-			CRUD.update(selectedRencontre);
-		}
+		MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, true, tab);
 	}
 
 	/*
@@ -479,12 +468,7 @@ public final class MainViewController {
 	@FXML
 	private void nouveauGroupe() throws SQLException {
 		Groupe tempGroupe = new Groupe();
-		modifGroupe = false;
-		boolean okClicked = MainApp.getInstance().showFicheGroupeEditDialog(tempGroupe, modifGroupe, 0);
-		if (okClicked) {
-			MainApp.getInstance().getGroupeData().add(tempGroupe);
-			CRUD.save(tempGroupe);
-		}
+		MainApp.getInstance().showFicheGroupeEditDialog(tempGroupe, false, 0);
 	}
 
 	/**
@@ -498,12 +482,7 @@ public final class MainViewController {
 	private void editGroupe() {
 		Groupe selectedGroupe = tv_reper.getSelectionModel().getSelectedItem();
 		if (selectedGroupe != null) {
-			modifGroupe = true;
-			boolean okClicked = MainApp.getInstance().showFicheGroupeEditDialog(selectedGroupe, modifGroupe, 0);
-			if (okClicked) {
-				showGroupeDetails(selectedGroupe);
-				CRUD.update(selectedGroupe);
-			}
+			MainApp.getInstance().showFicheGroupeEditDialog(selectedGroupe, true, 0);
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(MainApp.getInstance().getPrimaryStage());
@@ -532,18 +511,6 @@ public final class MainViewController {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-
-			Session s = HibernateSetUp.getSession();
-			s.beginTransaction();
-
-			// Query query = s.createQuery("delete from Representation where
-			// groupe_joue = " + "'" +
-			// tv_reper.getSelectionModel().getSelectedItem().getNom_groupe() +
-			// "'");
-			// query.executeUpdate();
-			// s.getTransaction().commit();
-			// s.close();
-
 			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());// TODO
 			tv_reper.getItems().remove(selectedIndex);
 		}
@@ -553,7 +520,7 @@ public final class MainViewController {
 	 * Methode appelée par la méthode <code>handleEditGroupe</code> pour
 	 * renseigner les labels de l'onglet repertoire de la fenetre principale.
 	 */
-	private void showGroupeDetails(Groupe groupe) {
+	public void showGroupeDetails(Groupe groupe) {
 		if (groupe != null) {
 			lb_nom_groupe.setText(groupe.getNom_groupe());
 			lb_carac_groupe.setText(groupe.getCarac_groupe());
@@ -605,12 +572,7 @@ public final class MainViewController {
 	@FXML
 	private void nouvelEvent() {
 		Rencontre tempRencontre = new Rencontre();
-		modifRencontre = false;
-		boolean okClicked = MainApp.getInstance().showFicheEventEditDialog(tempRencontre, modifRencontre, 0);
-		if (okClicked) {
-			MainApp.getInstance().getRencontreData().add(tempRencontre);
-			CRUD.save(tempRencontre);
-		}
+		MainApp.getInstance().showFicheEventEditDialog(tempRencontre, false, 0);
 	}
 
 	/**
@@ -624,12 +586,7 @@ public final class MainViewController {
 	private void editEvent() {
 		Rencontre selectedRencontre = tv_planif.getSelectionModel().getSelectedItem();
 		if (selectedRencontre != null) {
-			modifRencontre = true;
-			boolean okClicked = MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, modifRencontre, 0);
-			if (okClicked) {
-				showEventDetails(selectedRencontre);
-				CRUD.update(selectedRencontre);
-			}
+			MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, true, 0);
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(MainApp.getInstance().getPrimaryStage());
@@ -666,7 +623,7 @@ public final class MainViewController {
 	 * Methode appelée par la méthode <code>handleEditEvent</code> pour
 	 * renseigner les labels de l'onglet planification de la fenetre principale.
 	 */
-	private void showEventDetails(Rencontre rencontre) {
+	public void showEventDetails(Rencontre rencontre) {
 		if (rencontre != null) {
 			lb_lieu.setText(rencontre.getLieu_renc());
 			lb_date_deb.setText(rencontre.getDate_deb_renc().toString());
@@ -709,7 +666,6 @@ public final class MainViewController {
 	@FXML
 	private ToggleSwitch ts_adm_user;
 	private User user;
-	// public String currentLogin;
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.

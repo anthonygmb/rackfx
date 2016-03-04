@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import controller.MainViewController;
+import model.Groupe;
+import model.Rencontre;
+
 public abstract class CRUD {
 
 	/**
@@ -74,7 +78,17 @@ public abstract class CRUD {
 	public static <T> void delete(T obj) {
 		Session s = HibernateSetUp.getSession();
 		s.beginTransaction();
-		s.delete(obj);
+		if (obj instanceof Groupe) {
+			Groupe groupeH = (Groupe) s.load(Groupe.class,
+					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
+			s.delete(groupeH);
+		} else if (obj instanceof Rencontre) {
+			Rencontre rencontreH = (Rencontre) s.load(Rencontre.class,
+					MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId());
+			s.delete(rencontreH);
+		} else {
+			s.delete(obj);
+		}
 		s.getTransaction().commit();
 		s.close();
 	}
