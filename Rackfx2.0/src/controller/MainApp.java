@@ -21,7 +21,7 @@ import sql.CRUD;
 public final class MainApp extends Application {
 
 	private Stage primaryStage;
-	private BorderPane rootLayout;
+	private AnchorPane rootLayout;
 	private ObservableList<Groupe> groupeData = FXCollections.observableArrayList();
 	private ObservableList<Rencontre> rencontreData = FXCollections.observableArrayList();
 	private ObservableList<User> userData = FXCollections.observableArrayList();
@@ -85,7 +85,7 @@ public final class MainApp extends Application {
 		this.primaryStage.setTitle("RackFx");
 		this.primaryStage.getIcons().add(new Image("file:src/img/mediator.png"));
 		initRootLayout();
-		showMainView();
+//		showMainView();
 	}
 
 	/**
@@ -93,9 +93,17 @@ public final class MainApp extends Application {
 	 */
 	public void initRootLayout() {
 		try {
+//			FXMLLoader loader = new FXMLLoader();
+//			loader.setLocation(MainApp.class.getResource("../view/RootLayout.fxml"));
+//			rootLayout = (BorderPane) loader.load();
+//			Scene scene = new Scene(rootLayout);
+//			scene.getStylesheets().add(getClass().getResource("../view/style/mainview.css").toExternalForm());
+//			primaryStage.setScene(scene);
+//			primaryStage.show();
+			
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("../view/RootLayout.fxml"));
-			rootLayout = (BorderPane) loader.load();
+			loader.setLocation(MainApp.class.getResource("../view/MainView.fxml"));
+			rootLayout = (AnchorPane) loader.load();
 			Scene scene = new Scene(rootLayout);
 			scene.getStylesheets().add(getClass().getResource("../view/style/mainview.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -105,21 +113,23 @@ public final class MainApp extends Application {
 		}
 	}
 
-	/**
-	 * Methode d'initialisation de la mainView et encapsulage de mainView dans
-	 * le rootLayout. Elle fait appel à la méthode <code>setMainApp</code>.
-	 */
-	public void showMainView() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("../view/MainView.fxml"));
-			AnchorPane mainView = (AnchorPane) loader.load();
-			/* placer MainView au centre de RootLayout */
-			rootLayout.setCenter(mainView);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	/**
+//	 * Methode d'initialisation de la mainView et encapsulage de mainView dans
+//	 * le rootLayout. Elle fait appel à la méthode <code>setMainApp</code>.
+//	 */
+//	public void showMainView() {
+//		try {
+//			FXMLLoader loader = new FXMLLoader();
+//			loader.setLocation(MainApp.class.getResource("../view/MainView.fxml"));
+//			AnchorPane mainView = (AnchorPane) loader.load();
+//			/* placer MainView au centre de RootLayout */
+//			rootLayout.setCenter(mainView);
+//			
+//			
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Ouvre une fenetre de dialogue avec les détails de l'objet selectionné. Si

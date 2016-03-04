@@ -24,12 +24,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import model.Groupe;
@@ -118,6 +122,110 @@ public final class MainViewController {
 		col_droits.setCellValueFactory(cellData -> cellData.getValue().droit_authProperty());
 		ts_adm_user.setSelected(true);
 
+		btn_new_groupe.setDisable(true);
+		btn_new_event.setDisable(true);
+		btn_supp_groupe.setDisable(true);
+		btn_supp_event.setDisable(true);
+	}
+
+	/*
+	 * =========================================================================
+	 * GENERAL
+	 */
+
+	@FXML
+	private MenuBar mnb_menu;
+	@FXML
+	private Pane pane_bandeau;
+	@FXML
+	public TextField tf_login;
+	@FXML
+	private PasswordField pwf_mdp;
+	@FXML
+	private Button btn_connect;
+	@FXML
+	private Label lb_connection;
+
+	/**
+	 * Methode de connection à la session admin ou user. Elle est appelée
+	 * lorsque l'on clique sur le bouton connection du bandeau. Vérifie si le
+	 * login et le mot de passe sont conforme. Fait appel à la méthode
+	 * <code>deconnection</code>
+	 * 
+	 * @throws NoSuchProviderException
+	 * @throws NoSuchAlgorithmException
+	 */
+	@FXML
+	private void connection() {
+		if (btn_connect.getText().equals("Connection")) {
+			if (tf_login.getText().equals(login_admin) && pwf_mdp.getText().equals(pwd_admin)) {
+				connectAdmin = true;
+			}
+
+			/* Test de connection */
+			for (int i = 0; i < MainApp.getInstance().getUserData().size(); i++) {
+				if (tf_login.getText().equals(MainApp.getInstance().getUserData().get(i).getLogin())
+						&& CryptEtDecrypt.getSecurePassword(pwf_mdp.getText(), salt)
+								.equals(MainApp.getInstance().getUserData().get(i).getMot_de_passe())) {
+
+					if (MainApp.getInstance().getUserData().get(i).getDroit_auth().equals("administrateur")) {
+						connectAdmin = true;
+					} else {
+						connectUser = true;
+					}
+				}
+			}
+
+			/* Cas si l'utilisateur est connecté */
+			if (connectAdmin || connectUser) {
+				btn_connect.setText("Deconnection");
+				if (tf_login.getText().equals(login_admin) && btn_connect.getText().equals("Deconnection")) {
+					lb_connection.setText("Connecté en temps que [super admin] ");
+				} else {
+					if (connectUser) {
+						lb_connection.setText("Connecté en temps que [user] ");
+					} else {
+						lb_connection.setText("Connecté en temps que [admin] ");
+					}
+				}
+				lb_connection.setTextFill(Color.web("#DEFFFF"));
+				pwf_mdp.setStyle("-fx-text-inner-color: #000000;");
+				tf_login.setStyle("-fx-text-inner-color: #000000;");
+				tf_login.setDisable(true);
+				pwf_mdp.setDisable(true);
+				pwf_mdp.clear();
+				tab_administration.setDisable((connectAdmin) ? false : true);
+				btn_new_groupe.setDisable(false);
+				btn_new_event.setDisable(false);
+				btn_supp_groupe.setDisable((connectAdmin) ? false : true);
+				btn_supp_event.setDisable((connectAdmin) ? false : true);
+			} else {
+				/* Cas si le login ou le mot de passe est faux */
+				pwf_mdp.setStyle("-fx-text-inner-color: dc320c;");
+				tf_login.setStyle("-fx-text-inner-color: dc320c;");
+				lb_connection.setText("Erreur de connection");
+				lb_connection.setTextFill(Color.web("#dc320c"));
+				connectAdmin = false;
+			}
+		} else {
+			deconnection();
+		}
+	}
+
+	/**
+	 * Methode de deconnection
+	 */
+	public void deconnection() {
+		tab_administration.setDisable(true);
+		tabpane_onglets.getSelectionModel().select(0);
+		lb_connection.setText("");
+		btn_connect.setText("Connection");
+		tf_login.setDisable(false);
+		pwf_mdp.setDisable(false);
+		tf_login.clear();
+		pwf_mdp.clear();
+		connectAdmin = false;
+		connectUser = false;
 		btn_new_groupe.setDisable(true);
 		btn_new_event.setDisable(true);
 		btn_supp_groupe.setDisable(true);
@@ -424,17 +532,19 @@ public final class MainViewController {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			
+
 			Session s = HibernateSetUp.getSession();
 			s.beginTransaction();
-			
-//			Query query = s.createQuery("delete from Representation where groupe_joue = " + "'" + tv_reper.getSelectionModel().getSelectedItem().getNom_groupe() + "'");
-//			query.executeUpdate();
-//			s.getTransaction().commit();
-//			s.close();
-			
-			
-			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());//TODO
+
+			// Query query = s.createQuery("delete from Representation where
+			// groupe_joue = " + "'" +
+			// tv_reper.getSelectionModel().getSelectedItem().getNom_groupe() +
+			// "'");
+			// query.executeUpdate();
+			// s.getTransaction().commit();
+			// s.close();
+
+			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());// TODO
 			tv_reper.getItems().remove(selectedIndex);
 		}
 	}
@@ -599,7 +709,7 @@ public final class MainViewController {
 	@FXML
 	private ToggleSwitch ts_adm_user;
 	private User user;
-//	public String currentLogin;
+	// public String currentLogin;
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
@@ -652,8 +762,7 @@ public final class MainViewController {
 		alert.setTitle("Confirmation d'action");
 		alert.setHeaderText("Confirmation de suppression");
 
-		if (tv_admin.getSelectionModel().getSelectedItem().getLogin()
-				.equals(RootLayoutController.getInstance().tf_login.getText())) {
+		if (tv_admin.getSelectionModel().getSelectedItem().getLogin().equals(tf_login.getText())) {
 			alert.setContentText(
 					"Attention, ce login est actuellement utilisé\n" + "Voulez-vous supprimer cet utilisateur ?\n"
 							+ "Après la suppression vous serez déconnecté\n" + "et ne pourrez plus vous connecter");
@@ -662,7 +771,7 @@ public final class MainViewController {
 				CRUD.delete(tv_admin.getSelectionModel().getSelectedItem());
 				tv_admin.getItems().remove(selectedIndex);
 				annulerUser();
-				RootLayoutController.getInstance().deconnection();
+				deconnection();
 			}
 		} else {
 			alert.setContentText("Voulez-vous supprimer cet utilisateur ?");
