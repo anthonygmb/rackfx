@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import org.controlsfx.control.ToggleSwitch;
 import org.controlsfx.control.textfield.CustomTextField;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.search.FullTextSession;
@@ -600,6 +599,7 @@ public final class MainViewController {
 	@FXML
 	private ToggleSwitch ts_adm_user;
 	private User user;
+//	public String currentLogin;
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
@@ -657,15 +657,21 @@ public final class MainViewController {
 			alert.setContentText(
 					"Attention, ce login est actuellement utilisé\n" + "Voulez-vous supprimer cet utilisateur ?\n"
 							+ "Après la suppression vous serez déconnecté\n" + "et ne pourrez plus vous connecter");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				CRUD.delete(tv_admin.getSelectionModel().getSelectedItem());
+				tv_admin.getItems().remove(selectedIndex);
+				annulerUser();
+				RootLayoutController.getInstance().deconnection();
+			}
 		} else {
 			alert.setContentText("Voulez-vous supprimer cet utilisateur ?");
-		}
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
-			CRUD.delete(tv_admin.getSelectionModel().getSelectedItem());
-			tv_admin.getItems().remove(selectedIndex);
-			annulerUser();
-			RootLayoutController.getInstance().deconnection();
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				CRUD.delete(tv_admin.getSelectionModel().getSelectedItem());
+				tv_admin.getItems().remove(selectedIndex);
+				annulerUser();
+			}
 		}
 	}
 
