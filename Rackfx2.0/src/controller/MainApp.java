@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Groupe;
@@ -85,7 +84,6 @@ public final class MainApp extends Application {
 		this.primaryStage.setTitle("RackFx");
 		this.primaryStage.getIcons().add(new Image("file:src/img/mediator.png"));
 		initRootLayout();
-//		showMainView();
 	}
 
 	/**
@@ -93,14 +91,6 @@ public final class MainApp extends Application {
 	 */
 	public void initRootLayout() {
 		try {
-//			FXMLLoader loader = new FXMLLoader();
-//			loader.setLocation(MainApp.class.getResource("../view/RootLayout.fxml"));
-//			rootLayout = (BorderPane) loader.load();
-//			Scene scene = new Scene(rootLayout);
-//			scene.getStylesheets().add(getClass().getResource("../view/style/mainview.css").toExternalForm());
-//			primaryStage.setScene(scene);
-//			primaryStage.show();
-			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("../view/MainView.fxml"));
 			rootLayout = (AnchorPane) loader.load();
@@ -112,24 +102,6 @@ public final class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-
-//	/**
-//	 * Methode d'initialisation de la mainView et encapsulage de mainView dans
-//	 * le rootLayout. Elle fait appel à la méthode <code>setMainApp</code>.
-//	 */
-//	public void showMainView() {
-//		try {
-//			FXMLLoader loader = new FXMLLoader();
-//			loader.setLocation(MainApp.class.getResource("../view/MainView.fxml"));
-//			AnchorPane mainView = (AnchorPane) loader.load();
-//			/* placer MainView au centre de RootLayout */
-//			rootLayout.setCenter(mainView);
-//			
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	/**
 	 * Ouvre une fenetre de dialogue avec les détails de l'objet selectionné. Si

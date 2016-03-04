@@ -528,7 +528,7 @@ public final class MainViewController {
 		alert.setTitle("Confirmation d'action");
 		alert.setHeaderText("Confirmation de suppression");
 		alert.setContentText(
-				"Voulez-vous supprimer ce groupe ?\n\nN.B. tous les membres et titres\nlui appartenant seront également supprimé");
+				"Voulez-vous supprimer ce groupe ?\n\nN.B. tous les membres, titres et représentations\nlui appartenant seront également supprimé");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
