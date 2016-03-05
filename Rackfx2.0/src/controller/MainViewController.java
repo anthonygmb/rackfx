@@ -55,7 +55,6 @@ public final class MainViewController {
 	@FXML
 	public TabPane tabpane_onglets;
 	private Stage dialogStage;
-	// private boolean modifRencontre = false;
 	public boolean connectAdmin = false;
 	public boolean connectUser = false;
 	public String login_admin = "root";
