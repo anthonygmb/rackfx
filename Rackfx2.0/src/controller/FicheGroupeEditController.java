@@ -40,7 +40,7 @@ import sql.CRUD;
 import sql.HibernateSetUp;
 
 public class FicheGroupeEditController {
-	
+
 	/*
 	 * =========================================================================
 	 * GENERAL
@@ -82,7 +82,7 @@ public class FicheGroupeEditController {
 		 * récupération de la liste de personnes et de titres si le groupe est
 		 * existant ou pas
 		 */
-		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null && !dialogStage.getTitle().equals("Nouveau groupe *")) {
+		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) {// TODO
 			personneData.addAll(CRUD.getAllWhere("Personne", "groupeId",
 					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
 			titreData.addAll(CRUD.getAllWhere("Titre", "groupeId",
@@ -205,7 +205,7 @@ public class FicheGroupeEditController {
 		col_ville_event_f.setCellValueFactory(cellData -> cellData.getValue().ville_rencProperty());
 		col_deb_event_f.setCellValueFactory(cellData -> cellData.getValue().date_deb_rencProperty());
 		col_fin_event_f.setCellValueFactory(cellData -> cellData.getValue().date_fin_rencProperty());
-		
+
 		/* formatte le tableau d'événement passés */
 		col_event_event_p.setCellValueFactory(cellData -> cellData.getValue().nom_rencProperty());
 		col_ville_event_p.setCellValueFactory(cellData -> cellData.getValue().ville_rencProperty());
@@ -216,26 +216,30 @@ public class FicheGroupeEditController {
 		 * récupération de la liste de rencontres pour les placer dans les
 		 * tableaux d'événements futurs et passés
 		 */
-//		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) {
-//			
-//			// if
-//			// (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
-//			// &&
-//			// !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty())
-//			// {
-//			rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre", "groupeId",
-//					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
-//
-//			for (Rencontre rencTri : rencontreDataTri) {
-//				if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {
-//					rencontreDataF.add(rencTri);
-//				} else {
-//					rencontreDataP.add(rencTri);
-//				}
-//			}
-//		}
-//		tbv_event_f.getItems().addAll(rencontreDataF);
-//		tbv_event_p.getItems().addAll(rencontreDataP);
+		// if
+		// (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem()
+		// != null) {
+		//
+		// // if
+		// //
+		// (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
+		// // &&
+		// //
+		// !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty())
+		// // {
+		// rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre", "groupeId",
+		// MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
+		//
+		// for (Rencontre rencTri : rencontreDataTri) {
+		// if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {
+		// rencontreDataF.add(rencTri);
+		// } else {
+		// rencontreDataP.add(rencTri);
+		// }
+		// }
+		// }
+		// tbv_event_f.getItems().addAll(rencontreDataF);
+		// tbv_event_p.getItems().addAll(rencontreDataP);
 	}
 
 	/**
@@ -368,16 +372,22 @@ public class FicheGroupeEditController {
 			groupe.setRegion_groupe(tf_region_groupe.getText());
 			if (dialogStage.getTitle().equals("Nouveau groupe *")) {
 				geleTab(true);
-				dialogStage.setTitle(groupe.getNom_groupe());
 				MainApp.getInstance().getGroupeData().add(groupe);
 				CRUD.save(groupe);
 				MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
+				personneData.clear();
+				personneData.addAll(CRUD.getAllWhere("Personne", "groupeId",
+						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
+				titreData.addAll(CRUD.getAllWhere("Titre", "groupeId",
+						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
+				cmbox_membre.setItems(personneData);
+				tbv_titre.getItems().addAll(titreData);
 			} else {
 				CRUD.update(groupe);
-				dialogStage.setTitle(groupe.getNom_groupe());
 				MainViewController.getInstance().showGroupeDetails(groupe);
 				MainApp.getInstance().getGroupeData().setAll(CRUD.getAll("Groupe"));
 			}
+			dialogStage.setTitle(groupe.getNom_groupe());
 		}
 	}
 

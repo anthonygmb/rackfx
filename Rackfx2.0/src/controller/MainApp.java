@@ -135,6 +135,9 @@ public final class MainApp extends Application {
 			stageGroupe.setScene(scene);
 
 			/* met le groupe dans le controller */
+			if (!modif) {
+				MainViewController.getInstance().tv_reper.getSelectionModel().clearSelection();
+			}
 			FicheGroupeEditController controller = loader.getController();
 			controller.setDialogStage(stageGroupe);
 			controller.setGroupe(groupe, modif, tab);
