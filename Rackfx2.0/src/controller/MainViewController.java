@@ -128,7 +128,7 @@ public final class MainViewController {
 
 	/*
 	 * =========================================================================
-	 * GENERAL
+	 * BANDEAU DE CONNECTION
 	 */
 
 	@FXML
@@ -237,7 +237,7 @@ public final class MainViewController {
 	@FXML
 	private Tab tab_accueil;
 	@FXML
-	private CustomTextField cst_tf_search;
+	public CustomTextField cst_tf_search;
 	@FXML
 	private VBox vb_link = new VBox();
 
@@ -307,7 +307,8 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-							linkGroupe(groupe, 0);
+//							linkGroupe(groupe, 0);
+							MainApp.getInstance().showFicheGroupeEditDialog(groupe, true, 0);
 						}
 					});
 					vb_link.getChildren().add(link_groupe);
@@ -325,7 +326,8 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-							linkGroupe(groupeParent, 1);
+//							linkGroupe(groupeParent, 1);
+							MainApp.getInstance().showFicheGroupeEditDialog(groupeParent, true, 1);
 						}
 					});
 					vb_link.getChildren().add(link_personne);
@@ -343,7 +345,8 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-							linkGroupe(groupeParent, 2);
+//							linkGroupe(groupeParent, 2);
+							MainApp.getInstance().showFicheGroupeEditDialog(groupeParent, true, 2);
 						}
 					});
 					vb_link.getChildren().add(link_titre);
@@ -360,7 +363,8 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-							linkEvent(rencontre, 0);
+//							linkEvent(rencontre, 0);
+							MainApp.getInstance().showFicheEventEditDialog(rencontre, true, 0);
 						}
 					});
 					vb_link.getChildren().add(link_rencontre);
@@ -379,7 +383,8 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-							linkEvent(rencontreParent, 1);
+//							linkEvent(rencontreParent, 1);
+							MainApp.getInstance().showFicheEventEditDialog(rencontreParent, true, 1);
 						}
 					});
 					vb_link.getChildren().add(link_organisateur);
@@ -410,10 +415,10 @@ public final class MainViewController {
 	 * @param groupeTemp
 	 * @param tab
 	 */
-	private void linkGroupe(Groupe groupeTemp, int tab) {
-		Groupe selectedGroupe = groupeTemp;
-		MainApp.getInstance().showFicheGroupeEditDialog(selectedGroupe, true, tab);
-	}
+//	private void linkGroupe(Groupe groupeTemp, int tab) {
+////		Groupe selectedGroupe = groupeTemp;
+//		MainApp.getInstance().showFicheGroupeEditDialog(groupeTemp, true, tab);
+//	}
 
 	/**
 	 * Appelé quand l'utilisateur clique sur le lien de la recherche de la
@@ -425,10 +430,10 @@ public final class MainViewController {
 	 * @param rencontreTemp
 	 * @param tab
 	 */
-	private void linkEvent(Rencontre rencontreTemp, int tab) {
-		Rencontre selectedRencontre = rencontreTemp;
-		MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, true, tab);
-	}
+//	private void linkEvent(Rencontre rencontreTemp, int tab) {
+//		Rencontre selectedRencontre = rencontreTemp;
+//		MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, true, tab);
+//	}
 
 	/*
 	 * =========================================================================

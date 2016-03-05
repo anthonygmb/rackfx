@@ -347,15 +347,6 @@ public class FicheEventEditController {
 	}
 
 	/**
-	 * retourne true si l'utilisateur clique OK retourne false sinon
-	 * 
-	 * @return
-	 */
-//	public boolean isOkClicked() {
-//		return okClicked;
-//	}
-
-	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
 	 * Renseigne les attributs de l'objet rencontre et passe le booleen
 	 * <code>okClicked</code> à true.
@@ -374,20 +365,31 @@ public class FicheEventEditController {
 			} else {
 				rencontre.setPeriodicite_renc(cmbox_perio_event.getSelectionModel().getSelectedItem().toString());
 			}
-//			okClicked = true;
-//			dialogStage.close();
 			if (dialogStage.getTitle().equals("Nouvelle rencontre *")) {
 				geleTab(true);
-				dialogStage.setTitle(rencontre.getNom_renc());
 				MainApp.getInstance().getRencontreData().add(rencontre);
 				CRUD.save(rencontre);
 				MainViewController.getInstance().tv_planif.getSelectionModel().selectLast();
+//				orgaData.clear();
+//				repreData.clear();
+//				orgaData.addAll(CRUD.getAllWhere("Organisateur", "rencontreId",
+//						MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId()));
+//				repreData.addAll(CRUD.getAllWhere("Representation", "rencontreId",
+//						MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId()));
+//				cmbox_orga.setItems(orgaData);
+//				tbv_prog.setItems(repreData);
 			} else {
 				CRUD.update(rencontre);
-				dialogStage.setTitle(rencontre.getNom_renc());
 				MainViewController.getInstance().showEventDetails(rencontre);
 				MainApp.getInstance().getRencontreData().setAll(CRUD.getAll("Rencontre"));
 			}
+			dialogStage.setTitle(rencontre.getNom_renc());
+			orgaData.clear();
+			repreData.clear();
+			orgaData.addAll(CRUD.getAllWhere("Organisateur", "rencontreId", rencontre.getRencontreId()));
+			repreData.addAll(CRUD.getAllWhere("Representation", "rencontreId", rencontre.getRencontreId()));
+			cmbox_orga.setItems(orgaData);
+			tbv_prog.setItems(repreData);
 		}
 	}
 

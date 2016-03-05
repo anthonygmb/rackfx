@@ -180,6 +180,9 @@ public final class MainApp extends Application {
 			stageEvent.setScene(scene2);
 
 			/* met la rencontre dans le controller */
+			if (!modif) {
+				MainViewController.getInstance().tv_planif.getSelectionModel().clearSelection();
+			}
 			FicheEventEditController controller2 = loader2.getController();
 			controller2.setDialogStage(stageEvent);
 			controller2.setEvent(rencontre, modif, tab);

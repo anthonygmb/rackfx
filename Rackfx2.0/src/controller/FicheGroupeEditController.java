@@ -375,19 +375,41 @@ public class FicheGroupeEditController {
 				MainApp.getInstance().getGroupeData().add(groupe);
 				CRUD.save(groupe);
 				MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
-				personneData.clear();
-				personneData.addAll(CRUD.getAllWhere("Personne", "groupeId",
-						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
-				titreData.addAll(CRUD.getAllWhere("Titre", "groupeId",
-						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
-				cmbox_membre.setItems(personneData);
-				tbv_titre.getItems().addAll(titreData);
+//				personneData.clear();
+//				titreData.clear();
+//				if (MainViewController.getInstance().cst_tf_search.getText().isEmpty()) {
+//					personneData
+//							.addAll(CRUD.getAllWhere("Personne", "groupeId", MainViewController.getInstance().tv_reper
+//									.getSelectionModel().getSelectedItem().getGroupeId()));
+//					titreData.addAll(CRUD.getAllWhere("Titre", "groupeId", MainViewController.getInstance().tv_reper
+//							.getSelectionModel().getSelectedItem().getGroupeId()));
+//				} else {
+//					personneData.addAll(CRUD.getAllWhere("Personne", "groupeId", groupe.getGroupeId()));
+//					titreData.addAll(CRUD.getAllWhere("Titre", "groupeId", groupe.getGroupeId()));
+//				}
+
+//				cmbox_membre.setItems(personneData);
+//				tbv_titre.setItems(titreData);
 			} else {
 				CRUD.update(groupe);
 				MainViewController.getInstance().showGroupeDetails(groupe);
+//				int index = MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedIndex();
 				MainApp.getInstance().getGroupeData().setAll(CRUD.getAll("Groupe"));
+				MainViewController.getInstance().tv_reper.getSelectionModel().select(groupe);
+//				personneData.clear();
+//				titreData.clear();
+//				personneData.addAll(CRUD.getAllWhere("Personne", "groupeId", groupe.getGroupeId()));
+//				titreData.addAll(CRUD.getAllWhere("Titre", "groupeId", groupe.getGroupeId()));
 			}
 			dialogStage.setTitle(groupe.getNom_groupe());
+			personneData.clear();
+			titreData.clear();
+			System.out.printf("groupeId: %d\n", groupe.getGroupeId());
+			
+			personneData.addAll(CRUD.getAllWhere("Personne", "groupeId", groupe.getGroupeId()));
+			titreData.addAll(CRUD.getAllWhere("Titre", "groupeId", groupe.getGroupeId()));
+			cmbox_membre.setItems(personneData);
+			tbv_titre.setItems(titreData);
 		}
 	}
 
