@@ -307,7 +307,6 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-//							linkGroupe(groupe, 0);
 							MainApp.getInstance().showFicheGroupeEditDialog(groupe, true, 0);
 						}
 					});
@@ -326,7 +325,6 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-//							linkGroupe(groupeParent, 1);
 							MainApp.getInstance().showFicheGroupeEditDialog(groupeParent, true, 1);
 						}
 					});
@@ -345,7 +343,6 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-//							linkGroupe(groupeParent, 2);
 							MainApp.getInstance().showFicheGroupeEditDialog(groupeParent, true, 2);
 						}
 					});
@@ -363,7 +360,6 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-//							linkEvent(rencontre, 0);
 							MainApp.getInstance().showFicheEventEditDialog(rencontre, true, 0);
 						}
 					});
@@ -383,7 +379,6 @@ public final class MainViewController {
 
 						@Override
 						public void handle(ActionEvent event) {
-//							linkEvent(rencontreParent, 1);
 							MainApp.getInstance().showFicheEventEditDialog(rencontreParent, true, 1);
 						}
 					});
@@ -404,36 +399,7 @@ public final class MainViewController {
 			s.close();
 		}
 	}
-
-	/**
-	 * Appelé quand l'utilisateur clique sur le lien de la recherche de la
-	 * fenetre principale. Fait appel à la méthode
-	 * <code>showFicheGroupeEditDialog</code> Fait appel à la méthode
-	 * <code>showGroupeDetails</code> Sauve le groupe en base de donnée via
-	 * Hibernate.
-	 * 
-	 * @param groupeTemp
-	 * @param tab
-	 */
-//	private void linkGroupe(Groupe groupeTemp, int tab) {
-////		Groupe selectedGroupe = groupeTemp;
-//		MainApp.getInstance().showFicheGroupeEditDialog(groupeTemp, true, tab);
-//	}
-
-	/**
-	 * Appelé quand l'utilisateur clique sur le lien de la recherche de la
-	 * fenetre principale. Fait appel à la méthode
-	 * <code>showFicheEventEditDialog</code> Fait appel à la méthode
-	 * <code>showEventDetails</code> Sauve la rencontre en base de donnée via
-	 * Hibernate.
-	 * 
-	 * @param rencontreTemp
-	 * @param tab
-	 */
-//	private void linkEvent(Rencontre rencontreTemp, int tab) {
-//		Rencontre selectedRencontre = rencontreTemp;
-//		MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, true, tab);
-//	}
+	
 
 	/*
 	 * =========================================================================

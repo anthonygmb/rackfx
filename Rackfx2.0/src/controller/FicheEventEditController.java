@@ -370,14 +370,6 @@ public class FicheEventEditController {
 				MainApp.getInstance().getRencontreData().add(rencontre);
 				CRUD.save(rencontre);
 				MainViewController.getInstance().tv_planif.getSelectionModel().selectLast();
-//				orgaData.clear();
-//				repreData.clear();
-//				orgaData.addAll(CRUD.getAllWhere("Organisateur", "rencontreId",
-//						MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId()));
-//				repreData.addAll(CRUD.getAllWhere("Representation", "rencontreId",
-//						MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId()));
-//				cmbox_orga.setItems(orgaData);
-//				tbv_prog.setItems(repreData);
 			} else {
 				CRUD.update(rencontre);
 				MainViewController.getInstance().showEventDetails(rencontre);
