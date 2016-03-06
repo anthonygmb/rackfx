@@ -374,6 +374,7 @@ public class FicheGroupeEditController {
 				MainViewController.getInstance().tv_reper.getSelectionModel().select(index);
 			}
 			dialogStage.setTitle(groupe.getNom_groupe());
+			btn_creer_groupe.setText("Appliquer");
 			reinitialize();
 		}
 	}

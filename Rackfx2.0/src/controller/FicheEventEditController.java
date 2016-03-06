@@ -374,6 +374,7 @@ public class FicheEventEditController {
 				MainApp.getInstance().getRencontreData().setAll(CRUD.getAll("Rencontre"));
 			}
 			dialogStage.setTitle(rencontre.getNom_renc());
+			btn_creer_event.setText("Appliquer");
 			reinitialize();
 		}
 	}
