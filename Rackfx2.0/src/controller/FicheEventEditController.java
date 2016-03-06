@@ -552,8 +552,6 @@ public class FicheEventEditController {
 				cmbox_orga.getItems().add(organisateur);
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-//				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, MainViewController.getInstance().tv_planif
-//						.getSelectionModel().getSelectedItem().getRencontreId());
 				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
 				organisateur.setRencontre(rencontreH);
 				rencontreH.getListe_orga().add(organisateur);
@@ -733,8 +731,6 @@ public class FicheEventEditController {
 				tbv_prog.getItems().add(representation);
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-//				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, MainViewController.getInstance().tv_planif
-//						.getSelectionModel().getSelectedItem().getRencontreId());
 				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
 				representation.setRencontre(rencontreH);
 				rencontreH.getListe_repre().add(representation);

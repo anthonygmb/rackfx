@@ -648,8 +648,6 @@ public class FicheGroupeEditController {
 				cmbox_membre.getItems().add(personne);
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-//				Groupe groupeH = (Groupe) s.load(Groupe.class,
-//						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
 				Groupe groupeH = (Groupe) s.load(Groupe.class, groupe.getGroupeId());
 				personne.setGroupe(groupeH);
 				groupeH.getListe_personne().add(personne);
@@ -862,8 +860,6 @@ public class FicheGroupeEditController {
 				tbv_titre.getItems().add(titre);
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-//				Groupe groupeH = (Groupe) s.load(Groupe.class,
-//						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
 				Groupe groupeH = (Groupe) s.load(Groupe.class, groupe.getGroupeId());
 				titre.setGroupe(groupeH);
 				groupeH.getListe_titre().add(titre);
