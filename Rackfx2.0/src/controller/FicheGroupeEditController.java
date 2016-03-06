@@ -78,19 +78,6 @@ public class FicheGroupeEditController {
 	private void initialize() {
 		INSTANCE_FICHE_GROUPE_CONTROLLER = this;
 
-		/*
-		 * récupération de la liste de personnes et de titres si le groupe est
-		 * existant ou pas
-		 */
-		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) {// TODO
-			personneData.addAll(CRUD.getAllWhere("Personne", "groupeId",
-					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
-			titreData.addAll(CRUD.getAllWhere("Titre", "groupeId",
-					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
-		}
-		cmbox_membre.setItems(personneData);
-		tbv_titre.getItems().addAll(titreData);
-
 		/* formatte la combobox pour qu'elle affiche le texte voulu */
 		cmbox_membre.setButtonCell(new ListCell<Personne>() {
 			@Override
@@ -270,6 +257,16 @@ public class FicheGroupeEditController {
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
+	
+	/**
+	 * Méthode de mise à jour des entités enfants
+	 */
+	private void reinitialize() {
+		personneData.setAll(CRUD.getAllWhere("Personne", "groupeId", groupe.getGroupeId()));
+		titreData.setAll(CRUD.getAllWhere("Titre", "groupeId", groupe.getGroupeId()));
+		cmbox_membre.setItems(personneData);
+		tbv_titre.setItems(titreData);
+	}
 
 	/*
 	 * =========================================================================
@@ -351,6 +348,7 @@ public class FicheGroupeEditController {
 		cmbox_pays_groupe.getItems().addAll(pays_groupe);
 		tf_region_groupe.setText(groupe.getRegion_groupe());
 		btn_creer_groupe.setText((modif) ? "Appliquer" : "Créer");
+		reinitialize();
 	}
 
 	/**
@@ -383,12 +381,7 @@ public class FicheGroupeEditController {
 				MainViewController.getInstance().tv_reper.getSelectionModel().select(index);
 			}
 			dialogStage.setTitle(groupe.getNom_groupe());
-			personneData.clear();
-			titreData.clear();
-			personneData.addAll(CRUD.getAllWhere("Personne", "groupeId", groupe.getGroupeId()));
-			titreData.addAll(CRUD.getAllWhere("Titre", "groupeId", groupe.getGroupeId()));
-			cmbox_membre.setItems(personneData);
-			tbv_titre.setItems(titreData);
+			reinitialize();
 		}
 	}
 
@@ -655,8 +648,9 @@ public class FicheGroupeEditController {
 				cmbox_membre.getItems().add(personne);
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-				Groupe groupeH = (Groupe) s.load(Groupe.class,
-						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
+//				Groupe groupeH = (Groupe) s.load(Groupe.class,
+//						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
+				Groupe groupeH = (Groupe) s.load(Groupe.class, groupe.getGroupeId());
 				personne.setGroupe(groupeH);
 				groupeH.getListe_personne().add(personne);
 				s.save(personne);
@@ -868,8 +862,9 @@ public class FicheGroupeEditController {
 				tbv_titre.getItems().add(titre);
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-				Groupe groupeH = (Groupe) s.load(Groupe.class,
-						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
+//				Groupe groupeH = (Groupe) s.load(Groupe.class,
+//						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId());
+				Groupe groupeH = (Groupe) s.load(Groupe.class, groupe.getGroupeId());
 				titre.setGroupe(groupeH);
 				groupeH.getListe_titre().add(titre);
 				s.save(titre);

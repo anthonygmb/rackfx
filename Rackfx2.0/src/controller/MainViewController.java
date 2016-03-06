@@ -320,12 +320,11 @@ public final class MainViewController {
 				vb_link.getChildren().add(ctgr_personne);
 				for (Personne personne : result2) {
 					Hyperlink link_personne = new Hyperlink(personne.getNom_membre());
-					Groupe groupeParent = personne.getGroupe();
 					link_personne.setOnAction(new EventHandler<ActionEvent>() {
 
 						@Override
 						public void handle(ActionEvent event) {
-							MainApp.getInstance().showFicheGroupeEditDialog(groupeParent, true, 1);
+							MainApp.getInstance().showFicheGroupeEditDialog(personne.getGroupe(), true, 1);
 						}
 					});
 					vb_link.getChildren().add(link_personne);
@@ -338,12 +337,11 @@ public final class MainViewController {
 				vb_link.getChildren().add(ctgr_titre);
 				for (Titre titre : result3) {
 					Hyperlink link_titre = new Hyperlink(titre.getTitre());
-					Groupe groupeParent = titre.getGroupe();
 					link_titre.setOnAction(new EventHandler<ActionEvent>() {
 
 						@Override
 						public void handle(ActionEvent event) {
-							MainApp.getInstance().showFicheGroupeEditDialog(groupeParent, true, 2);
+							MainApp.getInstance().showFicheGroupeEditDialog(titre.getGroupe(), true, 2);
 						}
 					});
 					vb_link.getChildren().add(link_titre);
@@ -374,12 +372,11 @@ public final class MainViewController {
 				vb_link.getChildren().add(ctgr_organisateur);
 				for (Organisateur organisateur : result5) {
 					Hyperlink link_organisateur = new Hyperlink(organisateur.getNom_orga());
-					Rencontre rencontreParent = organisateur.getRencontre();
 					link_organisateur.setOnAction(new EventHandler<ActionEvent>() {
 
 						@Override
 						public void handle(ActionEvent event) {
-							MainApp.getInstance().showFicheEventEditDialog(rencontreParent, true, 1);
+							MainApp.getInstance().showFicheEventEditDialog(organisateur.getRencontre(), true, 1);
 						}
 					});
 					vb_link.getChildren().add(link_organisateur);
@@ -394,7 +391,7 @@ public final class MainViewController {
 			// + "\n";
 			// }
 			// }
-
+			
 			tx.commit();
 			s.close();
 		}

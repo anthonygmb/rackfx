@@ -151,7 +151,7 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "groupeId", nullable = false)
 	public Groupe getGroupe() {
 		return groupe;
@@ -160,7 +160,7 @@ public class Titre {
 	public void setGroupe(Groupe groupe) {
 		this.groupe = groupe;
 	}
-	
+
 	// =================================================================================================
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "titre")
 	public Set<Representation> getListe_representation() {

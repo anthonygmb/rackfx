@@ -68,19 +68,6 @@ public class FicheEventEditController {
 	private void initialize() {
 		INSTANCE_FICHE_EVENT_CONTROLLER = this;
 
-		/*
-		 * récupération de la liste de personnes et de titres si le groupe est
-		 * existant ou pas
-		 */
-		if (MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem() != null) {
-			orgaData.addAll(CRUD.getAllWhere("Organisateur", "rencontreId",
-					MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId()));
-			repreData.addAll(CRUD.getAllWhere("Representation", "rencontreId",
-					MainViewController.getInstance().tv_planif.getSelectionModel().getSelectedItem().getRencontreId()));
-		}
-		cmbox_orga.setItems(orgaData);
-		tbv_prog.setItems(repreData);
-
 		cmbox_orga.setButtonCell(new ListCell<Organisateur>() {
 			@Override
 			protected void updateItem(Organisateur item, boolean empty) {
@@ -279,6 +266,16 @@ public class FicheEventEditController {
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
+	
+	/**
+	 * Méthode de mise à jour des entités enfants
+	 */
+	private void reinitialize() {
+		orgaData.setAll(CRUD.getAllWhere("Organisateur", "rencontreId", rencontre.getRencontreId()));
+		repreData.setAll(CRUD.getAllWhere("Representation", "rencontreId", rencontre.getRencontreId()));
+		cmbox_orga.setItems(orgaData);
+		tbv_prog.setItems(repreData);
+	}
 
 	/*
 	 * =========================================================================
@@ -344,6 +341,7 @@ public class FicheEventEditController {
 		}
 		cmbox_perio_event.getItems().addAll(perio_event);
 		btn_creer_event.setText((modif) ? "Appliquer" : "Créer");
+		reinitialize();
 	}
 
 	/**
@@ -376,12 +374,7 @@ public class FicheEventEditController {
 				MainApp.getInstance().getRencontreData().setAll(CRUD.getAll("Rencontre"));
 			}
 			dialogStage.setTitle(rencontre.getNom_renc());
-			orgaData.clear();
-			repreData.clear();
-			orgaData.addAll(CRUD.getAllWhere("Organisateur", "rencontreId", rencontre.getRencontreId()));
-			repreData.addAll(CRUD.getAllWhere("Representation", "rencontreId", rencontre.getRencontreId()));
-			cmbox_orga.setItems(orgaData);
-			tbv_prog.setItems(repreData);
+			reinitialize();
 		}
 	}
 
@@ -559,8 +552,9 @@ public class FicheEventEditController {
 				cmbox_orga.getItems().add(organisateur);
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, MainViewController.getInstance().tv_planif
-						.getSelectionModel().getSelectedItem().getRencontreId());
+//				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, MainViewController.getInstance().tv_planif
+//						.getSelectionModel().getSelectedItem().getRencontreId());
+				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
 				organisateur.setRencontre(rencontreH);
 				rencontreH.getListe_orga().add(organisateur);
 				s.save(organisateur);
@@ -739,8 +733,9 @@ public class FicheEventEditController {
 				tbv_prog.getItems().add(representation);
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, MainViewController.getInstance().tv_planif
-						.getSelectionModel().getSelectedItem().getRencontreId());
+//				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, MainViewController.getInstance().tv_planif
+//						.getSelectionModel().getSelectedItem().getRencontreId());
+				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
 				representation.setRencontre(rencontreH);
 				rencontreH.getListe_repre().add(representation);
 			
