@@ -29,7 +29,8 @@ public class Representation {
 	private StringProperty nom_groupe;
 //	private StringProperty nom_titre;
 	private Rencontre rencontre;
-	private Titre titre;
+//	private Titre titre;
+	private Groupe groupe;
 
 	public Representation() {
 		this(null, null,/* null,*/ null);
@@ -123,13 +124,24 @@ public class Representation {
 	}
 
 	// =================================================================================================
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "titreId", nullable = false)
+//	public Titre getTitre() {
+//		return titre;
+//	}
+//
+//	public void setTitre(Titre titre) {
+//		this.titre = titre;
+//	}
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "titreId", nullable = false)
-	public Titre getTitre() {
-		return titre;
+	@JoinColumn(name = "groupeId", nullable = false)
+	public Groupe getGroupe() {
+		return groupe;
 	}
 
-	public void setTitre(Titre titre) {
-		this.titre = titre;
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
 	}
+	
 }

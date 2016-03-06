@@ -291,6 +291,7 @@ public final class MainViewController {
 			// qb.keyword().onFields("heure_debut").matching(cst_tf_search.getText()).createQuery();
 			// hibQuery = fullTextSession.createFullTextQuery(query,
 			// Representation.class);
+			// @SuppressWarnings("unchecked")
 			// List<Representation> result6 = hibQuery.list();
 
 			if (!result1.isEmpty() || !result2.isEmpty() || !result3.isEmpty() || !result4.isEmpty()
@@ -382,21 +383,32 @@ public final class MainViewController {
 					vb_link.getChildren().add(link_organisateur);
 				}
 			}
+
 			// if (result6.isEmpty()) {
-			// resultat1 += "REPRESENTATIONS :\nAucuns résultats\n";
-			// } else {
+			// Line ligne = new Line(0, 0, 588, 0);
+			// Label ctgr_representation = new Label(" REPRESENTATIONS:");
+			// vb_link.getChildren().add(ligne);
+			// vb_link.getChildren().add(ctgr_representation);
 			// for (Representation representation : result6) {
-			// resultat1 += "REPRESENTATIONS :\n" +
-			// representation.getHeure_debut()
-			// + "\n";
+			// Hyperlink link_representation = new
+			// Hyperlink(representation.getNom_Groupe() +
+			// representation.getTitre());
+			// link_representation.setOnAction(new EventHandler<ActionEvent>() {
+			//
+			// @Override
+			// public void handle(ActionEvent event) {
+			// MainApp.getInstance().showFicheEventEditDialog(representation.getRencontre(),
+			// true, 1);
+			// }
+			// });
+			// vb_link.getChildren().add(link_representation);
 			// }
 			// }
-			
+
 			tx.commit();
 			s.close();
 		}
 	}
-	
 
 	/*
 	 * =========================================================================

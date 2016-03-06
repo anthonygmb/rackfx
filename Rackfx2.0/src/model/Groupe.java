@@ -48,7 +48,7 @@ public class Groupe {
 	private StringProperty region_groupe;
 	private Set<Personne> liste_personne = new HashSet<Personne>();
 	private Set<Titre> liste_titre = new HashSet<Titre>();
-//	private Set<Rencontre> liste_rencontre = new HashSet<Rencontre>();
+	private Set<Representation> liste_representation = new HashSet<Representation>();
 
 	public Groupe() {
 		this(null, null, null, null);
@@ -150,14 +150,15 @@ public class Groupe {
 	public void setListe_titre(Set<Titre> liste_titre) {
 		this.liste_titre = liste_titre;
 	}
-	
+
 	// =================================================================================================
-//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH, mappedBy = "groupe")
-//	public Set<Rencontre> getListe_rencontre() {
-//		return liste_rencontre;
-//	}
-//
-//	public void setListe_rencontre(Set<Rencontre> liste_rencontre) {
-//		this.liste_rencontre = liste_rencontre;
-//	}
+	@IndexedEmbedded
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "groupe")
+	public Set<Representation> getListe_representation() {
+		return liste_representation;
+	}
+
+	public void setListe_representation(Set<Representation> liste_representation) {
+		this.liste_representation = liste_representation;
+	}
 }

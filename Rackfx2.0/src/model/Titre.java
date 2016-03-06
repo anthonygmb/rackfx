@@ -38,7 +38,7 @@ public class Titre {
 	private BooleanProperty reprise_titre;
 	private StringProperty auteur;
 	private Groupe groupe;
-	private Set<Representation> liste_representation = new HashSet<Representation>();
+//	private Set<Representation> liste_representation = new HashSet<Representation>();
 
 	public Titre() {
 		this(null, null);
@@ -162,12 +162,12 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "titre")
-	public Set<Representation> getListe_representation() {
-		return liste_representation;
-	}
-
-	public void setListe_representation(Set<Representation> liste_representation) {
-		this.liste_representation = liste_representation;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "titre")
+//	public Set<Representation> getListe_representation() {
+//		return liste_representation;
+//	}
+//
+//	public void setListe_representation(Set<Representation> liste_representation) {
+//		this.liste_representation = liste_representation;
+//	}
 }
