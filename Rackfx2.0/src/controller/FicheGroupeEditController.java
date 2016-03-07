@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Session;
@@ -74,6 +75,7 @@ public class FicheGroupeEditController {
 	 * Initialise la classe controller. Cette methode est appelé automatiquement
 	 * après que le fichier fxml a été chargé.
 	 */
+	@SuppressWarnings("unchecked")
 	@FXML
 	private void initialize() {
 		INSTANCE_FICHE_GROUPE_CONTROLLER = this;
@@ -206,8 +208,17 @@ public class FicheGroupeEditController {
 		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) { // TODO
 			if (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
 					&& !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty()) {
-				rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre", "groupeId",
-						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
+
+//				rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre", "groupeId",
+//						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
+
+				Session s = HibernateSetUp.getSession();
+				s.beginTransaction();
+				rencontreDataTri.addAll(s.createQuery("from Rencontre renc, Representation repre where renc.repre.groupeId = "
+						+ MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId())
+						.list());
+				s.getTransaction().commit();
+				s.close();
 
 				for (Rencontre rencTri : rencontreDataTri) {
 					if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {

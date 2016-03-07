@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -114,6 +116,7 @@ public class Representation {
 
 	// =================================================================================================
 	@ManyToOne(fetch = FetchType.LAZY)
+//	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name = "rencontreId", nullable = false)
 	public Rencontre getRencontre() {
 		return rencontre;
