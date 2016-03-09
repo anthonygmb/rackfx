@@ -9,11 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -179,7 +180,6 @@ public class Rencontre {
 
 	// =================================================================================================
 	@IndexedEmbedded
-//	@Fetch(FetchMode.JOIN)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "rencontre")
 	public Set<Representation> getListe_repre() {
 		return liste_repre;
@@ -188,4 +188,14 @@ public class Rencontre {
 	public void setListe_repre(Set<Representation> liste_repre) {
 		this.liste_repre = liste_repre;
 	}
+	
+//	@IndexedEmbedded
+//	@ManyToMany(cascade=CascadeType.ALL, mappedBy = "liste_rencontre")
+//	public Set<Representation> getListe_repre() {
+//		return liste_repre;
+//	}
+//
+//	public void setListe_repre(Set<Representation> liste_repre) {
+//		this.liste_repre = liste_repre;
+//	}
 }

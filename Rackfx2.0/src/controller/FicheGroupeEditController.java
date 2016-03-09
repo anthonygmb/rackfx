@@ -209,12 +209,13 @@ public class FicheGroupeEditController {
 			if (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
 					&& !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty()) {
 
-//				rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre", "groupeId",
-//						MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
+				// rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre",
+				// "Rencontre.representation.groupeId",
+				// MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
 
 				Session s = HibernateSetUp.getSession();
 				s.beginTransaction();
-				rencontreDataTri.addAll(s.createQuery("from Rencontre renc, Representation repre where renc.repre.groupeId = "
+				rencontreDataTri.addAll(s.createQuery("select renc.representation from Rencontre renc where representation.groupeId = "
 						+ MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId())
 						.list());
 				s.getTransaction().commit();
