@@ -621,14 +621,18 @@ public class FicheGroupeEditController {
 			}
 			if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
 				cmbox_membre.getItems().add(personne);
-				Session s = HibernateSetUp.getSession();
-				s.beginTransaction();
-				Groupe groupeH = (Groupe) s.load(Groupe.class, groupe.getGroupeId());
-				personne.setGroupe(groupeH);
-				groupeH.getListe_personne().add(personne);
-				s.save(personne);
-				s.getTransaction().commit();
-				s.close();
+//				Session s = HibernateSetUp.getSession();
+//				s.beginTransaction();
+//				Groupe groupeH = (Groupe) s.load(Groupe.class, groupe.getGroupeId());
+//				personne.setGroupe(groupeH);
+//				groupeH.getListe_personne().add(personne);//remettre la liste LAZY
+				
+				personne.setGroupe(groupe);
+				groupe.getListe_personne().add(personne);
+				CRUD.save(personne);
+//				s.save(personne);
+//				s.getTransaction().commit();
+//				s.close();
 			} else {
 				cmbox_membre.getItems().set(cmbox_membre.getSelectionModel().getSelectedIndex(), personne);
 				CRUD.update(personne);
@@ -833,14 +837,18 @@ public class FicheGroupeEditController {
 			}
 			if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
 				tbv_titre.getItems().add(titre);
-				Session s = HibernateSetUp.getSession();
-				s.beginTransaction();
-				Groupe groupeH = (Groupe) s.load(Groupe.class, groupe.getGroupeId());
-				titre.setGroupe(groupeH);
-				groupeH.getListe_titre().add(titre);
-				s.save(titre);
-				s.getTransaction().commit();
-				s.close();
+//				Session s = HibernateSetUp.getSession();
+//				s.beginTransaction();
+//				Groupe groupeH = (Groupe) s.load(Groupe.class, groupe.getGroupeId());
+//				titre.setGroupe(groupeH);
+//				groupeH.getListe_titre().add(titre);//remettre la liste LAZY
+				
+				titre.setGroupe(groupe);
+				groupe.getListe_titre().add(titre);
+				CRUD.save(titre);
+//				s.save(titre);
+//				s.getTransaction().commit();
+//				s.close();
 			} else {
 				tbv_titre.getItems().set(tbv_titre.getSelectionModel().getSelectedIndex(), titre);
 				CRUD.update(titre);

@@ -3,7 +3,6 @@ package controller;
 import java.sql.Time;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Session;
@@ -144,7 +143,7 @@ public class FicheEventEditController {
 
 		/* formatte le tableau de représentation */
 		col_groupe_prog.setCellValueFactory(cellData -> cellData.getValue().nom_groupeProperty());
-//		col_titre_prog.setCellValueFactory(cellData -> cellData.getValue().nom_titreProperty());
+		col_titre_prog.setCellValueFactory(cellData -> cellData.getValue().nom_titreProperty());
 		col_deb_prog.setCellValueFactory(cellData -> cellData.getValue().heure_debutProperty());
 		col_fin_prog.setCellValueFactory(cellData -> cellData.getValue().heure_fintProperty());
 		tbv_prog.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setProg());
@@ -270,12 +269,13 @@ public class FicheEventEditController {
 	/**
 	 * Méthode de mise à jour des entités enfants
 	 */
-	private void reinitialize() {
+	private void loadChildren() {
 		orgaData.setAll(CRUD.getAllWhere("Organisateur", "rencontreId", rencontre.getRencontreId()));
 		repreData.setAll(CRUD.getAllWhere("Representation", "rencontreId", rencontre.getRencontreId()));
 		cmbox_orga.setItems(orgaData);
 		tbv_prog.setItems(repreData);
 	}
+
 
 	/*
 	 * =========================================================================
@@ -341,7 +341,7 @@ public class FicheEventEditController {
 		}
 		cmbox_perio_event.getItems().addAll(perio_event);
 		btn_creer_event.setText((modif) ? "Appliquer" : "Créer");
-		reinitialize();
+		loadChildren();
 	}
 
 	/**
@@ -375,7 +375,7 @@ public class FicheEventEditController {
 			}
 			dialogStage.setTitle(rencontre.getNom_renc());
 			btn_creer_event.setText("Appliquer");
-			reinitialize();
+			loadChildren();
 		}
 	}
 
@@ -551,14 +551,18 @@ public class FicheEventEditController {
 
 			if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
 				cmbox_orga.getItems().add(organisateur);
-				Session s = HibernateSetUp.getSession();
-				s.beginTransaction();
-				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
-				organisateur.setRencontre(rencontreH);
-				rencontreH.getListe_orga().add(organisateur);
-				s.save(organisateur);
-				s.getTransaction().commit();
-				s.close();
+//				Session s = HibernateSetUp.getSession();
+//				s.beginTransaction();
+//				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
+//				organisateur.setRencontre(rencontreH);
+//				rencontreH.getListe_orga().add(organisateur);//remettre la liste LAZY
+				
+				organisateur.setRencontre(rencontre);
+				rencontre.getListe_orga().add(organisateur);
+				CRUD.save(organisateur);
+//				s.save(organisateur);
+//				s.getTransaction().commit();
+//				s.close();
 			} else {
 				cmbox_orga.getItems().set(cmbox_orga.getSelectionModel().getSelectedIndex(), organisateur);
 				CRUD.update(organisateur);
@@ -688,18 +692,20 @@ public class FicheEventEditController {
 			annulerProg();
 		} else {
 			representation = tbv_prog.getSelectionModel().getSelectedItem();
-			Session s = HibernateSetUp.getSession();
-			s.beginTransaction();
-			@SuppressWarnings("unchecked")
-			List<Groupe> groupe = s
-					.createQuery("from Groupe where nom_groupe = " + "'" + representation.getNom_Groupe() + "'").list();
-			cmbox_groupe_event.getSelectionModel().select(groupe.get(0));// TODO
+//			Session s = HibernateSetUp.getSession();
+//			s.beginTransaction();
+//			@SuppressWarnings("unchecked")
+//			List<Groupe> groupe = s
+//					.createQuery("from Groupe where nom_groupe = " + "'" + representation.getNom_Groupe() + "'").list();
+//			System.out.printf("nom du groupe: %s\n", representation.getGroupe().getNom_groupe());
+			
+			cmbox_groupe_event.getSelectionModel().select(representation.getGroupe());// TODO
 //			@SuppressWarnings("unchecked")
 //			List<Titre> titre = s.createQuery("from Titre where titre = " + "'" + representation.getNom_Titre() + "'")
 //					.list();
 //			cmbox_titre_event.getSelectionModel().select(titre.get(0));// TODO
-			s.getTransaction().commit();
-			s.close();
+//			s.getTransaction().commit();
+//			s.close();
 			ltp_h_deb_prog.setLocalTime(representation.getHeure_debut().toLocalTime());
 			ltp_h_fin_prog.setLocalTime(representation.getHeure_fin().toLocalTime());
 			btn_creer_prog.setText("Appliquer");
@@ -724,25 +730,31 @@ public class FicheEventEditController {
 				representation = tbv_prog.getSelectionModel().getSelectedItem();
 			}
 			representation.setNom_Groupe(cmbox_groupe_event.getSelectionModel().getSelectedItem().getNom_groupe());
-//			representation.setNom_Titre(cmbox_titre_event.getSelectionModel().getSelectedItem().getTitre());
+			representation.setNom_Titre(cmbox_titre_event.getSelectionModel().getSelectedItem().getTitre());
 			representation.setHeure_debut(java.sql.Time.valueOf(ltp_h_deb_prog.getLocalTime()));
 			representation.setHeure_fin(java.sql.Time.valueOf(ltp_h_fin_prog.getLocalTime()));
 
 			if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 				tbv_prog.getItems().add(representation);
-				Session s = HibernateSetUp.getSession();
-				s.beginTransaction();
-				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
-				representation.setRencontre(rencontreH);
-				rencontreH.getListe_repre().add(representation);
-			
-				Groupe groupeH = (Groupe) s.load(Groupe.class, cmbox_groupe_event.getSelectionModel().getSelectedItem().getGroupeId());
-				representation.setGroupe(groupeH);
-				groupeH.getListe_representation().add(representation);
+//				Session s = HibernateSetUp.getSession();
+//				s.beginTransaction();
+//				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
+//				representation.setRencontre(rencontreH);
+//				rencontreH.getListe_repre().add(representation);//remettre la liste LAZY
 				
-				s.save(representation);
-				s.getTransaction().commit();
-				s.close();
+				representation.setRencontre(rencontre);
+				rencontre.getListe_repre().add(representation);
+			
+//				Groupe groupeH = (Groupe) s.load(Groupe.class, cmbox_groupe_event.getSelectionModel().getSelectedItem().getGroupeId());
+//				representation.setGroupe(groupeH);
+//				groupeH.getListe_representation().add(representation);//remettre la liste LAZY
+				
+				representation.setGroupe(cmbox_groupe_event.getSelectionModel().getSelectedItem());
+				cmbox_groupe_event.getSelectionModel().getSelectedItem().getListe_representation().add(representation);
+				CRUD.save(representation);
+//				s.save(representation);
+//				s.getTransaction().commit();
+//				s.close();
 			} else {
 				tbv_prog.getItems().set(tbv_prog.getSelectionModel().getSelectedIndex(), representation);
 				CRUD.update(representation);

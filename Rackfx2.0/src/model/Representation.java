@@ -123,7 +123,7 @@ public class Representation {
 	}
 
 	// =================================================================================================
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "groupeId", nullable = false)
 	public Groupe getGroupe() {
 		return groupe;

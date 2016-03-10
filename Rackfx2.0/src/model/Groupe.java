@@ -131,7 +131,7 @@ public class Groupe {
 
 	// =================================================================================================
 	@IndexedEmbedded
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "groupe")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "groupe")
 	public Set<Personne> getListe_personne() {
 		return liste_personne;
 	}
@@ -142,7 +142,7 @@ public class Groupe {
 
 	// =================================================================================================
 	@IndexedEmbedded
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "groupe")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "groupe")
 	public Set<Titre> getListe_titre() {
 		return liste_titre;
 	}
@@ -153,7 +153,7 @@ public class Groupe {
 
 	// =================================================================================================
 	@IndexedEmbedded
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "groupe")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "groupe")
 	public Set<Representation> getListe_representation() {
 		return liste_representation;
 	}
