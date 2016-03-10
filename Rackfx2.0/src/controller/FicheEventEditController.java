@@ -734,16 +734,11 @@ public class FicheEventEditController {
 				s.beginTransaction();
 				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
 				representation.setRencontre(rencontreH);
-//				representation.getListe_rencontre().add(rencontreH);//TODO
 				rencontreH.getListe_repre().add(representation);
 			
 				Groupe groupeH = (Groupe) s.load(Groupe.class, cmbox_groupe_event.getSelectionModel().getSelectedItem().getGroupeId());
 				representation.setGroupe(groupeH);
 				groupeH.getListe_representation().add(representation);
-				
-//				Titre titreH = (Titre) s.load(Titre.class, cmbox_titre_event.getSelectionModel().getSelectedItem().getTitreId());
-//				representation.setTitre(titreH);
-//				titreH.getListe_representation().add(representation);//TODO
 				
 				s.save(representation);
 				s.getTransaction().commit();

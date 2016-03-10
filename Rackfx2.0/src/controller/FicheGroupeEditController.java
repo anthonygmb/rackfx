@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Session;
@@ -36,6 +35,7 @@ import jfxtras.scene.control.LocalTimePicker;
 import model.Groupe;
 import model.Personne;
 import model.Rencontre;
+import model.Representation;
 import model.Titre;
 import sql.CRUD;
 import sql.HibernateSetUp;
@@ -54,6 +54,7 @@ public class FicheGroupeEditController {
 	private DateFormat formatAnnee = new SimpleDateFormat("yyyy");
 	private Date auj = new Date();
 	private String annee = "";
+	private ObservableList<Representation> repreDataTri = FXCollections.observableArrayList();
 	private ObservableList<Rencontre> rencontreDataTri = FXCollections.observableArrayList();
 
 	/**
@@ -75,7 +76,6 @@ public class FicheGroupeEditController {
 	 * Initialise la classe controller. Cette methode est appelé automatiquement
 	 * après que le fichier fxml a été chargé.
 	 */
-	@SuppressWarnings("unchecked")
 	@FXML
 	private void initialize() {
 		INSTANCE_FICHE_GROUPE_CONTROLLER = this;
@@ -200,38 +200,6 @@ public class FicheGroupeEditController {
 		col_ville_event_p.setCellValueFactory(cellData -> cellData.getValue().ville_rencProperty());
 		col_deb_event_p.setCellValueFactory(cellData -> cellData.getValue().date_deb_rencProperty());
 		col_fin_event_p.setCellValueFactory(cellData -> cellData.getValue().date_fin_rencProperty());
-
-		/*
-		 * récupération de la liste de rencontres pour les placer dans les
-		 * tableaux d'événements futurs et passés
-		 */
-		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() != null) { // TODO
-			if (!MainViewController.getInstance().tv_planif.getSelectionModel().isEmpty()
-					&& !MainViewController.getInstance().tv_reper.getSelectionModel().isEmpty()) {
-
-				// rencontreDataTri.addAll(CRUD.getAllWhere("Rencontre",
-				// "Rencontre.representation.groupeId",
-				// MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId()));
-
-				Session s = HibernateSetUp.getSession();
-				s.beginTransaction();
-				rencontreDataTri.addAll(s.createQuery("select renc.representation from Rencontre renc where representation.groupeId = "
-						+ MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getGroupeId())
-						.list());
-				s.getTransaction().commit();
-				s.close();
-
-				for (Rencontre rencTri : rencontreDataTri) {
-					if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {
-						rencontreDataF.add(rencTri);
-					} else {
-						rencontreDataP.add(rencTri);
-					}
-				}
-			}
-			tbv_event_f.setItems(rencontreDataF);
-			tbv_event_p.setItems(rencontreDataP);
-		}
 	}
 
 	/**
@@ -266,7 +234,7 @@ public class FicheGroupeEditController {
 	/**
 	 * Méthode de mise à jour des entités enfants
 	 */
-	private void reinitialize() {
+	private void loadChildren() {
 		personneData.setAll(CRUD.getAllWhere("Personne", "groupeId", groupe.getGroupeId()));
 		titreData.setAll(CRUD.getAllWhere("Titre", "groupeId", groupe.getGroupeId()));
 		cmbox_membre.setItems(personneData);
@@ -353,7 +321,8 @@ public class FicheGroupeEditController {
 		cmbox_pays_groupe.getItems().addAll(pays_groupe);
 		tf_region_groupe.setText(groupe.getRegion_groupe());
 		btn_creer_groupe.setText((modif) ? "Appliquer" : "Créer");
-		reinitialize();
+		loadChildren();
+		loadRencontres();
 	}
 
 	/**
@@ -387,7 +356,7 @@ public class FicheGroupeEditController {
 			}
 			dialogStage.setTitle(groupe.getNom_groupe());
 			btn_creer_groupe.setText("Appliquer");
-			reinitialize();
+			loadChildren();
 		}
 	}
 
@@ -962,6 +931,29 @@ public class FicheGroupeEditController {
 	private TableColumn<Rencontre, java.sql.Date> col_deb_event_f;
 	@FXML
 	private TableColumn<Rencontre, java.sql.Date> col_fin_event_f;
+
+	/**
+	 * récupération de la liste de rencontres pour les placer dans les tableaux
+	 * d'événements futurs et passés
+	 */
+	private void loadRencontres() {
+		repreDataTri.setAll(CRUD.getAllWhere("Representation", "groupeId", groupe.getGroupeId()));
+
+		for (Representation repreTri : repreDataTri) {
+			rencontreDataTri
+					.setAll(CRUD.getAllWhere("Rencontre", "rencontreId", repreTri.getRencontre().getRencontreId()));
+
+			for (Rencontre rencTri : rencontreDataTri) {
+				if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {
+					rencontreDataF.setAll(rencTri);
+				} else {
+					rencontreDataP.setAll(rencTri);
+				}
+			}
+		}
+		tbv_event_f.setItems(rencontreDataF);
+		tbv_event_p.setItems(rencontreDataP);
+	}
 
 	/*
 	 * =========================================================================
