@@ -5,8 +5,6 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import org.hibernate.Session;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,7 +33,6 @@ import model.Rencontre;
 import model.Representation;
 import model.Titre;
 import sql.CRUD;
-import sql.HibernateSetUp;
 
 public class FicheEventEditController {
 
@@ -265,7 +262,7 @@ public class FicheEventEditController {
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
-	
+
 	/**
 	 * Méthode de mise à jour des entités enfants
 	 */
@@ -275,7 +272,6 @@ public class FicheEventEditController {
 		cmbox_orga.setItems(orgaData);
 		tbv_prog.setItems(repreData);
 	}
-
 
 	/*
 	 * =========================================================================
@@ -551,18 +547,9 @@ public class FicheEventEditController {
 
 			if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
 				cmbox_orga.getItems().add(organisateur);
-//				Session s = HibernateSetUp.getSession();
-//				s.beginTransaction();
-//				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
-//				organisateur.setRencontre(rencontreH);
-//				rencontreH.getListe_orga().add(organisateur);//remettre la liste LAZY
-				
 				organisateur.setRencontre(rencontre);
 				rencontre.getListe_orga().add(organisateur);
 				CRUD.save(organisateur);
-//				s.save(organisateur);
-//				s.getTransaction().commit();
-//				s.close();
 			} else {
 				cmbox_orga.getItems().set(cmbox_orga.getSelectionModel().getSelectedIndex(), organisateur);
 				CRUD.update(organisateur);
@@ -692,20 +679,16 @@ public class FicheEventEditController {
 			annulerProg();
 		} else {
 			representation = tbv_prog.getSelectionModel().getSelectedItem();
-//			Session s = HibernateSetUp.getSession();
-//			s.beginTransaction();
-//			@SuppressWarnings("unchecked")
-//			List<Groupe> groupe = s
-//					.createQuery("from Groupe where nom_groupe = " + "'" + representation.getNom_Groupe() + "'").list();
-//			System.out.printf("nom du groupe: %s\n", representation.getGroupe().getNom_groupe());
-			
-			cmbox_groupe_event.getSelectionModel().select(representation.getGroupe());// TODO
-//			@SuppressWarnings("unchecked")
-//			List<Titre> titre = s.createQuery("from Titre where titre = " + "'" + representation.getNom_Titre() + "'")
-//					.list();
-//			cmbox_titre_event.getSelectionModel().select(titre.get(0));// TODO
-//			s.getTransaction().commit();
-//			s.close();
+			for (Groupe groupeIt : MainApp.getInstance().getGroupeData()) {
+				if (representation.getNom_Groupe().equals(groupeIt.getNom_groupe())) {
+					cmbox_groupe_event.getSelectionModel().select(groupeIt);
+				}
+			}
+			for (Titre titreiT : titreData2) {
+				if (representation.getNom_Titre().equals(titreiT.getTitre())) {
+					cmbox_titre_event.getSelectionModel().select(titreiT);
+				}
+			}
 			ltp_h_deb_prog.setLocalTime(representation.getHeure_debut().toLocalTime());
 			ltp_h_fin_prog.setLocalTime(representation.getHeure_fin().toLocalTime());
 			btn_creer_prog.setText("Appliquer");
@@ -736,25 +719,11 @@ public class FicheEventEditController {
 
 			if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 				tbv_prog.getItems().add(representation);
-//				Session s = HibernateSetUp.getSession();
-//				s.beginTransaction();
-//				Rencontre rencontreH = (Rencontre) s.load(Rencontre.class, rencontre.getRencontreId());
-//				representation.setRencontre(rencontreH);
-//				rencontreH.getListe_repre().add(representation);//remettre la liste LAZY
-				
 				representation.setRencontre(rencontre);
 				rencontre.getListe_repre().add(representation);
-			
-//				Groupe groupeH = (Groupe) s.load(Groupe.class, cmbox_groupe_event.getSelectionModel().getSelectedItem().getGroupeId());
-//				representation.setGroupe(groupeH);
-//				groupeH.getListe_representation().add(representation);//remettre la liste LAZY
-				
 				representation.setGroupe(cmbox_groupe_event.getSelectionModel().getSelectedItem());
 				cmbox_groupe_event.getSelectionModel().getSelectedItem().getListe_representation().add(representation);
 				CRUD.save(representation);
-//				s.save(representation);
-//				s.getTransaction().commit();
-//				s.close();
 			} else {
 				tbv_prog.getItems().set(tbv_prog.getSelectionModel().getSelectedIndex(), representation);
 				CRUD.update(representation);
