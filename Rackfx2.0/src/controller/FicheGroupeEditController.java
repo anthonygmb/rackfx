@@ -36,6 +36,7 @@ import model.Rencontre;
 import model.Representation;
 import model.Titre;
 import sql.CRUD;
+import utilities.Validateur;
 
 public class FicheGroupeEditController {
 
@@ -330,15 +331,17 @@ public class FicheGroupeEditController {
 	 */
 	@FXML
 	private void creerModifierGroupe() {
-		if (isInputValidGroupe()) {
-			groupe.setNom_groupe(tf_nom_groupe.getText());
-			groupe.setCarac_groupe(tf_carac_groupe.getText());
-			if (cmbox_pays_groupe.getSelectionModel().isEmpty()) {
-				groupe.setPays_groupe("");
-			} else {
-				groupe.setPays_groupe(cmbox_pays_groupe.getSelectionModel().getSelectedItem().toString());
-			}
-			groupe.setRegion_groupe(tf_region_groupe.getText());
+		// if (isInputValidGroupe()) {
+		groupe.setNom_groupe(tf_nom_groupe.getText());
+		groupe.setCarac_groupe(tf_carac_groupe.getText());
+		if (cmbox_pays_groupe.getSelectionModel().isEmpty()) {
+			groupe.setPays_groupe("");
+		} else {
+			groupe.setPays_groupe(cmbox_pays_groupe.getSelectionModel().getSelectedItem().toString());
+		}
+		groupe.setRegion_groupe(tf_region_groupe.getText());
+		/* validation des contraintes */
+		if (Validateur.validator(groupe)) {
 			if (dialogStage.getTitle().equals("Nouveau groupe *")) {
 				geleTab(true);
 				MainApp.getInstance().getGroupeData().add(groupe);
@@ -371,23 +374,24 @@ public class FicheGroupeEditController {
 	 *
 	 * @return true si les entrée son valides
 	 */
-	private boolean isInputValidGroupe() {
-		String errorMessage = "";
-		if (tf_nom_groupe.getText() == null || tf_nom_groupe.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un nom de groupe!\n";
-		}
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Informations obligatoires requises");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
-			return false;
-		}
-	}
+	// private boolean isInputValidGroupe() {
+	// String errorMessage = "";
+	// if (tf_nom_groupe.getText() == null || tf_nom_groupe.getText().length()
+	// == 0) {
+	// errorMessage += "Veuillez entrer un nom de groupe!\n";
+	// }
+	// if (errorMessage.length() == 0) {
+	// return true;
+	// } else {
+	// Alert alert = new Alert(AlertType.ERROR);
+	// alert.initOwner(dialogStage);
+	// alert.setTitle("Erreur");
+	// alert.setHeaderText("Informations obligatoires requises");
+	// alert.setContentText(errorMessage);
+	// alert.showAndWait();
+	// return false;
+	// }
+	// }
 
 	/*
 	 * =========================================================================
@@ -570,52 +574,54 @@ public class FicheGroupeEditController {
 	 */
 	@FXML
 	private void creerModifierPersonne() {
-		if (isInputValidPersonne()) {
-			if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
-				personne = new Personne();
+		// if (isInputValidPersonne()) {
+		if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
+			personne = new Personne();
+		} else {
+			personne = cmbox_membre.getSelectionModel().getSelectedItem();
+		}
+		personne.setNom_membre(tf_nom_membre.getText());
+		personne.setPrenom_membre(tf_prenom_membre.getText());
+		personne.setDate_naiss_membre(java.sql.Date.valueOf(dtp_date_naiss_membre.getValue()));
+		if (ckbox_mr_civi_membre.isSelected()) {
+			personne.setCivi_membre("Monsieur");
+		} else {
+			personne.setCivi_membre("Madamme");
+		}
+		if (cmbox_spe_membre.getSelectionModel().getSelectedItem() == null) {
+			personne.setSpe_membre("");
+		} else {
+			personne.setSpe_membre(cmbox_spe_membre.getSelectionModel().getSelectedItem());
+		}
+		if (cmbox_instru_membre.getSelectionModel().getSelectedItem() == null) {
+			personne.setInstru_membre("");
+		} else {
+			personne.setInstru_membre(cmbox_instru_membre.getSelectionModel().getSelectedItem());
+		}
+		if (cmbox_respon_membre.getSelectionModel().getSelectedItem() == null) {
+			personne.setRespon_membre("");
+		} else {
+			personne.setRespon_membre(cmbox_respon_membre.getSelectionModel().getSelectedItem());
+		}
+		if (ckbox_corres_membre.isSelected()) {
+			personne.setCorrespondant(true);
+			personne.setAdresse_cor(tf_adress_cor.getText());
+			if (telNumber.equals("")) {
+				personne.setTel_cor((long) 0);
 			} else {
-				personne = cmbox_membre.getSelectionModel().getSelectedItem();
+				personne.setTel_cor(Long.parseLong(telNumber));
 			}
-			personne.setNom_membre(tf_nom_membre.getText());
-			personne.setPrenom_membre(tf_prenom_membre.getText());
-			personne.setDate_naiss_membre(java.sql.Date.valueOf(dtp_date_naiss_membre.getValue()));
-			if (ckbox_mr_civi_membre.isSelected()) {
-				personne.setCivi_membre("Monsieur");
+			if (faxNumber.equals("")) {
+				personne.setFax_cor((long) 0);
 			} else {
-				personne.setCivi_membre("Madamme");
+				personne.setFax_cor(Long.parseLong(faxNumber));
 			}
-			if (cmbox_spe_membre.getSelectionModel().getSelectedItem() == null) {
-				personne.setSpe_membre("");
-			} else {
-				personne.setSpe_membre(cmbox_spe_membre.getSelectionModel().getSelectedItem());
-			}
-			if (cmbox_instru_membre.getSelectionModel().getSelectedItem() == null) {
-				personne.setInstru_membre("");
-			} else {
-				personne.setInstru_membre(cmbox_instru_membre.getSelectionModel().getSelectedItem());
-			}
-			if (cmbox_respon_membre.getSelectionModel().getSelectedItem() == null) {
-				personne.setRespon_membre("");
-			} else {
-				personne.setRespon_membre(cmbox_respon_membre.getSelectionModel().getSelectedItem());
-			}
-			if (ckbox_corres_membre.isSelected()) {
-				personne.setCorrespondant(true);
-				personne.setAdresse_cor(tf_adress_cor.getText());
-				if (telNumber.equals("")) {
-					personne.setTel_cor((long) 0);
-				} else {
-					personne.setTel_cor(Long.parseLong(telNumber));
-				}
-				if (faxNumber.equals("")) {
-					personne.setFax_cor((long) 0);
-				} else {
-					personne.setFax_cor(Long.parseLong(faxNumber));
-				}
-				personne.setMail_cor(tf_mail_cor.getText());
-			} else {
-				personne.setCorrespondant(false);
-			}
+			personne.setMail_cor(tf_mail_cor.getText());
+		} else {
+			personne.setCorrespondant(false);
+		}
+		/* validation des contraintes */
+		if (Validateur.validator(personne)) {
 			if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
 				cmbox_membre.getItems().add(personne);
 				personne.setGroupe(groupe);
@@ -676,41 +682,30 @@ public class FicheGroupeEditController {
 	 *
 	 * @return true si les entrée son valides
 	 */
-	private boolean isInputValidPersonne() {
-		String errorMessage = "";
-		if (tf_nom_membre.getText() == null || tf_nom_membre.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un nom de membre!\n";
-		}
-		if (tf_prenom_membre.getText() == null || tf_prenom_membre.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un prénom de membre!\n";
-		}
-		if (dtp_date_naiss_membre.getValue().isEqual(LocalDate.now())
-				|| dtp_date_naiss_membre.getValue().isAfter(LocalDate.now())) {
-			errorMessage += "Veuillez entrer une date inférieure à aujourd'hui!\n";
-		}
-		if (ckbox_corres_membre.isSelected()) {
-			if ((!tf_mail_cor.getText().contains("@")) || tf_mail_cor.getLength() < 6) {
-				errorMessage += "Veuillez entrer une adresse mail valide!\n";
-			}
-			if (telNumber.length() < 10) {
-				errorMessage += "Veuillez entrer un numero de téléphone valide!\n";
-			}
-			if (faxNumber.length() > 0 && faxNumber.length() < 10) {
-				errorMessage += "Veuillez entrer un numero de fax valide!\n";
-			}
-		}
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Informations obligatoires requises");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
-			return false;
-		}
-	}
+	/*
+	 * private boolean isInputValidPersonne() { String errorMessage = ""; // if
+	 * (tf_nom_membre.getText() == null || // tf_nom_membre.getText().length()
+	 * == 0) { // errorMessage += "Veuillez entrer un nom de membre!\n"; // } //
+	 * if (tf_prenom_membre.getText() == null || //
+	 * tf_prenom_membre.getText().length() == 0) { // errorMessage +=
+	 * "Veuillez entrer un prénom de membre!\n"; // } // if
+	 * (dtp_date_naiss_membre.getValue().isEqual(LocalDate.now()) // ||
+	 * dtp_date_naiss_membre.getValue().isAfter(LocalDate.now())) { //
+	 * errorMessage += "Veuillez entrer une date inférieure à //
+	 * aujourd'hui!\n"; // } if (ckbox_corres_membre.isSelected()) { if
+	 * ((!tf_mail_cor.getText().contains("@")) || tf_mail_cor.getLength() < 6) {
+	 * errorMessage += "Veuillez entrer une adresse mail valide!\n"; } if
+	 * (telNumber.length() < 10) { errorMessage +=
+	 * "Veuillez entrer un numero de téléphone valide!\n"; } if
+	 * (faxNumber.length() > 0 && faxNumber.length() < 10) { errorMessage +=
+	 * "Veuillez entrer un numero de fax valide!\n"; } } if
+	 * (errorMessage.length() == 0) { return true; } else { Alert alert = new
+	 * Alert(AlertType.ERROR); alert.initOwner(dialogStage);
+	 * alert.setTitle("Erreur"); alert.setHeaderText(
+	 * "Informations obligatoires requises");
+	 * alert.setContentText(errorMessage); alert.showAndWait(); return false; }
+	 * }
+	 */
 
 	/*
 	 * =========================================================================
@@ -805,24 +800,26 @@ public class FicheGroupeEditController {
 	 */
 	@FXML
 	private void creerModifierTitre() throws ParseException {
-		if (isInputValidTitre()) {
-			if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
-				titre = new Titre();
-			} else {
-				titre = tbv_titre.getSelectionModel().getSelectedItem();
-			}
-			titre.setTitre(tf_titre.getText());
-			titre.setAnnee(annee);
-			titre.setGenre(tf_genre_titre.getText());
-			titre.setDuree(java.sql.Time.valueOf(lt_pk_duree.getLocalTime()));
-			if (ckbox_reprise_titre.isSelected()) {
-				titre.setReprise_titre(true);
-				titre.setAuteur(tf_auteur_titre.getText());
-			} else {
-				titre.setReprise_titre(false);
-				titre.setAuteur(MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem()
-						.getNom_groupe());
-			}
+		// if (isInputValidTitre()) {
+		if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
+			titre = new Titre();
+		} else {
+			titre = tbv_titre.getSelectionModel().getSelectedItem();
+		}
+		titre.setTitre(tf_titre.getText());
+		titre.setAnnee(annee);
+		titre.setGenre(tf_genre_titre.getText());
+		titre.setDuree(java.sql.Time.valueOf(lt_pk_duree.getLocalTime()));
+		if (ckbox_reprise_titre.isSelected()) {
+			titre.setReprise_titre(true);
+			titre.setAuteur(tf_auteur_titre.getText());
+		} else {
+			titre.setReprise_titre(false);
+			titre.setAuteur(
+					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getNom_groupe());
+		}
+		/* validation des contraintes */
+		if (Validateur.validator(titre)) {
 			if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
 				tbv_titre.getItems().add(titre);
 				titre.setGroupe(groupe);
@@ -834,6 +831,7 @@ public class FicheGroupeEditController {
 			}
 			annulerTitre();
 		}
+		// }
 	}
 
 	/**
@@ -879,27 +877,28 @@ public class FicheGroupeEditController {
 	 *
 	 * @return true si les entrée son valides
 	 */
-	private boolean isInputValidTitre() {
-		String errorMessage = "";
-		if (tf_titre.getText() == null || tf_titre.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un nom de titre!\n";
-		}
-		if (ckbox_reprise_titre.isSelected()
-				&& (tf_auteur_titre.getText() == null || tf_auteur_titre.getText().length() == 0)) {
-			errorMessage += "Veuillez entrer un nom d'auteur!\n";
-		}
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Informations obligatoires requises");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
-			return false;
-		}
-	}
+	// private boolean isInputValidTitre() {
+	// String errorMessage = "";
+	// if (tf_titre.getText() == null || tf_titre.getText().length() == 0) {
+	// errorMessage += "Veuillez entrer un nom de titre!\n";
+	// }
+	// if (ckbox_reprise_titre.isSelected()
+	// && (tf_auteur_titre.getText() == null ||
+	// tf_auteur_titre.getText().length() == 0)) {
+	// errorMessage += "Veuillez entrer un nom d'auteur!\n";
+	// }
+	// if (errorMessage.length() == 0) {
+	// return true;
+	// } else {
+	// Alert alert = new Alert(AlertType.ERROR);
+	// alert.initOwner(dialogStage);
+	// alert.setTitle("Erreur");
+	// alert.setHeaderText("Informations obligatoires requises");
+	// alert.setContentText(errorMessage);
+	// alert.showAndWait();
+	// return false;
+	// }
+	// }
 
 	/*
 	 * =========================================================================

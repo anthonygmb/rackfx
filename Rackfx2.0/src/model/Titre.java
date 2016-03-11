@@ -14,6 +14,7 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -63,6 +64,7 @@ public class Titre {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getTitre() {
@@ -79,6 +81,7 @@ public class Titre {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getAnnee() {
@@ -94,6 +97,7 @@ public class Titre {
 	}
 
 	// =================================================================================================
+	@NotNull
 	public Time getDuree() {
 		return duree.get();
 	}
@@ -133,6 +137,8 @@ public class Titre {
 	}
 
 	// =================================================================================================
+	@NotNull
+	@NotEmpty
 	public String getAuteur() {
 		return auteur.get();
 	}

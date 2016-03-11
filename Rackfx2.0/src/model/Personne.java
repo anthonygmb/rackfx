@@ -9,11 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.LongProperty;
@@ -77,6 +82,8 @@ public class Personne {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	@Size(max = 50)
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getNom_membre() {
@@ -93,6 +100,8 @@ public class Personne {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	@Size(max = 50)
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getPrenom_membre() {
@@ -122,6 +131,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	@Past
 	public Date getDate_naiss_membre() {
 		return date_naiss_membre.get();
 	}
@@ -187,6 +197,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	@Size(max = 120)
 	public String getAdresse_cor() {
 		return adresse_cor.get();
 	}
@@ -200,6 +211,8 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	
+	@Pattern(regexp="(^$|[0-9]{10})")
 	public Long getTel_cor() {
 		return tel_cor.get();
 	}
@@ -213,6 +226,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	@Pattern(regexp="(^$|[0-9]{10})")
 	public Long getFax_cor() {
 		return fax_cor.get();
 	}
@@ -226,6 +240,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	@Email
 	public String getMail_cor() {
 		return mail_cor.get();
 	}
