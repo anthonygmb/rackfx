@@ -107,14 +107,10 @@ public final class MainApp extends Application {
 	 * Ouvre une fenetre de dialogue avec les détails de l'objet selectionné. Si
 	 * l'utilisateur clique sur le bouton Créer ou Appliquer, les modifications
 	 * sont sauvegardées dans l'objet en question et la valeure true est
-	 * retournée. Elle fait appel à la méthode <code>setGroupe</code> Elle fait
-	 * appel à la méthode <code>isOkClicked</code>
+	 * retournée. Elle fait appel à la méthode <code>setGroupe</code>
 	 * 
 	 * @param groupe
-	 *            (objet groupe qui va être edité)
 	 * @param modifGroupe
-	 *            (booleen permettant de savoir si on va ouvrir la fenetre en
-	 *            mode création ou modification)
 	 * @param tab
 	 * @return true si l'utilisateur valide, sinon false.
 	 */
@@ -153,14 +149,10 @@ public final class MainApp extends Application {
 	 * Ouvre une fenetre de dialogue avec les détails de l'objet selectionné. Si
 	 * l'utilisateur clique sur le bouton Créer ou Appliquer, les modifications
 	 * sont sauvegardées dans l'objet en question et la valeure true est
-	 * retournée. Elle fait appel à la méthode <code>setEvent</code> Elle fait
-	 * appel à la méthode <code>isOkClicked</code>
+	 * retournée. Elle fait appel à la méthode <code>setEvent</code>
 	 * 
 	 * @param rencontre
-	 *            (objet rencontre qui va être edité)
 	 * @param modifGroupe
-	 *            (booleen permettant de savoir si on va ouvrir la fenetre en
-	 *            mode création ou modification)
 	 * @return true si l'utilisateur valide, sinon false.
 	 */
 	public void showFicheEventEditDialog(Rencontre rencontre, boolean modif, int tab) {

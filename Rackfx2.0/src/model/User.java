@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -40,6 +43,8 @@ public class User {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	@Length(min = 6, max = 25)
 	public String getLogin() {
 		return login.get();
 	}
@@ -54,6 +59,8 @@ public class User {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	@Length(min = 8, max = 25)
 	public String getMot_de_passe() {
 		return mot_de_passe.get();
 	}
@@ -68,6 +75,7 @@ public class User {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
 	public String getDroit_auth() {
 		return droit_auth.get();
 	}

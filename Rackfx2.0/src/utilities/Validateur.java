@@ -23,9 +23,10 @@ public class Validateur {
 	private static Stage popup;
 
 	/**
-	 * Méthode de validation des beans, cette méthode controle
-	 * le format des attributs passés dans le bean.
-	 * @param obj, objet de type générique
+	 * Méthode de validation des beans, cette méthode controle le format des
+	 * attributs passés dans le bean.
+	 * 
+	 * @param obj
 	 * @return true si le bean n'a pas problème de format
 	 */
 	public static <T> boolean validator(T obj) {

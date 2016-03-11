@@ -35,7 +35,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.stage.Stage;
 import model.Groupe;
 import model.Organisateur;
 import model.Personne;
@@ -45,6 +44,7 @@ import model.User;
 import sql.CRUD;
 import sql.HibernateSetUp;
 import utilities.CryptEtDecrypt;
+import utilities.Validateur;
 
 public final class MainViewController {
 
@@ -54,7 +54,6 @@ public final class MainViewController {
 	 */
 	@FXML
 	public TabPane tabpane_onglets;
-	private Stage dialogStage;
 	public boolean connectAdmin = false;
 	public boolean connectUser = false;
 	public String login_admin = "root";
@@ -496,8 +495,8 @@ public final class MainViewController {
 	}
 
 	/**
-	 * Methode appelée par la méthode <code>handleEditGroupe</code> pour
-	 * renseigner les labels de l'onglet repertoire de la fenetre principale.
+	 * Methode appelée par la méthode <code>editGroupe</code> pour renseigner
+	 * les labels de l'onglet repertoire de la fenetre principale.
 	 */
 	public void showGroupeDetails(Groupe groupe) {
 		if (groupe != null) {
@@ -599,8 +598,8 @@ public final class MainViewController {
 	}
 
 	/**
-	 * Methode appelée par la méthode <code>handleEditEvent</code> pour
-	 * renseigner les labels de l'onglet planification de la fenetre principale.
+	 * Methode appelée par la méthode <code>editEvent</code> pour renseigner les
+	 * labels de l'onglet planification de la fenetre principale.
 	 */
 	public void showEventDetails(Rencontre rencontre) {
 		if (rencontre != null) {
@@ -648,8 +647,7 @@ public final class MainViewController {
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
-	 * Renseigne les attributs de l'objet User. Elle fait appel à la méthode
-	 * <code>isInputValidUser</code> et la methode <code>annulerUser</code>
+	 * Renseigne les attributs de l'objet User.
 	 * 
 	 * @throws ParseException
 	 * @throws NoSuchProviderException
@@ -657,15 +655,16 @@ public final class MainViewController {
 	 */
 	@FXML
 	private void creerModifierUser() throws NoSuchAlgorithmException, NoSuchProviderException {
-		if (isInputValidUser()) {
-			user = new User();
-			user.setLogin(tf_admin_login.getText());
-			user.setMot_de_passe(CryptEtDecrypt.getSecurePassword(tf_admin_mdp.getText(), salt));
-			if (!ts_adm_user.isSelected()) {
-				user.setDroit_auth("administrateur");
-			} else {
-				user.setDroit_auth("utilisateur");
-			}
+		user = new User();
+		user.setLogin(tf_admin_login.getText());
+		user.setMot_de_passe(CryptEtDecrypt.getSecurePassword(tf_admin_mdp.getText(), salt));
+		if (!ts_adm_user.isSelected()) {
+			user.setDroit_auth("administrateur");
+		} else {
+			user.setDroit_auth("utilisateur");
+		}
+		/* validation des contraintes */
+		if (Validateur.validator(user)) {
 			tv_admin.getItems().add(user);
 			CRUD.save(user);
 			annulerUser();
@@ -716,32 +715,6 @@ public final class MainViewController {
 				tv_admin.getItems().remove(selectedIndex);
 				annulerUser();
 			}
-		}
-	}
-
-	/**
-	 * Methode de vérification des champs obligatoires.
-	 *
-	 * @return true si les entrée son valides
-	 */
-	private boolean isInputValidUser() {
-		String errorMessage = "";
-		if (tf_admin_login.getText() == null || tf_admin_login.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un login!\n";
-		}
-		if (tf_admin_mdp.getText() == null || tf_admin_mdp.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un login!\n";
-		}
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Informations obligatoires requises");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
-			return false;
 		}
 	}
 }

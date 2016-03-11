@@ -1,7 +1,6 @@
 package controller;
 
 import java.sql.Time;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -33,6 +32,7 @@ import model.Rencontre;
 import model.Representation;
 import model.Titre;
 import sql.CRUD;
+import utilities.Validateur;
 
 public class FicheEventEditController {
 
@@ -342,23 +342,23 @@ public class FicheEventEditController {
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
-	 * Renseigne les attributs de l'objet rencontre et passe le booleen
-	 * <code>okClicked</code> à true.
+	 * Enregistre ou met à jour une rencontre en base de données.
 	 */
 	@FXML
 	private void creerModifierRencontre() {
-		if (isInputValidRencontre()) {
-			rencontre.setNom_renc(tf_nom_event.getText());
-			rencontre.setVille_renc(tf_ville_event.getText());
-			rencontre.setLieu_renc(tf_lieu_event.getText());
-			rencontre.setNb_pers_attendues(Long.parseLong(NbPers));
-			rencontre.setDate_deb_renc(java.sql.Date.valueOf(dt_debut_event.getValue()));
-			rencontre.setDate_fin_renc(java.sql.Date.valueOf(dt_fin_event.getValue()));
-			if (cmbox_perio_event.getSelectionModel().isEmpty()) {
-				rencontre.setPeriodicite_renc("");
-			} else {
-				rencontre.setPeriodicite_renc(cmbox_perio_event.getSelectionModel().getSelectedItem().toString());
-			}
+		rencontre.setNom_renc(tf_nom_event.getText());
+		rencontre.setVille_renc(tf_ville_event.getText());
+		rencontre.setLieu_renc(tf_lieu_event.getText());
+		rencontre.setNb_pers_attendues(Long.parseLong(NbPers));
+		rencontre.setDate_deb_renc(java.sql.Date.valueOf(dt_debut_event.getValue()));
+		rencontre.setDate_fin_renc(java.sql.Date.valueOf(dt_fin_event.getValue()));
+		if (cmbox_perio_event.getSelectionModel().isEmpty()) {
+			rencontre.setPeriodicite_renc("");
+		} else {
+			rencontre.setPeriodicite_renc(cmbox_perio_event.getSelectionModel().getSelectedItem().toString());
+		}
+		/* validation des contraintes */
+		if (Validateur.validator(rencontre)) {
 			if (dialogStage.getTitle().equals("Nouvelle rencontre *")) {
 				geleTab(true);
 				MainApp.getInstance().getRencontreData().add(rencontre);
@@ -382,36 +382,6 @@ public class FicheEventEditController {
 	@FXML
 	private void annulerRencontre() {
 		dialogStage.close();
-	}
-
-	/**
-	 * Methode de vérification des champs obligatoires.
-	 *
-	 * @return true si les entrée son valides
-	 */
-	private boolean isInputValidRencontre() {
-		String errorMessage = "";
-		if (tf_nom_event.getText() == null || tf_nom_event.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un nom d'événement!\n";
-		}
-		if (tf_ville_event.getText() == null || tf_ville_event.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un nom de ville!\n";
-		}
-		if (dt_debut_event.getValue().isAfter(dt_fin_event.getValue())
-				|| dt_fin_event.getValue().isBefore(dt_debut_event.getValue())) {
-			errorMessage += "Veuillez entrer une date valide!\n";
-		}
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Informations obligatoires requises");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
-			return false;
-		}
 	}
 
 	/*
@@ -512,39 +482,37 @@ public class FicheEventEditController {
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
-	 * Renseigne les attributs de l'objet Organisateur. Elle fait appel à la
-	 * méthode <code>isInputValidOrganisateur</code> et la methode
-	 * <code>annulerOrganisateur</code>
+	 * Enregistre ou met à jour un organisateur en base de données.
 	 */
 	@FXML
 	private void creerModifierOrganisateur() {
-		if (isInputValidOrganisateur()) {
-			if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
-				organisateur = new Organisateur();
-			} else {
-				organisateur = cmbox_orga.getSelectionModel().getSelectedItem();
-			}
-			if (ckbox_mr_civi_orga.isSelected()) {
-				organisateur.setCivi_orga("Monsieur");
-			} else {
-				organisateur.setCivi_orga("Madamme");
-			}
-			organisateur.setNom_orga(tf_nom_orga.getText());
-			organisateur.setPrenom_orga(tf_prenom_orga.getText());
-			organisateur.setEntreprise_orga(tf_entreprise_orga.getText());
-			organisateur.setAdresse_entreprise_orga(tf_adress_orga.getText());
-			if (telNumber.equals("")) {
-				organisateur.setTel_orga((long) 0);
-			} else {
-				organisateur.setTel_orga(Long.parseLong(telNumber));
-			}
-			if (faxNumber.equals("")) {
-				organisateur.setFax_orga((long) 0);
-			} else {
-				organisateur.setFax_orga(Long.parseLong(faxNumber));
-			}
-			organisateur.setMail_orga(tf_mail_orga.getText());
-
+		if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
+			organisateur = new Organisateur();
+		} else {
+			organisateur = cmbox_orga.getSelectionModel().getSelectedItem();
+		}
+		if (ckbox_mr_civi_orga.isSelected()) {
+			organisateur.setCivi_orga("Monsieur");
+		} else {
+			organisateur.setCivi_orga("Madamme");
+		}
+		organisateur.setNom_orga(tf_nom_orga.getText());
+		organisateur.setPrenom_orga(tf_prenom_orga.getText());
+		organisateur.setEntreprise_orga(tf_entreprise_orga.getText());
+		organisateur.setAdresse_entreprise_orga(tf_adress_orga.getText());
+		if (telNumber.equals("")) {
+			organisateur.setTel_orga((long) 0);
+		} else {
+			organisateur.setTel_orga(Long.parseLong(telNumber));
+		}
+		if (faxNumber.equals("")) {
+			organisateur.setFax_orga((long) 0);
+		} else {
+			organisateur.setFax_orga(Long.parseLong(faxNumber));
+		}
+		organisateur.setMail_orga(tf_mail_orga.getText());
+		/* validation des contraintes */
+		if (Validateur.validator(organisateur)) {
 			if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
 				cmbox_orga.getItems().add(organisateur);
 				organisateur.setRencontre(rencontre);
@@ -595,44 +563,6 @@ public class FicheEventEditController {
 			CRUD.delete(cmbox_orga.getSelectionModel().getSelectedItem());
 			cmbox_orga.getItems().remove(selectedIndex);
 			annulerOrganisateur();
-		}
-	}
-
-	/**
-	 * Methode de vérification des champs obligatoires.
-	 *
-	 * @return true si les entrée son valides
-	 */
-	private boolean isInputValidOrganisateur() {
-		String errorMessage = "";
-		if (tf_nom_orga.getText() == null || tf_nom_orga.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un nom d'organisateur!\n";
-		}
-		if (tf_prenom_orga.getText() == null || tf_prenom_orga.getText().length() == 0) {
-			errorMessage += "Veuillez entrer un prénom d'organisateur!\n";
-		}
-		if (tf_entreprise_orga.getText() == null || tf_entreprise_orga.getText().length() == 0) {
-			errorMessage += "Veuillez entrer une entreprise d'organisateur!\n";
-		}
-		if (tf_mail_orga.getLength() > 0 && ((!tf_mail_orga.getText().contains("@")) || tf_mail_orga.getLength() < 6)) {
-			errorMessage += "Veuillez entrer une adresse mail valide!\n";
-		}
-		if (telNumber.length() < 10) {
-			errorMessage += "Veuillez entrer un numero de téléphone valide!\n";
-		}
-		if (faxNumber.length() > 0 && faxNumber.length() < 10) {
-			errorMessage += "Veuillez entrer un numero de fax valide!\n";
-		}
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Informations obligatoires requises");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
-			return false;
 		}
 	}
 
@@ -698,25 +628,22 @@ public class FicheEventEditController {
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
-	 * Renseigne les attributs de l'objet Représentation. Elle fait appel à la
-	 * méthode <code>isInputValidProg</code> et la methode
-	 * <code>annulerProg</code>
-	 * 
-	 * @throws ParseException
+	 * Enregistre ou met à jour une representation en base de données.
 	 */
 	@FXML
-	private void creerModifierProg() throws ParseException {
-		if (isInputValidProg()) {
-			if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
-				representation = new Representation();
-			} else {
-				representation = tbv_prog.getSelectionModel().getSelectedItem();
-			}
-			representation.setNom_Groupe(cmbox_groupe_event.getSelectionModel().getSelectedItem().getNom_groupe());
-			representation.setNom_Titre(cmbox_titre_event.getSelectionModel().getSelectedItem().getTitre());
-			representation.setHeure_debut(java.sql.Time.valueOf(ltp_h_deb_prog.getLocalTime()));
-			representation.setHeure_fin(java.sql.Time.valueOf(ltp_h_fin_prog.getLocalTime()));
+	private void creerModifierProg() {
+		if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
+			representation = new Representation();
+		} else {
+			representation = tbv_prog.getSelectionModel().getSelectedItem();
+		}
+		representation.setNom_Groupe(cmbox_groupe_event.getSelectionModel().getSelectedItem().getNom_groupe());
+		representation.setNom_Titre(cmbox_titre_event.getSelectionModel().getSelectedItem().getTitre());
+		representation.setHeure_debut(java.sql.Time.valueOf(ltp_h_deb_prog.getLocalTime()));
+		representation.setHeure_fin(java.sql.Time.valueOf(ltp_h_fin_prog.getLocalTime()));
 
+		/* validation des contraintes */
+		if (Validateur.validator(representation)) {
 			if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 				tbv_prog.getItems().add(representation);
 				representation.setRencontre(rencontre);
@@ -764,40 +691,6 @@ public class FicheEventEditController {
 			CRUD.delete(tbv_prog.getSelectionModel().getSelectedItem());
 			tbv_prog.getItems().remove(selectedIndex);
 			annulerProg();
-		}
-	}
-
-	/**
-	 * Methode de vérification des champs obligatoires.
-	 *
-	 * @return true si les entrée son valides
-	 */
-	private boolean isInputValidProg() {
-		String errorMessage = "";
-		if (cmbox_groupe_event.getSelectionModel().getSelectedItem() == null) {
-			errorMessage += "Veuillez selectionner un groupe!\n";
-		}
-		if (cmbox_titre_event.getSelectionModel().getSelectedItem() == null) {
-			errorMessage += "Veuillez selectionner un titre!\n";
-		}
-		if (ltp_h_deb_prog.getLocalTime().equals(MainApp.getInstance().def_time)
-				&& ltp_h_fin_prog.getLocalTime().equals(MainApp.getInstance().def_time)) {
-			errorMessage += "Veuillez entrer l'heure de début!\n";
-		}
-		if (ltp_h_fin_prog.getLocalTime().isBefore(ltp_h_deb_prog.getLocalTime())
-				|| ltp_h_deb_prog.getLocalTime().isAfter(ltp_h_fin_prog.getLocalTime())) {
-			errorMessage += "Conflict dans les plages horaires!\n";
-		}
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Informations obligatoires requises");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
-			return false;
 		}
 	}
 }

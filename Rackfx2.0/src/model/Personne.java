@@ -10,14 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.BooleanProperty;
@@ -83,7 +82,7 @@ public class Personne {
 	// =================================================================================================
 	@NotNull
 	@NotEmpty
-	@Size(max = 50)
+	@Length(max = 50)
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getNom_membre() {
@@ -101,7 +100,7 @@ public class Personne {
 	// =================================================================================================
 	@NotNull
 	@NotEmpty
-	@Size(max = 50)
+	@Length(max = 50)
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getPrenom_membre() {
@@ -118,6 +117,7 @@ public class Personne {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
 	public String getCivi_membre() {
 		return civi_membre.get();
 	}
@@ -184,6 +184,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	@NotNull
 	public Boolean getCorrespondant() {
 		return correspondant.get();
 	}
@@ -197,7 +198,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@Size(max = 120)
+	@Length(max = 100)
 	public String getAdresse_cor() {
 		return adresse_cor.get();
 	}
@@ -211,8 +212,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	
-	@Pattern(regexp="(^$|[0-9]{10})")
+	// @Pattern(regexp="[0-9]")//TODO
 	public Long getTel_cor() {
 		return tel_cor.get();
 	}
@@ -226,7 +226,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@Pattern(regexp="(^$|[0-9]{10})")
+	// @Pattern(regexp="(^$|[0-9]{10})")//TODO
 	public Long getFax_cor() {
 		return fax_cor.get();
 	}

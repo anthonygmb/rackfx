@@ -9,11 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.BooleanProperty;
@@ -65,6 +67,7 @@ public class Titre {
 	// =================================================================================================
 	@NotNull
 	@NotEmpty
+	@Length(max = 100)
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getTitre() {
@@ -80,8 +83,7 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@NotNull
-	@NotEmpty
+	@Size(min = 4, max = 4)
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getAnnee() {
@@ -111,6 +113,7 @@ public class Titre {
 	}
 
 	// =================================================================================================
+	@Length(max = 50)
 	public String getGenre() {
 		return genre.get();
 	}
@@ -124,6 +127,7 @@ public class Titre {
 	}
 
 	// =================================================================================================
+	@NotNull
 	public Boolean getReprise_titre() {
 		return reprise_titre.get();
 	}
@@ -137,8 +141,7 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@NotNull
-	@NotEmpty
+	@Length(min = 1, max = 100)
 	public String getAuteur() {
 		return auteur.get();
 	}

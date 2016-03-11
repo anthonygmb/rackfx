@@ -2,7 +2,6 @@ package controller;
 
 import java.sql.Time;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -325,13 +324,10 @@ public class FicheGroupeEditController {
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
-	 * Renseigne les attributs de l'objet Groupe et passe le booleen
-	 * <code>okClicked</code> à true. Elle fait appel à la méthode
-	 * <code>isInputValid</code>
+	 * Enregistre ou met à jour un groupe en base de données.
 	 */
 	@FXML
 	private void creerModifierGroupe() {
-		// if (isInputValidGroupe()) {
 		groupe.setNom_groupe(tf_nom_groupe.getText());
 		groupe.setCarac_groupe(tf_carac_groupe.getText());
 		if (cmbox_pays_groupe.getSelectionModel().isEmpty()) {
@@ -368,30 +364,6 @@ public class FicheGroupeEditController {
 	private void annulerGroupe() {
 		dialogStage.close();
 	}
-
-	/**
-	 * Methode de vérification des champs obligatoires.
-	 *
-	 * @return true si les entrée son valides
-	 */
-	// private boolean isInputValidGroupe() {
-	// String errorMessage = "";
-	// if (tf_nom_groupe.getText() == null || tf_nom_groupe.getText().length()
-	// == 0) {
-	// errorMessage += "Veuillez entrer un nom de groupe!\n";
-	// }
-	// if (errorMessage.length() == 0) {
-	// return true;
-	// } else {
-	// Alert alert = new Alert(AlertType.ERROR);
-	// alert.initOwner(dialogStage);
-	// alert.setTitle("Erreur");
-	// alert.setHeaderText("Informations obligatoires requises");
-	// alert.setContentText(errorMessage);
-	// alert.showAndWait();
-	// return false;
-	// }
-	// }
 
 	/*
 	 * =========================================================================
@@ -568,13 +540,10 @@ public class FicheGroupeEditController {
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
-	 * Renseigne les attributs de l'objet Personne. Elle fait appel à la méthode
-	 * <code>isInputValidPersonne</code> et la methode
-	 * <code>annulerPersonne</code>
+	 * Enregistre ou met à jour une personne en base de données.
 	 */
 	@FXML
 	private void creerModifierPersonne() {
-		// if (isInputValidPersonne()) {
 		if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
 			personne = new Personne();
 		} else {
@@ -677,36 +646,6 @@ public class FicheGroupeEditController {
 		}
 	}
 
-	/**
-	 * Methode de vérification des champs obligatoires.
-	 *
-	 * @return true si les entrée son valides
-	 */
-	/*
-	 * private boolean isInputValidPersonne() { String errorMessage = ""; // if
-	 * (tf_nom_membre.getText() == null || // tf_nom_membre.getText().length()
-	 * == 0) { // errorMessage += "Veuillez entrer un nom de membre!\n"; // } //
-	 * if (tf_prenom_membre.getText() == null || //
-	 * tf_prenom_membre.getText().length() == 0) { // errorMessage +=
-	 * "Veuillez entrer un prénom de membre!\n"; // } // if
-	 * (dtp_date_naiss_membre.getValue().isEqual(LocalDate.now()) // ||
-	 * dtp_date_naiss_membre.getValue().isAfter(LocalDate.now())) { //
-	 * errorMessage += "Veuillez entrer une date inférieure à //
-	 * aujourd'hui!\n"; // } if (ckbox_corres_membre.isSelected()) { if
-	 * ((!tf_mail_cor.getText().contains("@")) || tf_mail_cor.getLength() < 6) {
-	 * errorMessage += "Veuillez entrer une adresse mail valide!\n"; } if
-	 * (telNumber.length() < 10) { errorMessage +=
-	 * "Veuillez entrer un numero de téléphone valide!\n"; } if
-	 * (faxNumber.length() > 0 && faxNumber.length() < 10) { errorMessage +=
-	 * "Veuillez entrer un numero de fax valide!\n"; } } if
-	 * (errorMessage.length() == 0) { return true; } else { Alert alert = new
-	 * Alert(AlertType.ERROR); alert.initOwner(dialogStage);
-	 * alert.setTitle("Erreur"); alert.setHeaderText(
-	 * "Informations obligatoires requises");
-	 * alert.setContentText(errorMessage); alert.showAndWait(); return false; }
-	 * }
-	 */
-
 	/*
 	 * =========================================================================
 	 * ONGLET TITRES
@@ -793,14 +732,10 @@ public class FicheGroupeEditController {
 
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
-	 * Renseigne les attributs de l'objet Titre. Elle fait appel à la méthode
-	 * <code>isInputValidTitre</code> et la methode <code>annulerTitre</code>
-	 * 
-	 * @throws ParseException
+	 * Enregistre ou met à jour un titre en base de données.
 	 */
 	@FXML
-	private void creerModifierTitre() throws ParseException {
-		// if (isInputValidTitre()) {
+	private void creerModifierTitre() {
 		if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
 			titre = new Titre();
 		} else {
@@ -831,7 +766,6 @@ public class FicheGroupeEditController {
 			}
 			annulerTitre();
 		}
-		// }
 	}
 
 	/**
@@ -871,34 +805,6 @@ public class FicheGroupeEditController {
 			annulerTitre();
 		}
 	}
-
-	/**
-	 * Methode de vérification des champs obligatoires.
-	 *
-	 * @return true si les entrée son valides
-	 */
-	// private boolean isInputValidTitre() {
-	// String errorMessage = "";
-	// if (tf_titre.getText() == null || tf_titre.getText().length() == 0) {
-	// errorMessage += "Veuillez entrer un nom de titre!\n";
-	// }
-	// if (ckbox_reprise_titre.isSelected()
-	// && (tf_auteur_titre.getText() == null ||
-	// tf_auteur_titre.getText().length() == 0)) {
-	// errorMessage += "Veuillez entrer un nom d'auteur!\n";
-	// }
-	// if (errorMessage.length() == 0) {
-	// return true;
-	// } else {
-	// Alert alert = new Alert(AlertType.ERROR);
-	// alert.initOwner(dialogStage);
-	// alert.setTitle("Erreur");
-	// alert.setHeaderText("Informations obligatoires requises");
-	// alert.setContentText(errorMessage);
-	// alert.showAndWait();
-	// return false;
-	// }
-	// }
 
 	/*
 	 * =========================================================================

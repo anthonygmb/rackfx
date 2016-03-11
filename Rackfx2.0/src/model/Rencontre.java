@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -18,6 +19,8 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
@@ -69,6 +72,8 @@ public class Rencontre {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	@Length(max = 80)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getNom_renc() {
 		return nom_renc.get();
@@ -84,6 +89,8 @@ public class Rencontre {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	@Length(max = 80)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getVille_renc() {
 		return ville_renc.get();
@@ -98,6 +105,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
+	@Length(max = 80)
 	public String getLieu_renc() {
 		return lieu_renc.get();
 	}
@@ -111,6 +119,8 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
+	//TODO doit etre avant date de fin
+	@NotNull
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public Date getDate_deb_renc() {
 		return date_deb_renc.get();
@@ -125,6 +135,8 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
+	//TODO doit etre apres date de fin
+	@NotNull
 	public Date getDate_fin_renc() {
 		return date_fin_renc.get();
 	}
@@ -152,6 +164,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
+	@Size(max = 6)
 	public Long getNb_pers_attendues() {
 		return nb_pers_attendues.get();
 	}

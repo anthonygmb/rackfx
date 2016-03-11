@@ -10,6 +10,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -60,6 +63,8 @@ public class Organisateur {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	@Length(max = 50)
 	@Field
 	public String getNom_orga() {
 		return nom_orga.get();
@@ -75,6 +80,8 @@ public class Organisateur {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	@Length(max = 50)
 	@Field
 	public String getPrenom_orga() {
 		return prenom_orga.get();
@@ -90,6 +97,7 @@ public class Organisateur {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
 	public String getCivi_orga() {
 		return civi_orga.get();
 	}
@@ -103,6 +111,7 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
+	@Length(max = 100)
 	public String getAdresse_entreprise_orga() {
 		return adresse_entreprise_orga.get();
 	}
@@ -117,6 +126,8 @@ public class Organisateur {
 
 	// =================================================================================================
 	@NotNull
+	@NotEmpty
+	// TODO telephone
 	public Long getTel_orga() {
 		return tel_orga.get();
 	}
@@ -130,6 +141,7 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
+	// TODO fax
 	public Long getFax_orga() {
 		return fax_orga.get();
 	}
@@ -143,6 +155,7 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
+	@Email
 	public String getMail_orga() {
 		return mail_orga.get();
 	}
@@ -156,6 +169,9 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
+	@NotNull
+	@NotEmpty
+	@Length(max = 50)
 	@Field
 	public String getEntreprise_orga() {
 		return entreprise_orga.get();

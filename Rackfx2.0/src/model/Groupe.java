@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
@@ -29,6 +28,7 @@ import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -79,7 +79,7 @@ public class Groupe {
 	// =================================================================================================
 	@NotNull
 	@NotEmpty
-	@Size(max = 50)
+	@Length(max = 50)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	@Analyzer(definition = "customanalyzer")
 	public String getNom_groupe() {
@@ -95,7 +95,7 @@ public class Groupe {
 	}
 
 	// =================================================================================================
-	@Size(max = 50)
+	@Length(max = 50)
 	public String getCarac_groupe() {
 		return carac_groupe.get();
 	}
@@ -122,7 +122,7 @@ public class Groupe {
 	}
 
 	// =================================================================================================
-	@Size(max = 50)
+	@Length(max = 50)
 	public String getRegion_groupe() {
 		return region_groupe.get();
 	}
