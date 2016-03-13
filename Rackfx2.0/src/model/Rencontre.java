@@ -10,8 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Max;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -71,7 +70,6 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 80)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
@@ -88,7 +86,6 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 80)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
@@ -119,8 +116,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	//TODO doit etre avant date de fin
-	@NotNull
+	// TODO doit etre avant date de fin
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public Date getDate_deb_renc() {
 		return date_deb_renc.get();
@@ -135,8 +131,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	//TODO doit etre apres date de fin
-	@NotNull
+	// TODO doit etre apres date de fin
 	public Date getDate_fin_renc() {
 		return date_fin_renc.get();
 	}
@@ -164,7 +159,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@Size(max = 6)
+	@Max(value = 6)
 	public Long getNb_pers_attendues() {
 		return nb_pers_attendues.get();
 	}

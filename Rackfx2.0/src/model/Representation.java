@@ -57,7 +57,6 @@ public class Representation {
 
 	// =================================================================================================
 	@NotNull
-	// TODO doit etre avant heure de fin
 	@Field
 	public Time getHeure_debut() {
 		return heure_debut.get();
@@ -73,7 +72,6 @@ public class Representation {
 
 	// =================================================================================================
 	@NotNull
-	// TODO doit etre apres heure de debut
 	public Time getHeure_fin() {
 		return heure_fin.get();
 	}
@@ -87,7 +85,6 @@ public class Representation {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Column(name = "groupe_joue")
 	public String getNom_Groupe() {
@@ -103,7 +100,6 @@ public class Representation {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Column(name = "titre_joue")
 	public String getNom_Titre() {

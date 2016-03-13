@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
@@ -20,10 +21,8 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -42,8 +41,8 @@ public class Personne {
 	private StringProperty respon_membre;
 	private BooleanProperty correspondant;
 	private StringProperty adresse_cor;
-	private LongProperty tel_cor;
-	private LongProperty fax_cor;
+	private StringProperty tel_cor;
+	private StringProperty fax_cor;
 	private StringProperty mail_cor;
 	private Groupe groupe;
 
@@ -61,8 +60,8 @@ public class Personne {
 		this.respon_membre = new SimpleStringProperty("");
 		this.correspondant = new SimpleBooleanProperty(true);
 		this.adresse_cor = new SimpleStringProperty("");
-		this.tel_cor = new SimpleLongProperty();
-		this.fax_cor = new SimpleLongProperty();
+		this.tel_cor = new SimpleStringProperty("");
+		this.fax_cor = new SimpleStringProperty("");
 		this.mail_cor = new SimpleStringProperty("");
 	}
 
@@ -80,7 +79,6 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 50)
 	@Field
@@ -98,7 +96,6 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 50)
 	@Field
@@ -116,7 +113,6 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	public String getCivi_membre() {
 		return civi_membre.get();
@@ -212,30 +208,30 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	// @Pattern(regexp="[0-9]")//TODO
-	public Long getTel_cor() {
+	@Size(max = 13)
+	public String getTel_cor() {
 		return tel_cor.get();
 	}
 
-	public void setTel_cor(Long tel_cor) {
+	public void setTel_cor(String tel_cor) {
 		this.tel_cor.set(tel_cor);
 	}
 
-	public LongProperty tel_corProperty() {
+	public StringProperty tel_corProperty() {
 		return tel_cor;
 	}
 
 	// =================================================================================================
-	// @Pattern(regexp="(^$|[0-9]{10})")//TODO
-	public Long getFax_cor() {
+	@Size(max = 13)
+	public String getFax_cor() {
 		return fax_cor.get();
 	}
 
-	public void setFax_cor(Long fax_cor) {
+	public void setFax_cor(String fax_cor) {
 		this.fax_cor.set(fax_cor);
 	}
 
-	public LongProperty fax_corProperty() {
+	public StringProperty fax_corProperty() {
 		return fax_cor;
 	}
 

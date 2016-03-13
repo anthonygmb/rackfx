@@ -65,7 +65,6 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 100)
 	@Field
@@ -83,7 +82,7 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@Size(min = 4, max = 4)
+	@Size(max = 4)
 	@Field
 	@Analyzer(definition = "customanalyzer")
 	public String getAnnee() {
@@ -141,7 +140,8 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@Length(min = 1, max = 100)
+	@NotEmpty
+	@Length(max = 100)
 	public String getAuteur() {
 		return auteur.get();
 	}

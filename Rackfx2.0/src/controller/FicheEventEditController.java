@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
@@ -114,7 +115,7 @@ public class FicheEventEditController {
 		tf_tel_orga.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\d*") && newValue.length() < 13) {
+				if (newValue.matches("\\d*") && newValue.length() <= 13) {
 					telNumber = newValue;
 				} else {
 					tf_tel_orga.setText(oldValue);
@@ -126,7 +127,7 @@ public class FicheEventEditController {
 		tf_fax_orga.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\d*") && newValue.length() < 13) {
+				if (newValue.matches("\\d*") && newValue.length() <= 13) {
 					faxNumber = newValue;
 				} else {
 					tf_fax_orga.setText(oldValue);
@@ -215,6 +216,32 @@ public class FicheEventEditController {
 					cmbox_titre_event.getItems().clear();
 					titreData2.addAll(CRUD.getAllWhere("Titre", "groupeId", newValue.getGroupeId()));
 					cmbox_titre_event.setItems(titreData2);
+				}
+			}
+		});
+
+		/* listener pour ajuster la duree de la representation */
+		ltp_h_deb_prog.localTimeProperty().addListener(new ChangeListener<LocalTime>() {
+
+			@Override
+			public void changed(ObservableValue<? extends LocalTime> observable, LocalTime oldValue,
+					LocalTime newValue) {
+				if (cmbox_titre_event.getSelectionModel().getSelectedItem() != null) {
+					ltp_h_fin_prog.setLocalTime(newValue
+							.plusHours(cmbox_titre_event.getSelectionModel().getSelectedItem().getDuree().getTime()));
+				}
+			}
+		});
+		
+		/* listener pour ajuster la duree de la representation */
+		ltp_h_fin_prog.localTimeProperty().addListener(new ChangeListener<LocalTime>() {
+
+			@Override
+			public void changed(ObservableValue<? extends LocalTime> observable, LocalTime oldValue,
+					LocalTime newValue) {
+				if (cmbox_titre_event.getSelectionModel().getSelectedItem() != null) {
+					ltp_h_deb_prog.setLocalTime(ltp_h_fin_prog.getLocalTime()
+							.plusHours(cmbox_titre_event.getSelectionModel().getSelectedItem().getDuree().getTime()));
 				}
 			}
 		});
@@ -462,13 +489,13 @@ public class FicheEventEditController {
 			tf_entreprise_orga.setText(organisateur.getEntreprise_orga());
 			tf_adress_orga.setText(organisateur.getAdresse_entreprise_orga());
 
-			if (organisateur.getTel_orga() == 0) {
+			if (organisateur.getTel_orga() == null) {
 				tf_tel_orga.clear();
 			} else {
 				tf_tel_orga.setText(String.valueOf(organisateur.getTel_orga()));
 			}
 
-			if (organisateur.getFax_orga() == 0) {
+			if (organisateur.getFax_orga() == null) {
 				tf_fax_orga.clear();
 			} else {
 				tf_fax_orga.setText(String.valueOf(organisateur.getFax_orga()));
@@ -501,14 +528,14 @@ public class FicheEventEditController {
 		organisateur.setEntreprise_orga(tf_entreprise_orga.getText());
 		organisateur.setAdresse_entreprise_orga(tf_adress_orga.getText());
 		if (telNumber.equals("")) {
-			organisateur.setTel_orga((long) 0);
+			organisateur.setTel_orga(null);
 		} else {
-			organisateur.setTel_orga(Long.parseLong(telNumber));
+			organisateur.setTel_orga(telNumber);
 		}
 		if (faxNumber.equals("")) {
-			organisateur.setFax_orga((long) 0);
+			organisateur.setFax_orga(null);
 		} else {
-			organisateur.setFax_orga(Long.parseLong(faxNumber));
+			organisateur.setFax_orga(faxNumber);
 		}
 		organisateur.setMail_orga(tf_mail_orga.getText());
 		/* validation des contraintes */

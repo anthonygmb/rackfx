@@ -118,7 +118,7 @@ public class FicheGroupeEditController {
 		tf_tel_cor.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\d*") && newValue.length() < 13) {
+				if (newValue.matches("\\d*") && newValue.length() <= 13) {
 					telNumber = newValue;
 				} else {
 					tf_tel_cor.setText(oldValue);
@@ -131,7 +131,7 @@ public class FicheGroupeEditController {
 		tf_fax_cor.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\d*") && newValue.length() < 13) {
+				if (newValue.matches("\\d*") && newValue.length() <= 13) {
 					faxNumber = newValue;
 				} else {
 					tf_fax_cor.setText(oldValue);
@@ -517,12 +517,12 @@ public class FicheGroupeEditController {
 				activeCorrespondant(true);
 				tf_adress_cor.setText(personne.getAdresse_cor());
 
-				if (personne.getTel_cor() == 0) {
+				if (personne.getTel_cor() == null) {
 					tf_tel_cor.clear();
 				} else {
 					tf_tel_cor.setText(String.valueOf(personne.getTel_cor()));
 				}
-				if (personne.getFax_cor() == 0) {
+				if (personne.getFax_cor() == null) {
 					tf_fax_cor.clear();
 				} else {
 					tf_fax_cor.setText(String.valueOf(personne.getFax_cor()));
@@ -576,14 +576,14 @@ public class FicheGroupeEditController {
 			personne.setCorrespondant(true);
 			personne.setAdresse_cor(tf_adress_cor.getText());
 			if (telNumber.equals("")) {
-				personne.setTel_cor((long) 0);
+				personne.setTel_cor(null);
 			} else {
-				personne.setTel_cor(Long.parseLong(telNumber));
+				personne.setTel_cor(telNumber);
 			}
 			if (faxNumber.equals("")) {
-				personne.setFax_cor((long) 0);
+				personne.setFax_cor(null);
 			} else {
-				personne.setFax_cor(Long.parseLong(faxNumber));
+				personne.setFax_cor(faxNumber);
 			}
 			personne.setMail_cor(tf_mail_cor.getText());
 		} else {
@@ -744,7 +744,12 @@ public class FicheGroupeEditController {
 		titre.setTitre(tf_titre.getText());
 		titre.setAnnee(annee);
 		titre.setGenre(tf_genre_titre.getText());
-		titre.setDuree(java.sql.Time.valueOf(lt_pk_duree.getLocalTime()));
+		if (java.sql.Time.valueOf(lt_pk_duree.getLocalTime()).toString().equals("00:00:00")) {
+			titre.setDuree(null);
+		} else {
+			titre.setDuree(java.sql.Time.valueOf(lt_pk_duree.getLocalTime()));
+		}
+
 		if (ckbox_reprise_titre.isSelected()) {
 			titre.setReprise_titre(true);
 			titre.setAuteur(tf_auteur_titre.getText());

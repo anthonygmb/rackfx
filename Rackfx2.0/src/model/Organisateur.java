@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -14,8 +14,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -28,8 +26,8 @@ public class Organisateur {
 	private StringProperty prenom_orga;
 	private StringProperty civi_orga;
 	private StringProperty adresse_entreprise_orga;
-	private LongProperty tel_orga;
-	private LongProperty fax_orga;
+	private StringProperty tel_orga;
+	private StringProperty fax_orga;
 	private StringProperty mail_orga;
 	private StringProperty entreprise_orga;
 	private Rencontre rencontre;
@@ -43,8 +41,8 @@ public class Organisateur {
 		this.prenom_orga = new SimpleStringProperty(prenom_orga);
 		this.civi_orga = new SimpleStringProperty("");
 		this.adresse_entreprise_orga = new SimpleStringProperty("");
-		this.tel_orga = new SimpleLongProperty();
-		this.fax_orga = new SimpleLongProperty();
+		this.tel_orga = new SimpleStringProperty("");
+		this.fax_orga = new SimpleStringProperty("");
 		this.mail_orga = new SimpleStringProperty("");
 		this.entreprise_orga = new SimpleStringProperty("");
 	}
@@ -62,7 +60,6 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 50)
 	@Field
@@ -79,7 +76,6 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 50)
 	@Field
@@ -96,7 +92,6 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	public String getCivi_orga() {
 		return civi_orga.get();
@@ -125,32 +120,31 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
-	// TODO telephone
-	public Long getTel_orga() {
+	@Size(max = 13)
+	public String getTel_orga() {
 		return tel_orga.get();
 	}
 
-	public void setTel_orga(Long tel_orga) {
+	public void setTel_orga(String tel_orga) {
 		this.tel_orga.set(tel_orga);
 	}
 
-	public LongProperty tel_orgaProperty() {
+	public StringProperty tel_orgaProperty() {
 		return tel_orga;
 	}
 
 	// =================================================================================================
-	// TODO fax
-	public Long getFax_orga() {
+	@Size(max = 13)
+	public String getFax_orga() {
 		return fax_orga.get();
 	}
 
-	public void setFax_orga(Long fax_orga) {
+	public void setFax_orga(String fax_orga) {
 		this.fax_orga.set(fax_orga);
 	}
 
-	public LongProperty fax_orgaProperty() {
+	public StringProperty fax_orgaProperty() {
 		return fax_orga;
 	}
 
@@ -169,7 +163,6 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 50)
 	@Field

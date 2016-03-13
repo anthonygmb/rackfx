@@ -40,8 +40,7 @@ public class Validateur {
 			Set<ConstraintViolation<Groupe>> constraintViolations = validator.validate(groupe);
 			if (constraintViolations.size() > 0) {
 				for (ConstraintViolation<Groupe> contraintes : constraintViolations) {
-					errorMessage += contraintes.getRootBeanClass().getSimpleName() + "." + contraintes.getPropertyPath()
-							+ " " + contraintes.getMessage() + "\n";
+					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
 				}
 				result = false;
 			}
@@ -50,8 +49,7 @@ public class Validateur {
 			Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 			if (constraintViolations.size() > 0) {
 				for (ConstraintViolation<Personne> contraintes : constraintViolations) {
-					errorMessage += contraintes.getRootBeanClass().getSimpleName() + "." + contraintes.getPropertyPath()
-							+ " " + contraintes.getMessage() + "\n";
+					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
 				}
 				result = false;
 			}
@@ -60,8 +58,7 @@ public class Validateur {
 			Set<ConstraintViolation<Titre>> constraintViolations = validator.validate(titre);
 			if (constraintViolations.size() > 0) {
 				for (ConstraintViolation<Titre> contraintes : constraintViolations) {
-					errorMessage += contraintes.getRootBeanClass().getSimpleName() + "." + contraintes.getPropertyPath()
-							+ " " + contraintes.getMessage() + "\n";
+					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
 				}
 				result = false;
 			}
@@ -70,8 +67,7 @@ public class Validateur {
 			Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
 			if (constraintViolations.size() > 0) {
 				for (ConstraintViolation<Rencontre> contraintes : constraintViolations) {
-					errorMessage += contraintes.getRootBeanClass().getSimpleName() + "." + contraintes.getPropertyPath()
-							+ " " + contraintes.getMessage() + "\n";
+					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
 				}
 				result = false;
 			}
@@ -80,8 +76,7 @@ public class Validateur {
 			Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(organisateur);
 			if (constraintViolations.size() > 0) {
 				for (ConstraintViolation<Organisateur> contraintes : constraintViolations) {
-					errorMessage += contraintes.getRootBeanClass().getSimpleName() + "." + contraintes.getPropertyPath()
-							+ " " + contraintes.getMessage() + "\n";
+					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
 				}
 				result = false;
 			}
@@ -90,8 +85,7 @@ public class Validateur {
 			Set<ConstraintViolation<Representation>> constraintViolations = validator.validate(representation);
 			if (constraintViolations.size() > 0) {
 				for (ConstraintViolation<Representation> contraintes : constraintViolations) {
-					errorMessage += contraintes.getRootBeanClass().getSimpleName() + "." + contraintes.getPropertyPath()
-							+ " " + contraintes.getMessage() + "\n";
+					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
 				}
 				result = false;
 			}
@@ -100,8 +94,7 @@ public class Validateur {
 			Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
 			if (constraintViolations.size() > 0) {
 				for (ConstraintViolation<User> contraintes : constraintViolations) {
-					errorMessage += contraintes.getRootBeanClass().getSimpleName() + "." + contraintes.getPropertyPath()
-							+ " " + contraintes.getMessage() + "\n";
+					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
 				}
 				result = false;
 			}

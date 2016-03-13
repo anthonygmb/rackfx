@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
@@ -77,7 +76,6 @@ public class Groupe {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(max = 50)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
