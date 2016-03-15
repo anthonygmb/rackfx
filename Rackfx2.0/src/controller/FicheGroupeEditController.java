@@ -308,12 +308,10 @@ public class FicheGroupeEditController {
 		this.groupe = groupe;
 		tf_nom_groupe.setText(groupe.getNom_groupe());
 		tf_carac_groupe.setText(groupe.getCarac_groupe());
-		if (modif) {
-			if (groupe.getPays_groupe().equals("")) {
-				cmbox_pays_groupe.getSelectionModel().clearSelection();
-			} else {
-				cmbox_pays_groupe.getSelectionModel().select(groupe.getPays_groupe());
-			}
+		if (groupe.getPays_groupe().equals("")) {
+			cmbox_pays_groupe.getSelectionModel().clearSelection();
+		} else {
+			cmbox_pays_groupe.getSelectionModel().select(groupe.getPays_groupe());
 		}
 		cmbox_pays_groupe.getItems().addAll(pays_groupe);
 		tf_region_groupe.setText(groupe.getRegion_groupe());
@@ -330,29 +328,32 @@ public class FicheGroupeEditController {
 	private void creerModifierGroupe() {
 		groupe.setNom_groupe(tf_nom_groupe.getText());
 		groupe.setCarac_groupe(tf_carac_groupe.getText());
-		if (cmbox_pays_groupe.getSelectionModel().isEmpty()) {
-			groupe.setPays_groupe("");
-		} else {
+		if (!cmbox_pays_groupe.getSelectionModel().isEmpty()) {
 			groupe.setPays_groupe(cmbox_pays_groupe.getSelectionModel().getSelectedItem().toString());
 		}
 		groupe.setRegion_groupe(tf_region_groupe.getText());
-		/* validation des contraintes */
-		if (Validateur.validator(groupe)) {
-			if (dialogStage.getTitle().equals("Nouveau groupe *")) {
-				geleTab(true);
-				MainApp.getInstance().getGroupeData().add(groupe);
-				CRUD.save(groupe);
-				MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
-			} else {
-				CRUD.update(groupe);
-				MainViewController.getInstance().showGroupeDetails(groupe);
-				int index = MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedIndex();
-				MainApp.getInstance().getGroupeData().setAll(CRUD.getAll("Groupe"));
-				MainViewController.getInstance().tv_reper.getSelectionModel().select(index);
+		try {
+			/* validation des contraintes */
+			if (Validateur.validator(groupe)) {
+				if (dialogStage.getTitle().equals("Nouveau groupe *")) {
+					CRUD.save(groupe);
+					geleTab(true);
+					MainApp.getInstance().getGroupeData().add(groupe);
+					MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
+				} else {
+					CRUD.update(groupe);
+					MainViewController.getInstance().showGroupeDetails(groupe);
+					int index = MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedIndex();
+					MainApp.getInstance().getGroupeData().setAll(CRUD.getAll("Groupe"));
+					MainViewController.getInstance().tv_reper.getSelectionModel().select(index);
+				}
+				dialogStage.setTitle(groupe.getNom_groupe());
+				btn_creer_groupe.setText("Appliquer");
+				loadChildren();
 			}
-			dialogStage.setTitle(groupe.getNom_groupe());
-			btn_creer_groupe.setText("Appliquer");
-			loadChildren();
+			/* test de doublons */
+		} catch (Exception e) {
+			Validateur.showPopup("Ce groupe existe déjà");
 		}
 	}
 
@@ -589,18 +590,23 @@ public class FicheGroupeEditController {
 		} else {
 			personne.setCorrespondant(false);
 		}
-		/* validation des contraintes */
-		if (Validateur.validator(personne)) {
-			if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
-				cmbox_membre.getItems().add(personne);
-				personne.setGroupe(groupe);
-				groupe.getListe_personne().add(personne);
-				CRUD.save(personne);
-			} else {
-				cmbox_membre.getItems().set(cmbox_membre.getSelectionModel().getSelectedIndex(), personne);
-				CRUD.update(personne);
+		try {
+			/* validation des contraintes */
+			if (Validateur.validator(personne)) {
+				if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
+					personne.setGroupe(groupe);
+					groupe.getListe_personne().add(personne);
+					CRUD.save(personne);
+					cmbox_membre.getItems().add(personne);
+				} else {
+					CRUD.update(personne);
+					cmbox_membre.getItems().set(cmbox_membre.getSelectionModel().getSelectedIndex(), personne);
+				}
+				annulerPersonne();
 			}
-			annulerPersonne();
+			/* test de doublons */
+		} catch (Exception e) {
+			Validateur.showPopup("Cette personne existe déjà");
 		}
 	}
 

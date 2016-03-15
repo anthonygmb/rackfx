@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -117,6 +118,7 @@ public class Rencontre {
 
 	// =================================================================================================
 	// TODO doit etre avant date de fin
+	@NotNull
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public Date getDate_deb_renc() {
 		return date_deb_renc.get();
@@ -132,6 +134,7 @@ public class Rencontre {
 
 	// =================================================================================================
 	// TODO doit etre apres date de fin
+	@NotNull
 	public Date getDate_fin_renc() {
 		return date_fin_renc.get();
 	}

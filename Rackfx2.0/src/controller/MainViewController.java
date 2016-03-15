@@ -663,11 +663,16 @@ public final class MainViewController {
 		} else {
 			user.setDroit_auth("utilisateur");
 		}
-		/* validation des contraintes */
-		if (Validateur.validator(user)) {
-			tv_admin.getItems().add(user);
-			CRUD.save(user);
-			annulerUser();
+		try {
+			/* validation des contraintes */
+			if (Validateur.validator(user)) {
+				CRUD.save(user);
+				tv_admin.getItems().add(user);
+				annulerUser();
+			}
+			/* test de doublons */
+		} catch (Exception e) {
+			Validateur.showPopup("Ce login existe déjà");
 		}
 	}
 

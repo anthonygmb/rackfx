@@ -100,14 +100,22 @@ public class Validateur {
 			}
 		}
 		if (!result) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(popup);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Informations obligatoires requises");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
-			errorMessage = "";
+			showPopup(errorMessage);
 		}
 		return result;
+	}
+
+	/**
+	 * Méthode d'affichage de popup de messages d'erreurs
+	 * 
+	 * @param message
+	 */
+	public static void showPopup(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.initOwner(popup);
+		alert.setTitle("Erreur");
+		alert.setHeaderText("Erreur dans la saisie des données");
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 }

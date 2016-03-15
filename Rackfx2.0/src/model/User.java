@@ -3,6 +3,8 @@ package model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -12,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "login") )
 public class User {
 
 	private long userId;
@@ -42,7 +45,6 @@ public class User {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
 	@Length(min = 6, max = 25)
 	public String getLogin() {
@@ -58,9 +60,8 @@ public class User {
 	}
 
 	// =================================================================================================
-	@NotNull
 	@NotEmpty
-	@Length(min = 8, max = 25)
+	@Length(min = 8)
 	public String getMot_de_passe() {
 		return mot_de_passe.get();
 	}
@@ -75,7 +76,6 @@ public class User {
 
 	// =================================================================================================
 	@NotNull
-	@NotEmpty
 	public String getDroit_auth() {
 		return droit_auth.get();
 	}

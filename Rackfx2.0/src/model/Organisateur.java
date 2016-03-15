@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Field;
@@ -19,6 +21,7 @@ import javafx.beans.property.StringProperty;
 
 @Entity
 @Indexed
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "nom_orga", "prenom_orga" }) )
 public class Organisateur {
 
 	private long orgaId;

@@ -39,7 +39,7 @@ import javafx.beans.property.StringProperty;
 		@TokenFilterDef(factory = LowerCaseFilterFactory.class),
 		@TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
 				@Parameter(name = "language", value = "English") }) })
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "groupeId") )
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "nom_groupe") )
 public class Groupe {
 
 	private long groupeId;

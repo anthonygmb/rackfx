@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.*?>
+<?import jfxtras.scene.control.agenda.*?>
 <?import jfxtras.scene.control.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>

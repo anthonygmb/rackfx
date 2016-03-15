@@ -2,7 +2,6 @@ package controller;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
@@ -220,32 +219,6 @@ public class FicheEventEditController {
 			}
 		});
 
-		/* listener pour ajuster la duree de la representation */
-		ltp_h_deb_prog.localTimeProperty().addListener(new ChangeListener<LocalTime>() {
-
-			@Override
-			public void changed(ObservableValue<? extends LocalTime> observable, LocalTime oldValue,
-					LocalTime newValue) {
-				if (cmbox_titre_event.getSelectionModel().getSelectedItem() != null) {
-					ltp_h_fin_prog.setLocalTime(newValue
-							.plusHours(cmbox_titre_event.getSelectionModel().getSelectedItem().getDuree().getTime()));
-				}
-			}
-		});
-		
-		/* listener pour ajuster la duree de la representation */
-		ltp_h_fin_prog.localTimeProperty().addListener(new ChangeListener<LocalTime>() {
-
-			@Override
-			public void changed(ObservableValue<? extends LocalTime> observable, LocalTime oldValue,
-					LocalTime newValue) {
-				if (cmbox_titre_event.getSelectionModel().getSelectedItem() != null) {
-					ltp_h_deb_prog.setLocalTime(ltp_h_fin_prog.getLocalTime()
-							.plusHours(cmbox_titre_event.getSelectionModel().getSelectedItem().getDuree().getTime()));
-				}
-			}
-		});
-
 		btn_creer_event.setDisable(true);
 		btn_creer_orga.setDisable(true);
 		btn_creer_prog.setDisable(true);
@@ -355,13 +328,13 @@ public class FicheEventEditController {
 			dt_fin_event.setValue(LocalDate.now());
 		}
 
-		if (modif) {
-			if (rencontre.getPeriodicite_renc().equals("")) {
-				cmbox_perio_event.getSelectionModel().clearSelection();
-			} else {
-				cmbox_perio_event.getSelectionModel().select(rencontre.getPeriodicite_renc());
-			}
+		// if (modif) {
+		if (rencontre.getPeriodicite_renc().equals("")) {
+			cmbox_perio_event.getSelectionModel().clearSelection();
+		} else {
+			cmbox_perio_event.getSelectionModel().select(rencontre.getPeriodicite_renc());
 		}
+		// }
 		cmbox_perio_event.getItems().addAll(perio_event);
 		btn_creer_event.setText((modif) ? "Appliquer" : "Créer");
 		loadChildren();
@@ -379,9 +352,7 @@ public class FicheEventEditController {
 		rencontre.setNb_pers_attendues(Long.parseLong(NbPers));
 		rencontre.setDate_deb_renc(java.sql.Date.valueOf(dt_debut_event.getValue()));
 		rencontre.setDate_fin_renc(java.sql.Date.valueOf(dt_fin_event.getValue()));
-		if (cmbox_perio_event.getSelectionModel().isEmpty()) {
-			rencontre.setPeriodicite_renc("");
-		} else {
+		if (!cmbox_perio_event.getSelectionModel().isEmpty()) {
 			rencontre.setPeriodicite_renc(cmbox_perio_event.getSelectionModel().getSelectedItem().toString());
 		}
 		/* validation des contraintes */
@@ -538,18 +509,23 @@ public class FicheEventEditController {
 			organisateur.setFax_orga(faxNumber);
 		}
 		organisateur.setMail_orga(tf_mail_orga.getText());
-		/* validation des contraintes */
-		if (Validateur.validator(organisateur)) {
-			if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
-				cmbox_orga.getItems().add(organisateur);
-				organisateur.setRencontre(rencontre);
-				rencontre.getListe_orga().add(organisateur);
-				CRUD.save(organisateur);
-			} else {
-				cmbox_orga.getItems().set(cmbox_orga.getSelectionModel().getSelectedIndex(), organisateur);
-				CRUD.update(organisateur);
+		try {
+			/* validation des contraintes */
+			if (Validateur.validator(organisateur)) {
+				if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
+					organisateur.setRencontre(rencontre);
+					rencontre.getListe_orga().add(organisateur);
+					CRUD.save(organisateur);
+					cmbox_orga.getItems().add(organisateur);
+				} else {
+					CRUD.update(organisateur);
+					cmbox_orga.getItems().set(cmbox_orga.getSelectionModel().getSelectedIndex(), organisateur);
+				}
+				annulerOrganisateur();
 			}
-			annulerOrganisateur();
+			/* test de doublons */
+		} catch (Exception e) {
+			Validateur.showPopup("Cet organisateur existe déjà");
 		}
 	}
 
