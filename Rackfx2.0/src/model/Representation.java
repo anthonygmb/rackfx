@@ -2,21 +2,18 @@ package model;
 
 import java.sql.Time;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import controller.FicheEventEditController;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -59,7 +56,6 @@ public class Representation {
 
 	// =================================================================================================
 	@NotNull
-//	@Max(value = ) //TODO custon constrainte
 	@Field
 	public Time getHeure_debut() {
 		return heure_debut.get();
@@ -74,7 +70,7 @@ public class Representation {
 	}
 
 	// =================================================================================================
-	@NotNull//TODO custon constrainte
+	@NotNull
 	public Time getHeure_fin() {
 		return heure_fin.get();
 	}
@@ -89,7 +85,6 @@ public class Representation {
 
 	// =================================================================================================
 	@NotEmpty
-	@Column(name = "groupe_joue")//TODO enlever?
 	public String getNom_Groupe() {
 		return nom_groupe.get();
 	}
@@ -104,7 +99,6 @@ public class Representation {
 
 	// =================================================================================================
 	@NotEmpty
-	@Column(name = "titre_joue")//TODO enlever?
 	public String getNom_Titre() {
 		return nom_titre.get();
 	}

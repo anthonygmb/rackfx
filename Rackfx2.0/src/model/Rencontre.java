@@ -117,7 +117,6 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	// TODO doit etre avant date de fin
 	@NotNull
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public Date getDate_deb_renc() {
@@ -133,7 +132,6 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	// TODO doit etre apres date de fin
 	@NotNull
 	public Date getDate_fin_renc() {
 		return date_fin_renc.get();
@@ -162,7 +160,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@Max(value = 6)
+	@Max(value = 10000)
 	public Long getNb_pers_attendues() {
 		return nb_pers_attendues.get();
 	}

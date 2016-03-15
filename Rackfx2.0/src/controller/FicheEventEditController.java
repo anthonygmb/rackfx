@@ -328,13 +328,11 @@ public class FicheEventEditController {
 			dt_fin_event.setValue(LocalDate.now());
 		}
 
-		// if (modif) {
 		if (rencontre.getPeriodicite_renc().equals("")) {
 			cmbox_perio_event.getSelectionModel().clearSelection();
 		} else {
 			cmbox_perio_event.getSelectionModel().select(rencontre.getPeriodicite_renc());
 		}
-		// }
 		cmbox_perio_event.getItems().addAll(perio_event);
 		btn_creer_event.setText((modif) ? "Appliquer" : "Créer");
 		loadChildren();
@@ -345,10 +343,13 @@ public class FicheEventEditController {
 	 * Enregistre ou met à jour une rencontre en base de données.
 	 */
 	@FXML
-	private void creerModifierRencontre() {
+	private void creerModifierRencontre() {// TODO contrainte plage dates
 		rencontre.setNom_renc(tf_nom_event.getText());
 		rencontre.setVille_renc(tf_ville_event.getText());
 		rencontre.setLieu_renc(tf_lieu_event.getText());
+		if (tf_nb_pers_event.getText().equals("")) {
+			NbPers = "0";
+		}
 		rencontre.setNb_pers_attendues(Long.parseLong(NbPers));
 		rencontre.setDate_deb_renc(java.sql.Date.valueOf(dt_debut_event.getValue()));
 		rencontre.setDate_fin_renc(java.sql.Date.valueOf(dt_fin_event.getValue()));
@@ -634,7 +635,7 @@ public class FicheEventEditController {
 	 * Enregistre ou met à jour une representation en base de données.
 	 */
 	@FXML
-	private void creerModifierProg() {
+	private void creerModifierProg() {// TODO contrainte plage heure
 		if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 			representation = new Representation();
 		} else {
