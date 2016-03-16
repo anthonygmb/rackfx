@@ -10,11 +10,11 @@ rackfx est une évolution de rack, le projet à implémenté plusieurs points:
 - le projet utilise le gestionnaire de projets Maven
 - le champ de recherche est géré par Hibernate search
 - le projet implémente plusieurs design pattern dont le modèle MVC et le singleton
+- les contraintes des beans sont gérés par Hibernate Validator
 
 Plusieurs points restent à faires:
-- un bug lors de la sauvegarde de l'entité représentation
+- les tests de jUnit doivent être implémentés 
 - la recherche d'entité avec hibernate search doit fonctionner avec un Analyzer
   qui prend en compte la recherche par approximation
-- les représentations doivent être rangé dans les tableaux d'événements futurs et passés
 
 </> anthony </>
