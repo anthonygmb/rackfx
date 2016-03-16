@@ -343,7 +343,7 @@ public class FicheEventEditController {
 	 * Enregistre ou met à jour une rencontre en base de données.
 	 */
 	@FXML
-	private void creerModifierRencontre() {// TODO contrainte plage dates
+	private void creerModifierRencontre() {
 		rencontre.setNom_renc(tf_nom_event.getText());
 		rencontre.setVille_renc(tf_ville_event.getText());
 		rencontre.setLieu_renc(tf_lieu_event.getText());
@@ -357,7 +357,8 @@ public class FicheEventEditController {
 			rencontre.setPeriodicite_renc(cmbox_perio_event.getSelectionModel().getSelectedItem().toString());
 		}
 		/* validation des contraintes */
-		if (Validateur.validator(rencontre)) {
+		if (Validateur.validator(rencontre)
+				&& Validateur.valideDate(dt_debut_event.getValue(), dt_fin_event.getValue())) {
 			if (dialogStage.getTitle().equals("Nouvelle rencontre *")) {
 				geleTab(true);
 				MainApp.getInstance().getRencontreData().add(rencontre);
@@ -635,7 +636,7 @@ public class FicheEventEditController {
 	 * Enregistre ou met à jour une representation en base de données.
 	 */
 	@FXML
-	private void creerModifierProg() {// TODO contrainte plage heure
+	private void creerModifierProg() {
 		if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 			representation = new Representation();
 		} else {
@@ -647,7 +648,8 @@ public class FicheEventEditController {
 		representation.setHeure_fin(java.sql.Time.valueOf(ltp_h_fin_prog.getLocalTime()));
 
 		/* validation des contraintes */
-		if (Validateur.validator(representation)) {
+		if (Validateur.validator(representation)
+				&& Validateur.valideTime(ltp_h_deb_prog.getLocalTime(), ltp_h_fin_prog.getLocalTime())) {
 			if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 				tbv_prog.getItems().add(representation);
 				representation.setRencontre(rencontre);

@@ -1,5 +1,7 @@
 package utilities;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -18,15 +20,20 @@ import model.Representation;
 import model.Titre;
 import model.User;
 
+/**
+ * The Class Validateur.
+ */
 public class Validateur {
 
+	/** The popup. */
 	private static Stage popup;
 
 	/**
 	 * Méthode de validation des beans, cette méthode controle le format des
 	 * attributs passés dans le bean.
-	 * 
-	 * @param obj
+	 *
+	 * @param <T> the generic type
+	 * @param obj the obj
 	 * @return true si le bean n'a pas problème de format
 	 */
 	public static <T> boolean validator(T obj) {
@@ -106,9 +113,9 @@ public class Validateur {
 	}
 
 	/**
-	 * Méthode d'affichage de popup de messages d'erreurs
-	 * 
-	 * @param message
+	 * Méthode d'affichage de popup de messages d'erreurs.
+	 *
+	 * @param message the message
 	 */
 	public static void showPopup(String message) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -117,5 +124,37 @@ public class Validateur {
 		alert.setHeaderText("Erreur dans la saisie des données");
 		alert.setContentText(message);
 		alert.showAndWait();
+	}
+
+	/**
+	 * Valide date.
+	 *
+	 * @param dateDebut the date debut
+	 * @param dateFin the date fin
+	 * @return true, if successful
+	 */
+	public static boolean valideDate(LocalDate dateDebut, LocalDate dateFin) {
+		if (dateDebut.isBefore(dateFin)) {
+			return true;
+		} else {
+			showPopup("La date de debut doit être avant la\ndate de fin");
+			return false;
+		}
+	}
+
+	/**
+	 * Valide time.
+	 *
+	 * @param timeDebut the time debut
+	 * @param timeFin the time fin
+	 * @return true, if successful
+	 */
+	public static boolean valideTime(LocalTime timeDebut, LocalTime timeFin) {
+		if (timeDebut.isBefore(timeFin)) {
+			return true;
+		} else {
+			showPopup("L'heure de debut doit être avant l'heure de fin");
+			return false;
+		}
 	}
 }

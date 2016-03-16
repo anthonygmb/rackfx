@@ -3,7 +3,6 @@ package controller;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -489,7 +488,7 @@ public final class MainViewController {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());// TODO
+			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());
 			tv_reper.getItems().remove(selectedIndex);
 		}
 	}
@@ -604,8 +603,8 @@ public final class MainViewController {
 	public void showEventDetails(Rencontre rencontre) {
 		if (rencontre != null) {
 			lb_lieu.setText(rencontre.getLieu_renc());
-			lb_date_deb.setText(rencontre.getDate_deb_renc().toString());
-			lb_date_fin.setText(rencontre.getDate_fin_renc().toString());
+			lb_date_deb.setText(rencontre.getDate_deb_renc().toString());//TODO changer format date
+			lb_date_fin.setText(rencontre.getDate_fin_renc().toString());//TODO changer format date
 			lb_nb_pers.setText(Long.toString(rencontre.getNb_pers_attendues()));
 			lb_perio.setText(rencontre.getPeriodicite_renc());
 		} else {
@@ -648,13 +647,9 @@ public final class MainViewController {
 	/**
 	 * Methode executée lorsque l'utilisateur clique sur le bouton Créer.
 	 * Renseigne les attributs de l'objet User.
-	 * 
-	 * @throws ParseException
-	 * @throws NoSuchProviderException
-	 * @throws NoSuchAlgorithmException
 	 */
 	@FXML
-	private void creerModifierUser() throws NoSuchAlgorithmException, NoSuchProviderException {
+	private void creerModifierUser() {
 		user = new User();
 		user.setLogin(tf_admin_login.getText());
 		user.setMot_de_passe(CryptEtDecrypt.getSecurePassword(tf_admin_mdp.getText(), salt));
