@@ -39,15 +39,15 @@ public class Titre {
 	private Groupe groupe;
 
 	public Titre() {
-		this(null, null);
+		this(null, null, null, null, false, null);
 	}
 
-	public Titre(String titre, String auteur) {
+	public Titre(String titre, String annee, Time duree, String genre, boolean reprise_titre, String auteur) {
 		this.titre = new SimpleStringProperty(titre);
-		this.annee = new SimpleStringProperty("2016");
-		this.duree = new SimpleObjectProperty<Time>();
-		this.genre = new SimpleStringProperty("");
-		this.reprise_titre = new SimpleBooleanProperty(true);
+		this.annee = new SimpleStringProperty(annee);
+		this.duree = new SimpleObjectProperty<Time>(duree);
+		this.genre = new SimpleStringProperty(genre);
+		this.reprise_titre = new SimpleBooleanProperty(reprise_titre);
 		this.auteur = new SimpleStringProperty(auteur);
 	}
 

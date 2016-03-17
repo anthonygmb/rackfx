@@ -40,7 +40,7 @@ public class RencontreTest {
 	}
 	
 	/**
-	 * Test controllant que les attributs NotEmpty ne peuvent pas etre null
+	 * Test controllant que les attributs NotNull ne peuvent pas etre null
 	 * Attributs: date_deb_renc, date_fin_renc
 	 */
 	@Test
@@ -57,7 +57,7 @@ public class RencontreTest {
 	 * Attributs: nom_renc, ville_renc, lieu_renc
 	 */
 	@Test
-	public void personneMax80Length() {
+	public void rencontreMax80Length() {
 		Rencontre rencontre = new Rencontre(phraseOver50.concat(phraseOver50), phraseOver50.concat(phraseOver50), phraseOver50.concat(phraseOver50), Date.valueOf("2020-01-01"), Date.valueOf("2020-01-01"), null, 0);
 		Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
 		assertEquals(3, constraintViolations.size());
@@ -77,11 +77,11 @@ public class RencontreTest {
 	}
 	
 	/**
-	 * Test qui certifie qu'un model crée en respectant les contraintes est
+	 * Test qui certifie qu'un bean crée en respectant les contraintes est
 	 * valide
 	 */
 	@Test
-	public void personneValid() {
+	public void rencontreValid() {
 		Rencontre rencontre = new Rencontre("test", "test", "test", Date.valueOf("2020-01-01"), Date.valueOf("2020-01-01"), "test", 1000);
 		Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
 		assertEquals(0, constraintViolations.size());

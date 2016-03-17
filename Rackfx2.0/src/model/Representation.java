@@ -38,8 +38,8 @@ public class Representation {
 	public Representation(String nom_groupe, String nom_titre, Time heure_debut, Time heure_fin) {
 		this.nom_groupe = new SimpleStringProperty(nom_groupe);
 		this.nom_titre = new SimpleStringProperty(nom_titre);
-		this.heure_debut = new SimpleObjectProperty<Time>();
-		this.heure_fin = new SimpleObjectProperty<Time>();
+		this.heure_debut = new SimpleObjectProperty<Time>(heure_debut);
+		this.heure_fin = new SimpleObjectProperty<Time>(heure_fin);
 	}
 
 	// =================================================================================================

@@ -107,7 +107,7 @@ public class PersonneTest {
 	}
 	
 	/**
-	 * Test qui certifie qu'un model crée en respectant les contraintes est
+	 * Test qui certifie qu'un bean crée en respectant les contraintes est
 	 * valide
 	 */
 	@Test
