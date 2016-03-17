@@ -31,7 +31,7 @@ public class RepresentationTest {
 	 * Attributs: nom_groupe, nom_titre
 	 */
 	@Test
-	public void repreNotEmptyTest() {
+	public void notEmptyTest() {
 		Representation repre = new Representation(null, null, Time.valueOf("01:01:01"), Time.valueOf("01:01:01"));
 		Set<ConstraintViolation<Representation>> constraintViolations = validator.validate(repre);
 		assertEquals(2, constraintViolations.size());
@@ -43,7 +43,7 @@ public class RepresentationTest {
 	 * Attributs: heure_debut, heure_fin
 	 */
 	@Test
-	public void repreNotNullTest() {
+	public void notNullTest() {
 		Representation repre = new Representation("test", "test", null, null);
 		Set<ConstraintViolation<Representation>> constraintViolations = validator.validate(repre);
 		assertEquals(2, constraintViolations.size());
@@ -55,7 +55,7 @@ public class RepresentationTest {
 	 * valide
 	 */
 	@Test
-	public void repreValid() {
+	public void valid() {
 		Representation repre = new Representation("test", "test", Time.valueOf("01:01:01"), Time.valueOf("01:01:01"));
 		Set<ConstraintViolation<Representation>> constraintViolations = validator.validate(repre);
 		assertEquals(0, constraintViolations.size());

@@ -33,7 +33,7 @@ public class GroupeTest {
 	 * Attributs: nom_groupe
 	 */
 	@Test
-	public void groupeNotEmptyTest() {
+	public void notEmptyTest() {
 		Groupe groupe = new Groupe(null, null, null, null);
 		Set<ConstraintViolation<Groupe>> constraintViolations = validator.validate(groupe);
 		assertEquals(1, constraintViolations.size());
@@ -46,7 +46,7 @@ public class GroupeTest {
 	 * Attributs: nom_groupe, carac_groupe, region_groupe
 	 */
 	@Test
-	public void groupeMax50Length() {
+	public void max50Length() {
 		Groupe groupe = new Groupe(phraseOver50, phraseOver50, null, phraseOver50);
 		Set<ConstraintViolation<Groupe>> constraintViolations = validator.validate(groupe);
 		assertEquals(3, constraintViolations.size());
@@ -58,7 +58,7 @@ public class GroupeTest {
 	 * valide
 	 */
 	@Test
-	public void groupeValid() {
+	public void valid() {
 		Groupe groupe = new Groupe("test", "test", "test", "test");
 		Set<ConstraintViolation<Groupe>> constraintViolations = validator.validate(groupe);
 		assertEquals(0, constraintViolations.size());

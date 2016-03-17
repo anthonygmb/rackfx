@@ -32,7 +32,7 @@ public class RencontreTest {
 	 * Attributs: nom_renc, ville_renc
 	 */
 	@Test
-	public void rencontreNotEmptyTest() {
+	public void notEmptyTest() {
 		Rencontre rencontre = new Rencontre(null, null, null, Date.valueOf("2020-01-01"), Date.valueOf("2020-01-01"), null, 0);
 		Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
 		assertEquals(2, constraintViolations.size());
@@ -44,7 +44,7 @@ public class RencontreTest {
 	 * Attributs: date_deb_renc, date_fin_renc
 	 */
 	@Test
-	public void rencontreNotNullTest() {
+	public void notNullTest() {
 		Rencontre rencontre = new Rencontre("test", "test", null, null, null, null, 0);
 		Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
 		assertEquals(2, constraintViolations.size());
@@ -57,7 +57,7 @@ public class RencontreTest {
 	 * Attributs: nom_renc, ville_renc, lieu_renc
 	 */
 	@Test
-	public void rencontreMax80Length() {
+	public void max80Length() {
 		Rencontre rencontre = new Rencontre(phraseOver50.concat(phraseOver50), phraseOver50.concat(phraseOver50), phraseOver50.concat(phraseOver50), Date.valueOf("2020-01-01"), Date.valueOf("2020-01-01"), null, 0);
 		Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
 		assertEquals(3, constraintViolations.size());
@@ -69,7 +69,7 @@ public class RencontreTest {
 	 * Attributs: nb_pers_attendues
 	 */
 	@Test
-	public void rencontreMaxValueTest() {
+	public void maxValueTest() {
 		Rencontre rencontre = new Rencontre("test", "test", "test", Date.valueOf("2020-01-01"), Date.valueOf("2020-01-01"), null, 15000);
 		Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
 		assertEquals(1, constraintViolations.size());
@@ -81,7 +81,7 @@ public class RencontreTest {
 	 * valide
 	 */
 	@Test
-	public void rencontreValid() {
+	public void valid() {
 		Rencontre rencontre = new Rencontre("test", "test", "test", Date.valueOf("2020-01-01"), Date.valueOf("2020-01-01"), "test", 1000);
 		Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
 		assertEquals(0, constraintViolations.size());

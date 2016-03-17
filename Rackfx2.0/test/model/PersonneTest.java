@@ -34,7 +34,7 @@ public class PersonneTest {
 	 * Attributs: nom_membre, prenom_membre, civi_membre
 	 */
 	@Test
-	public void personneNotEmptyTest() {
+	public void notEmptyTest() {
 		Personne personne = new Personne(null, null, null, null, null, null, null, false, null, null, null, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(3, constraintViolations.size());
@@ -47,7 +47,7 @@ public class PersonneTest {
 	 * Attributs: nom_personne, prenom_personne
 	 */
 	@Test
-	public void personneMax50Length() {
+	public void max50Length() {
 		Personne personne = new Personne(phraseOver50, phraseOver50, "test", null, null, null, null, false, null, null, null, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(2, constraintViolations.size());
@@ -60,7 +60,7 @@ public class PersonneTest {
 	 * Attributs: adresse_cor
 	 */
 	@Test
-	public void personneMax100Length() {
+	public void max100Length() {
 		Personne personne = new Personne("test", "test", "test", null, null, null, null, false, phraseOver50.concat(phraseOver50), null, null, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(1, constraintViolations.size());
@@ -73,7 +73,7 @@ public class PersonneTest {
 	 * Attributs: tel_cor, fax_cor
 	 */
 	@Test
-	public void personneMax13Size() {
+	public void max13Size() {
 		Personne personne = new Personne("test", "test", "test", null, null, null, null, false, null, phraseOver50, phraseOver50, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(2, constraintViolations.size());
@@ -86,7 +86,7 @@ public class PersonneTest {
 	 * Attributs: mail_cor
 	 */
 	@Test
-	public void personneEmailTest() {
+	public void emailTest() {
 		Personne personne = new Personne("test", "test", "test", null, null, null, null, false, null, null, null, "testEmail");
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(1, constraintViolations.size());
@@ -99,7 +99,7 @@ public class PersonneTest {
 	 * Attributs: date_naiss_membre
 	 */
 	@Test
-	public void personneDateTest() {
+	public void dateTest() {
 		Personne personne = new Personne("test", "test", "test", Date.valueOf("2020-01-01"), null, null, null, false, null, null, null, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(1, constraintViolations.size());
@@ -111,7 +111,7 @@ public class PersonneTest {
 	 * valide
 	 */
 	@Test
-	public void personneValid() {
+	public void valid() {
 		Personne personne = new Personne("test", "test", "test", Date.valueOf("2010-01-01"), "test", "test", "test", false, "test", "test", "test", "test@email.com");
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(0, constraintViolations.size());

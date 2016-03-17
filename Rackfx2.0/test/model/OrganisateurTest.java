@@ -33,7 +33,7 @@ public class OrganisateurTest {
 	 * Attributs: nom_orga, prenom_orga, civi_orga, tel_orga, entreprise_orga
 	 */
 	@Test
-	public void orgaNotEmptyTest() {
+	public void notEmptyTest() {
 		Organisateur orga = new Organisateur(null, null, null, null, null, null, null, null);
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(5, constraintViolations.size());
@@ -46,7 +46,7 @@ public class OrganisateurTest {
 	 * Attributs: nom_orga, prenom_orga, entreprise_orga
 	 */
 	@Test
-	public void orgaMax50Length() {
+	public void max50Length() {
 		Organisateur orga = new Organisateur(phraseOver50, phraseOver50, "test", null, "test", null, null, phraseOver50);
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(3, constraintViolations.size());
@@ -59,7 +59,7 @@ public class OrganisateurTest {
 	 * Attributs: adresse_entreprise_orga
 	 */
 	@Test
-	public void orgaMax100Length() {
+	public void max100Length() {
 		Organisateur orga = new Organisateur("test", "test", "test", phraseOver50.concat(phraseOver50), "test", null, null, "test");
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(1, constraintViolations.size());
@@ -72,7 +72,7 @@ public class OrganisateurTest {
 	 * Attributs: tel_orga, fax_orga
 	 */
 	@Test
-	public void orgaMax13Size() {
+	public void max13Size() {
 		Organisateur orga = new Organisateur("test", "test", "test", "test", phraseOver50, phraseOver50, null, "test");
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(2, constraintViolations.size());
@@ -85,7 +85,7 @@ public class OrganisateurTest {
 	 * Attributs: mail_orga
 	 */
 	@Test
-	public void orgaEmailTest() {
+	public void emailTest() {
 		Organisateur orga = new Organisateur("test", "test", "test", null, "test", null, "testEmail", "test");
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(1, constraintViolations.size());
@@ -97,7 +97,7 @@ public class OrganisateurTest {
 	 * valide
 	 */
 	@Test
-	public void orgaValid() {
+	public void valid() {
 		Organisateur orga = new Organisateur("test", "test", "test", "test", "test", "test", "test@email.com", "test");
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(0, constraintViolations.size());
