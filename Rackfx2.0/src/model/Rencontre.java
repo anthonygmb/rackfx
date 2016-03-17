@@ -45,17 +45,18 @@ public class Rencontre {
 	private Set<Representation> liste_repre = new HashSet<Representation>();
 
 	public Rencontre() {
-		this(null, null);
+		this(null, null, null, null, null, null, 0);
 	}
 
-	public Rencontre(String nom_renc, String ville_renc) {
+	public Rencontre(String nom_renc, String ville_renc, String lieu_renc, Date date_deb_renc, Date date_fin_renc,
+			String periodicite_renc, long nb_pers_attendues) {
 		this.nom_renc = new SimpleStringProperty(nom_renc);
 		this.ville_renc = new SimpleStringProperty(ville_renc);
-		this.lieu_renc = new SimpleStringProperty("");
-		this.date_deb_renc = new SimpleObjectProperty<Date>();
-		this.date_fin_renc = new SimpleObjectProperty<Date>();
-		this.periodicite_renc = new SimpleStringProperty("");
-		this.nb_pers_attendues = new SimpleLongProperty();
+		this.lieu_renc = new SimpleStringProperty(lieu_renc);
+		this.date_deb_renc = new SimpleObjectProperty<Date>(date_deb_renc);
+		this.date_fin_renc = new SimpleObjectProperty<Date>(date_fin_renc);
+		this.periodicite_renc = new SimpleStringProperty(periodicite_renc);
+		this.nb_pers_attendues = new SimpleLongProperty(nb_pers_attendues);
 	}
 
 	// =================================================================================================
