@@ -50,22 +50,24 @@ public class Personne {
 	private Groupe groupe;
 
 	public Personne() {
-		this(null, null);
+		this(null, null, null, null, null, null, null, false, null, null, null, null);
 	}
 
-	public Personne(String nom_membre, String prenom_membre) {
+	public Personne(String nom_membre, String prenom_membre, String civi_membre, Date date_naiss_membre,
+			String spe_membre, String instru_membre, String respon_membre, boolean correspondant, String adresse_cor,
+			String tel_cor, String fax_cor, String mail_cor) {
 		this.nom_membre = new SimpleStringProperty(nom_membre);
 		this.prenom_membre = new SimpleStringProperty(prenom_membre);
-		this.civi_membre = new SimpleStringProperty("");
-		this.date_naiss_membre = new SimpleObjectProperty<Date>();
-		this.spe_membre = new SimpleStringProperty("");
-		this.instru_membre = new SimpleStringProperty("");
-		this.respon_membre = new SimpleStringProperty("");
-		this.correspondant = new SimpleBooleanProperty(true);
-		this.adresse_cor = new SimpleStringProperty("");
-		this.tel_cor = new SimpleStringProperty("");
-		this.fax_cor = new SimpleStringProperty("");
-		this.mail_cor = new SimpleStringProperty("");
+		this.civi_membre = new SimpleStringProperty(civi_membre);
+		this.date_naiss_membre = new SimpleObjectProperty<Date>(date_naiss_membre);
+		this.spe_membre = new SimpleStringProperty(spe_membre);
+		this.instru_membre = new SimpleStringProperty(instru_membre);
+		this.respon_membre = new SimpleStringProperty(respon_membre);
+		this.correspondant = new SimpleBooleanProperty(correspondant);
+		this.adresse_cor = new SimpleStringProperty(adresse_cor);
+		this.tel_cor = new SimpleStringProperty(tel_cor);
+		this.fax_cor = new SimpleStringProperty(fax_cor);
+		this.mail_cor = new SimpleStringProperty(mail_cor);
 	}
 
 	// =================================================================================================

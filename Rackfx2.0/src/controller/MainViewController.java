@@ -603,8 +603,14 @@ public final class MainViewController {
 	public void showEventDetails(Rencontre rencontre) {
 		if (rencontre != null) {
 			lb_lieu.setText(rencontre.getLieu_renc());
-			lb_date_deb.setText(rencontre.getDate_deb_renc().toString());//TODO changer format date
-			lb_date_fin.setText(rencontre.getDate_fin_renc().toString());//TODO changer format date
+			lb_date_deb.setText(rencontre.getDate_deb_renc().toString());// TODO
+																			// changer
+																			// format
+																			// date
+			lb_date_fin.setText(rencontre.getDate_fin_renc().toString());// TODO
+																			// changer
+																			// format
+																			// date
 			lb_nb_pers.setText(Long.toString(rencontre.getNb_pers_attendues()));
 			lb_perio.setText(rencontre.getPeriodicite_renc());
 		} else {

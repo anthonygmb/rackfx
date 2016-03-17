@@ -36,18 +36,19 @@ public class Organisateur {
 	private Rencontre rencontre;
 
 	public Organisateur() {
-		this(null, null);
+		this(null, null, null, null, null, null, null, null);
 	}
 
-	public Organisateur(String nom_orga, String prenom_orga) {
+	public Organisateur(String nom_orga, String prenom_orga, String civi_orga, String adresse_entreprise_orga,
+			String tel_orga, String fax_orga, String mail_orga, String entreprise_orga) {
 		this.nom_orga = new SimpleStringProperty(nom_orga);
 		this.prenom_orga = new SimpleStringProperty(prenom_orga);
-		this.civi_orga = new SimpleStringProperty("");
-		this.adresse_entreprise_orga = new SimpleStringProperty("");
-		this.tel_orga = new SimpleStringProperty("");
-		this.fax_orga = new SimpleStringProperty("");
-		this.mail_orga = new SimpleStringProperty("");
-		this.entreprise_orga = new SimpleStringProperty("");
+		this.civi_orga = new SimpleStringProperty(civi_orga);
+		this.adresse_entreprise_orga = new SimpleStringProperty(adresse_entreprise_orga);
+		this.tel_orga = new SimpleStringProperty(tel_orga);
+		this.fax_orga = new SimpleStringProperty(fax_orga);
+		this.mail_orga = new SimpleStringProperty(mail_orga);
+		this.entreprise_orga = new SimpleStringProperty(entreprise_orga);
 	}
 
 	// =================================================================================================

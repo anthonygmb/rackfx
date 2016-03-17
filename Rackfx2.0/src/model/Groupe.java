@@ -57,9 +57,9 @@ public class Groupe {
 
 	public Groupe(String nomGroupe, String carac_groupe, String pays_groupe, String region_groupe) {
 		this.nom_groupe = new SimpleStringProperty(nomGroupe);
-		this.carac_groupe = new SimpleStringProperty("");
-		this.pays_groupe = new SimpleStringProperty("");
-		this.region_groupe = new SimpleStringProperty("");
+		this.carac_groupe = new SimpleStringProperty(carac_groupe);
+		this.pays_groupe = new SimpleStringProperty(pays_groupe);
+		this.region_groupe = new SimpleStringProperty(region_groupe);
 	}
 
 	// =================================================================================================
