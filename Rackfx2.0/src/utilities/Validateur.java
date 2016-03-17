@@ -30,11 +30,11 @@ public class Validateur {
 
 	/**
 	 * Méthode de validation des beans, cette méthode controle le format des
-	 * attributs passés dans le bean.
+	 * attributs passés dans le model.
 	 *
 	 * @param <T> the generic type
 	 * @param obj the obj
-	 * @return true si le bean n'a pas problème de format
+	 * @return true si le model n'a pas problème de format
 	 */
 	public static <T> boolean validator(T obj) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

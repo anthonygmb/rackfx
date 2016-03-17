@@ -308,7 +308,7 @@ public class FicheGroupeEditController {
 		this.groupe = groupe;
 		tf_nom_groupe.setText(groupe.getNom_groupe());
 		tf_carac_groupe.setText(groupe.getCarac_groupe());
-		if (groupe.getPays_groupe().equals("")) {
+		if (groupe.getPays_groupe() == null) {
 			cmbox_pays_groupe.getSelectionModel().clearSelection();
 		} else {
 			cmbox_pays_groupe.getSelectionModel().select(groupe.getPays_groupe());

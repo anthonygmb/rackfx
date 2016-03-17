@@ -1,8 +1,6 @@
-/controller/
+/META-INF/
 /img/
 /view/
-/META-INF/
-/bean/
+/controller/
 /model/
-/sql/
 /utilities/
