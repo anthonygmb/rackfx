@@ -328,7 +328,7 @@ public class FicheEventEditController {
 			dt_fin_event.setValue(LocalDate.now());
 		}
 
-		if (rencontre.getPeriodicite_renc().equals("")) {
+		if (rencontre.getPeriodicite_renc() == null) {
 			cmbox_perio_event.getSelectionModel().clearSelection();
 		} else {
 			cmbox_perio_event.getSelectionModel().select(rencontre.getPeriodicite_renc());
