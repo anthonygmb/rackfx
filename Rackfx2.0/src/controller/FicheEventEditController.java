@@ -57,8 +57,8 @@ public class FicheEventEditController {
 	}
 
 	/**
-	 * Initializes the controller class. This method is automatically called
-	 * after the fxml file has been loaded.
+	 * Méthode initialize appellé automatiquement après que
+	 * le fxml est été chargé.
 	 */
 	@FXML
 	private void initialize() {
