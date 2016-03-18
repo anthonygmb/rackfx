@@ -71,6 +71,10 @@
 																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 															</rowConstraints>
 															<children>
 																<Label fx:id="lb_nom_groupe" text="Nom du groupe" />
@@ -81,6 +85,14 @@
 																<Label fx:id="lb_carac_groupe" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 																<Label fx:id="lb_pays_groupe" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 																<Label fx:id="lb_region_groupe" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="Nombre de membres" GridPane.rowIndex="4" />
+                                                <Label fx:id="lb_nb_membre" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label text="Nombre de titres" GridPane.rowIndex="5" />
+                                                <Label fx:id="lb_nb_titre" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Nombre d'événements futurs" GridPane.rowIndex="6" />
+                                                <Label text="Nombre d'événements passés" GridPane.rowIndex="7" />
+                                                <Label fx:id="lb_nb_event_futur" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <Label fx:id="lb_nb_event_passe" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 															</children>
 														</GridPane>
 														<ButtonBar layoutX="324.0" layoutY="471.0" prefHeight="40.0" prefWidth="414.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
@@ -135,6 +147,8 @@
 																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 																<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 															</rowConstraints>
 															<children>
 																<Label text="Lieu" />
@@ -147,6 +161,10 @@
 																<Label fx:id="lb_date_fin" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 																<Label fx:id="lb_perio" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 																<Label fx:id="lb_nb_pers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label text="Nombre d'organisateurs" GridPane.rowIndex="5" />
+                                                <Label fx:id="lb_nb_orga" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label fx:id="lb_nb_repre" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <Label text="Nombre de représentations" GridPane.rowIndex="6" />
 															</children>
 														</GridPane>
 														<ButtonBar layoutX="207.0" layoutY="335.0" prefHeight="40.0" prefWidth="414.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
@@ -199,6 +217,12 @@
 											</padding>
 										</TextField>
                               <ToggleSwitch fx:id="ts_adm_user" layoutX="649.0" layoutY="441.0" prefHeight="20.0" prefWidth="124.0" text="admin | user" AnchorPane.bottomAnchor="105.0" />
+                              <Label layoutX="801.0" layoutY="53.0" text="Nombre d'utilisateurs" />
+                              <Label layoutX="801.0" layoutY="89.0" text="Nombre d'administrateurs" />
+                              <Label fx:id="lb_nb_user" layoutX="1010.0" layoutY="53.0" text="Label" />
+                              <Label fx:id="lb_nb_admin" layoutX="1010.0" layoutY="89.0" text="Label" />
+                              <Label layoutX="801.0" layoutY="128.0" text="Nombre total" />
+                              <Label fx:id="lb_nb_total" layoutX="1010.0" layoutY="128.0" text="Label" />
 									</children>
 								</AnchorPane>
 							</content>

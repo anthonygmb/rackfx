@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,9 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -39,6 +43,7 @@ import model.Groupe;
 import model.Organisateur;
 import model.Personne;
 import model.Rencontre;
+import model.Representation;
 import model.Titre;
 import model.User;
 import sql.CRUD;
@@ -89,7 +94,6 @@ public final class MainViewController {
 	 */
 	@FXML
 	private void initialize() throws InterruptedException {
-
 		INSTANCE_MAIN_VIEW_CONTROLLER = this;
 
 		Session s = HibernateSetUp.getSession();
@@ -101,6 +105,27 @@ public final class MainViewController {
 		tv_reper.setItems(MainApp.getInstance().getGroupeData());
 		tv_planif.setItems(MainApp.getInstance().getRencontreData());
 		tv_admin.setItems(MainApp.getInstance().getUserData());
+
+		/* récupération du nombre d'utilisateurs et d'administrateurs */
+		lb_nb_admin.setText(String.valueOf(CRUD.count("User", "droit_auth", "\'administrateur\'")));
+		lb_nb_user.setText(String.valueOf(CRUD.count("User", "droit_auth", "\'utilisateur\'")));
+		lb_nb_total.setText(
+				String.valueOf(Integer.valueOf(lb_nb_admin.getText()) + Integer.valueOf(lb_nb_user.getText())));
+
+		/*
+		 * listener pour mettre à jour le nombre d'utilisateurs et
+		 * d'administrateurs
+		 */
+		MainApp.getInstance().getUserData().addListener(new ListChangeListener<User>() {
+
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends User> c) {
+				lb_nb_admin.setText(String.valueOf(CRUD.count("User", "droit_auth", "\'administrateur\'")));
+				lb_nb_user.setText(String.valueOf(CRUD.count("User", "droit_auth", "\'utilisateur\'")));
+				lb_nb_total.setText(
+						String.valueOf(Integer.valueOf(lb_nb_admin.getText()) + Integer.valueOf(lb_nb_user.getText())));
+			}
+		});
 
 		nom_groupeColumn.setCellValueFactory(cellData -> cellData.getValue().nom_groupeProperty());
 		showGroupeDetails(null);
@@ -433,6 +458,17 @@ public final class MainViewController {
 	private Button btn_edit_groupe;
 	@FXML
 	public Button btn_supp_groupe;
+	@FXML
+	private Label lb_nb_membre;
+	@FXML
+	private Label lb_nb_titre;
+	@FXML
+	private Label lb_nb_event_futur;
+	@FXML
+	private Label lb_nb_event_passe;
+	private ObservableList<Representation> repreDataTri = FXCollections.observableArrayList();
+	private ObservableList<Rencontre> rencontreDataTri = FXCollections.observableArrayList();
+	private Date auj = new Date();
 
 	/**
 	 * Appelé quand l'utilisateur clique sur le bouton Nouveau de l'onglet
@@ -500,15 +536,39 @@ public final class MainViewController {
 	 */
 	public void showGroupeDetails(Groupe groupe) {
 		if (groupe != null) {
+			int rencontreDataF = 0;
+			int rencontreDataP = 0;
+			repreDataTri.setAll(CRUD.getAllWhere("Representation", "groupeId", groupe.getGroupeId()));
+			for (Representation repreTri : repreDataTri) {
+				rencontreDataTri
+						.setAll(CRUD.getAllWhere("Rencontre", "rencontreId", repreTri.getRencontre().getRencontreId()));
+
+				for (Rencontre rencTri : rencontreDataTri) {
+					if (rencTri.getDate_fin_renc().getTime() > auj.getTime()) {
+						rencontreDataF++;
+					} else {
+						rencontreDataP++;
+					}
+				}
+			}
 			lb_nom_groupe.setText(groupe.getNom_groupe());
 			lb_carac_groupe.setText(groupe.getCarac_groupe());
 			lb_pays_groupe.setText(groupe.getPays_groupe());
 			lb_region_groupe.setText(groupe.getRegion_groupe());
+			lb_nb_membre
+					.setText(String.valueOf(CRUD.count("Personne", "groupeId", String.valueOf(groupe.getGroupeId()))));
+			lb_nb_titre.setText(String.valueOf(CRUD.count("Titre", "groupeId", String.valueOf(groupe.getGroupeId()))));
+			lb_nb_event_futur.setText(String.valueOf(rencontreDataF));
+			lb_nb_event_passe.setText(String.valueOf(rencontreDataP));
 		} else {
 			lb_nom_groupe.setText("");
 			lb_carac_groupe.setText("");
 			lb_pays_groupe.setText("");
 			lb_region_groupe.setText("");
+			lb_nb_membre.setText("");
+			lb_nb_titre.setText("");
+			lb_nb_event_futur.setText("");
+			lb_nb_event_passe.setText("");
 		}
 	}
 
@@ -540,6 +600,10 @@ public final class MainViewController {
 	private Button btn_edit_event;
 	@FXML
 	public Button btn_supp_event;
+	@FXML
+	private Label lb_nb_orga;
+	@FXML
+	private Label lb_nb_repre;
 	private SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	/**
@@ -609,12 +673,18 @@ public final class MainViewController {
 			lb_date_fin.setText(simpleFormat.format(rencontre.getDate_fin_renc()));
 			lb_nb_pers.setText(rencontre.getNb_pers_attendues().toString());
 			lb_perio.setText(rencontre.getPeriodicite_renc());
+			lb_nb_orga.setText(String
+					.valueOf(CRUD.count("Organisateur", "rencontreId", String.valueOf(rencontre.getRencontreId()))));
+			lb_nb_repre.setText(String
+					.valueOf(CRUD.count("Representation", "rencontreId", String.valueOf(rencontre.getRencontreId()))));
 		} else {
 			lb_lieu.setText("");
 			lb_date_deb.setText("");
 			lb_date_fin.setText("");
 			lb_nb_pers.setText("");
 			lb_perio.setText("");
+			lb_nb_orga.setText("");
+			lb_nb_repre.setText("");
 		}
 	}
 
@@ -644,6 +714,12 @@ public final class MainViewController {
 	private TextField tf_admin_mdp;
 	@FXML
 	private ToggleSwitch ts_adm_user;
+	@FXML
+	private Label lb_nb_user;
+	@FXML
+	private Label lb_nb_admin;
+	@FXML
+	private Label lb_nb_total;
 	private User user;
 
 	/**

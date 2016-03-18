@@ -2,6 +2,7 @@ package sql;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import controller.MainViewController;
@@ -42,6 +43,24 @@ public abstract class CRUD {
 		s.getTransaction().commit();
 		s.close();
 		return list_obj;
+	}
+
+	/**
+	 * Methode de comptage d'entités
+	 * 
+	 * @param table
+	 * @param parentId
+	 * @param id
+	 * @return count
+	 */
+	public static <T> long count(String table, String parentId, String id) {
+		Session s = HibernateSetUp.getSession();
+		s.beginTransaction();
+		Query query = s.createQuery("select count(*) from " + table + " where " + parentId + " = " + id);
+		Long count = (Long) query.uniqueResult();
+		s.getTransaction().commit();
+		s.close();
+		return count;
 	}
 
 	/**
