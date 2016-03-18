@@ -3,6 +3,7 @@ package controller;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -539,6 +540,7 @@ public final class MainViewController {
 	private Button btn_edit_event;
 	@FXML
 	public Button btn_supp_event;
+	private SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	/**
 	 * Appelé quand l'utilisateur clique sur le bouton Nouveau de l'onglet
@@ -603,15 +605,9 @@ public final class MainViewController {
 	public void showEventDetails(Rencontre rencontre) {
 		if (rencontre != null) {
 			lb_lieu.setText(rencontre.getLieu_renc());
-			lb_date_deb.setText(rencontre.getDate_deb_renc().toString());// TODO
-																			// changer
-																			// format
-																			// date
-			lb_date_fin.setText(rencontre.getDate_fin_renc().toString());// TODO
-																			// changer
-																			// format
-																			// date
-			lb_nb_pers.setText(Long.toString(rencontre.getNb_pers_attendues()));
+			lb_date_deb.setText(simpleFormat.format(rencontre.getDate_deb_renc()));
+			lb_date_fin.setText(simpleFormat.format(rencontre.getDate_fin_renc()));
+			lb_nb_pers.setText(rencontre.getNb_pers_attendues().toString());
 			lb_perio.setText(rencontre.getPeriodicite_renc());
 		} else {
 			lb_lieu.setText("");
