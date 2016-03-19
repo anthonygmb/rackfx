@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -50,6 +51,7 @@ public class Groupe {
 	private Set<Personne> liste_personne = new HashSet<Personne>();
 	private Set<Titre> liste_titre = new HashSet<Titre>();
 	private Set<Representation> liste_representation = new HashSet<Representation>();
+	private byte[] image;
 
 	public Groupe() {
 		this(null, null, null, null);
@@ -164,5 +166,15 @@ public class Groupe {
 
 	public void setListe_representation(Set<Representation> liste_representation) {
 		this.liste_representation = liste_representation;
+	}
+
+	// =================================================================================================
+	@Lob
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 }

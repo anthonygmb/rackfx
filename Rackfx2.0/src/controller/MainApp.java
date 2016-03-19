@@ -6,16 +6,19 @@ import java.time.LocalTime;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Groupe;
 import model.Rencontre;
 import model.User;
 import sql.CRUD;
+import sql.HibernateSetUp;
 
 public final class MainApp extends Application {
 
@@ -84,6 +87,15 @@ public final class MainApp extends Application {
 		this.primaryStage.setTitle("RackFx");
 		this.primaryStage.getIcons().add(new Image("file:src/img/mediator.png"));
 		initRootLayout();
+		
+		primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
+
+			@Override
+			public void handle(WindowEvent event) {
+				HibernateSetUp.shutdown();
+			}
+			
+		});
 	}
 
 	/**

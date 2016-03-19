@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,9 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import jfxtras.scene.control.LocalTimePicker;
@@ -35,6 +39,7 @@ import model.Rencontre;
 import model.Representation;
 import model.Titre;
 import sql.CRUD;
+import utilities.FileUtils;
 import utilities.Validateur;
 
 public class FicheGroupeEditController {
@@ -293,7 +298,16 @@ public class FicheGroupeEditController {
 	private Button btn_creer_groupe;
 	@FXML
 	private Button btn_annuler_groupe;
+	// @FXML
+	// private Button bt_import_img;
+	// @FXML
+	// private Button bt_supp_img;
+	@FXML
+	private ImageView img_view;
 	private Groupe groupe;
+	private final FileChooser fileChooser = new FileChooser();
+	private boolean importe = false;
+	private File file;
 
 	/**
 	 * renseigne la fenetre d'édition de groupe avec le groupe passé en
@@ -315,6 +329,13 @@ public class FicheGroupeEditController {
 		}
 		cmbox_pays_groupe.getItems().addAll(pays_groupe);
 		tf_region_groupe.setText(groupe.getRegion_groupe());
+		if (groupe.getImage() != null) {
+			img_view.setImage(FileUtils.convertByteToImage(groupe.getImage()));
+			importe = true;
+		} else {
+			img_view.setImage(new Image("file:src/img/cd_music.png"));
+			importe = false;
+		}
 		btn_creer_groupe.setText((modif) ? "Appliquer" : "Créer");
 		loadChildren();
 		loadRencontres();
@@ -332,6 +353,9 @@ public class FicheGroupeEditController {
 			groupe.setPays_groupe(cmbox_pays_groupe.getSelectionModel().getSelectedItem().toString());
 		}
 		groupe.setRegion_groupe(tf_region_groupe.getText());
+		if (importe) {
+			groupe.setImage(FileUtils.convertFileToByte(file));
+		}
 		try {
 			/* validation des contraintes */
 			if (Validateur.validator(groupe)) {
@@ -364,6 +388,32 @@ public class FicheGroupeEditController {
 	@FXML
 	private void annulerGroupe() {
 		dialogStage.close();
+	}
+
+	/**
+	 * Methode d'importation d'image avec le Filechooser de javaFx. On définit
+	 * le file chooser pour privilégier les formats image.
+	 */
+	@FXML
+	private void importerImagerGroupe() {
+		fileChooser.setTitle("Importer une image");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
+				new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
+		file = fileChooser.showOpenDialog(dialogStage);
+		img_view.setImage(FileUtils.convertFileToImage(file));
+		importe = true;
+	}
+
+	/**
+	 * Methode de suppression d'image de groupe
+	 */
+	@FXML
+	private void supprimerImage() {
+		if (importe) {
+			img_view.setImage(new Image("file:src/img/cd_music.png"));
+			groupe.setImage(null);
+		}
 	}
 
 	/*

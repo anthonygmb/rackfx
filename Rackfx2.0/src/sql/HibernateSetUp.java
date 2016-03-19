@@ -9,6 +9,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateSetUp {
 
+	/** The Constant sessionFactory. */
 	private static final SessionFactory sessionFactory;
 
 	static {
@@ -20,8 +21,21 @@ public class HibernateSetUp {
 		}
 	}
 
-	/* Renvoie une session Hibernate */
+	/**
+	 * Gets the session.
+	 *
+	 * @return the session
+	 * @throws HibernateException
+	 *             the hibernate exception
+	 */
 	public static Session getSession() throws HibernateException {
 		return sessionFactory.openSession();
+	}
+
+	/**
+	 * Shutdown.
+	 */
+	public static void shutdown() {
+		sessionFactory.close();
 	}
 }
