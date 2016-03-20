@@ -58,6 +58,7 @@ public class FicheGroupeEditController {
 	private String annee = "";
 	private ObservableList<Representation> repreDataTri = FXCollections.observableArrayList();
 	private ObservableList<Rencontre> rencontreDataTri = FXCollections.observableArrayList();
+	private Image imageOrigine;
 
 	/**
 	 * Constructeur.
@@ -81,6 +82,8 @@ public class FicheGroupeEditController {
 	@FXML
 	private void initialize() {
 		INSTANCE_FICHE_GROUPE_CONTROLLER = this;
+
+		imageOrigine = new Image("file:src/img/cd_music.png");
 
 		/* formatte la combobox pour qu'elle affiche le texte voulu */
 		cmbox_membre.setButtonCell(new ListCell<Personne>() {
@@ -178,6 +181,8 @@ public class FicheGroupeEditController {
 		btn_supp_membre.setDisable(true);
 		btn_creer_titre.setDisable(true);
 		btn_supp_titre.setDisable(true);
+		bt_import_img.setDisable(true);
+		bt_supp_img.setDisable(true);
 
 		if (MainViewController.getInstance().connectAdmin) {
 			btn_creer_groupe.setDisable(false);
@@ -185,6 +190,8 @@ public class FicheGroupeEditController {
 			btn_supp_membre.setDisable(false);
 			btn_creer_titre.setDisable(false);
 			btn_supp_titre.setDisable(false);
+			bt_import_img.setDisable(false);
+			bt_supp_img.setDisable(false);
 		} else if (MainViewController.getInstance().connectUser) {
 			btn_creer_groupe.setDisable(false);
 			btn_creer_membre.setDisable(false);
@@ -298,10 +305,10 @@ public class FicheGroupeEditController {
 	private Button btn_creer_groupe;
 	@FXML
 	private Button btn_annuler_groupe;
-	// @FXML
-	// private Button bt_import_img;
-	// @FXML
-	// private Button bt_supp_img;
+	@FXML
+	private Button bt_import_img;
+	@FXML
+	private Button bt_supp_img;
 	@FXML
 	private ImageView img_view;
 	private Groupe groupe;
@@ -333,7 +340,7 @@ public class FicheGroupeEditController {
 			img_view.setImage(FileUtils.convertByteToImage(groupe.getImage()));
 			importe = true;
 		} else {
-			img_view.setImage(new Image("file:src/img/cd_music.png"));
+			img_view.setImage(imageOrigine);
 			importe = false;
 		}
 		btn_creer_groupe.setText((modif) ? "Appliquer" : "Créer");
@@ -401,8 +408,10 @@ public class FicheGroupeEditController {
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
 				new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
 		file = fileChooser.showOpenDialog(dialogStage);
-		img_view.setImage(FileUtils.convertFileToImage(file));
-		importe = true;
+		if (file != null) {
+			img_view.setImage(FileUtils.convertFileToImage(file));
+			importe = true;
+		}
 	}
 
 	/**
@@ -411,7 +420,7 @@ public class FicheGroupeEditController {
 	@FXML
 	private void supprimerImage() {
 		if (importe) {
-			img_view.setImage(new Image("file:src/img/cd_music.png"));
+			img_view.setImage(imageOrigine);
 			groupe.setImage(null);
 		}
 	}

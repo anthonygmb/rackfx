@@ -152,6 +152,11 @@
 	-fx-border-width: 3px;
 }
 
+#anchor_accueil {
+-fx-background-image: url("file:src/img/curtains.jpg");
+-fx-background-size: 1100 525;
+}
+
 #pn_bandeau {
 	-fx-background-color: #272C30;
 }
@@ -176,8 +181,4 @@
 #gridpane_lb_planif .label {
 	-fx-font-size: 12.0pt;
 	-fx-text-fill: #88939C;
-}
-
-#vb_link {
-	-fx-background-color: #353C42;
 }

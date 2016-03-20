@@ -22,7 +22,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Side;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -36,14 +35,9 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -104,12 +98,6 @@ public final class MainViewController {
 	@FXML
 	private void initialize() throws InterruptedException {
 		INSTANCE_MAIN_VIEW_CONTROLLER = this;
-		
-		gridpane_lb_reper.setStyle(
-		        "-fx-background-color: rgba(255, 255, 255, 0.1);" +
-		                "-fx-effect: dropshadow(gaussian, black, 50, 0, 0, 0);" +
-		                "-fx-background-radius: 30"
-		            );
 
 		Session s = HibernateSetUp.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(s);
@@ -172,8 +160,6 @@ public final class MainViewController {
 
 	@FXML
 	private MenuBar mnb_menu;
-	@FXML
-	private Pane pane_bandeau;
 	@FXML
 	public TextField tf_login;
 	@FXML
@@ -279,11 +265,12 @@ public final class MainViewController {
 	public CustomTextField cst_tf_search;
 	@FXML
 	private VBox vb_link = new VBox();
+	@FXML
+	private AnchorPane anchor_accueil;
 
 	@FXML
 	private void searchBar() {
 		vb_link.getChildren().clear();
-		vb_link.setStyle("-fx-background-color: #353C42;");
 
 		if (!cst_tf_search.getText().equals("")) {
 			Session s = HibernateSetUp.getSession();
@@ -332,11 +319,6 @@ public final class MainViewController {
 			// Representation.class);
 			// @SuppressWarnings("unchecked")
 			// List<Representation> result6 = hibQuery.list();
-
-			if (!result1.isEmpty() || !result2.isEmpty() || !result3.isEmpty() || !result4.isEmpty()
-					|| !result5.isEmpty()) {
-				vb_link.setStyle("-fx-background-color: #353C42;");
-			}
 
 			if (!result1.isEmpty()) {
 				Label ctgr_groupe = new Label(" GROUPES:");
@@ -482,14 +464,12 @@ public final class MainViewController {
 	@FXML
 	private Label lb_nb_event_passe;
 	@FXML
-	private AnchorPane anchor_reper_2;
-	@FXML
 	private GridPane gridpane_lb_reper;
+	@FXML
+	private ImageView img_view_main;
 	private ObservableList<Representation> repreDataTri = FXCollections.observableArrayList();
 	private ObservableList<Rencontre> rencontreDataTri = FXCollections.observableArrayList();
 	private Date auj = new Date();
-	private BackgroundPosition position = new BackgroundPosition(Side.RIGHT, 10, false, null, 10, false);
-	private BackgroundSize size = new BackgroundSize(500, 500, false, false, false, false);
 
 	/**
 	 * Appelé quand l'utilisateur clique sur le bouton Nouveau de l'onglet
@@ -581,14 +561,7 @@ public final class MainViewController {
 			lb_nb_titre.setText(String.valueOf(CRUD.count("Titre", "groupeId", String.valueOf(groupe.getGroupeId()))));
 			lb_nb_event_futur.setText(String.valueOf(rencontreDataF));
 			lb_nb_event_passe.setText(String.valueOf(rencontreDataP));
-			anchor_reper_2.setBackground(new Background(
-					new BackgroundImage(FileUtils.convertByteToImage(groupe.getImage()), BackgroundRepeat.NO_REPEAT,
-							BackgroundRepeat.NO_REPEAT, position, size)));
-			anchor_reper_2.setStyle(
-			        "-fx-background-color: rgba(255, 255, 255, 0.1);" +
-			                "-fx-effect: dropshadow(gaussian, black, 50, 0, 0, 0);" +
-			                "-fx-background-insets: 50;"
-			            );
+			img_view_main.setImage(FileUtils.convertByteToImage(groupe.getImage()));
 		} else {
 			lb_nom_groupe.setText("");
 			lb_carac_groupe.setText("");
