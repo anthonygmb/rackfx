@@ -40,6 +40,7 @@ import model.Representation;
 import model.Titre;
 import sql.CRUD;
 import utilities.FileUtils;
+import utilities.Res_listes;
 import utilities.Validateur;
 
 public class FicheGroupeEditController {
@@ -84,8 +85,6 @@ public class FicheGroupeEditController {
 		INSTANCE_FICHE_GROUPE_CONTROLLER = this;
 
 		imageOrigine = new Image("file:src/img/cd_music.png");
-		instru_membre.addAll(CRUD.getAll("Instrument"));
-		pays_groupe.addAll(CRUD.getAll("Pays"));
 
 		/* formatte la combobox pour qu'elle affiche le texte voulu */
 		cmbox_membre.setButtonCell(new ListCell<Personne>() {
@@ -119,9 +118,9 @@ public class FicheGroupeEditController {
 		});
 
 		/* valeures par defaut de l'onglet membre */
-		cmbox_spe_membre.getItems().addAll(spe_membre);
-		cmbox_instru_membre.getItems().addAll(instru_membre);
-		cmbox_respon_membre.getItems().addAll(respon_membre);
+		cmbox_spe_membre.getItems().addAll(Res_listes.spe_membre);
+		cmbox_instru_membre.getItems().addAll(Res_listes.instru_membre);
+		cmbox_respon_membre.getItems().addAll(Res_listes.respon_membre);
 		annulerPersonne();
 
 		/* formatte le textfield au format numéro de téléphone */
@@ -264,9 +263,8 @@ public class FicheGroupeEditController {
 	private TextField tf_carac_groupe;
 	@FXML
 	private TextField tf_region_groupe;
-	private ObservableList<String> pays_groupe = FXCollections.observableArrayList();
 	@FXML
-	private ComboBox<String> cmbox_pays_groupe = new ComboBox<>(pays_groupe);
+	private ComboBox<String> cmbox_pays_groupe = new ComboBox<>(Res_listes.pays_groupe);
 	@FXML
 	private Button btn_creer_groupe;
 	@FXML
@@ -300,7 +298,7 @@ public class FicheGroupeEditController {
 		} else {
 			cmbox_pays_groupe.getSelectionModel().select(groupe.getPays_groupe());
 		}
-		cmbox_pays_groupe.getItems().addAll(pays_groupe);
+		cmbox_pays_groupe.getItems().addAll(Res_listes.pays_groupe);
 		tf_region_groupe.setText(groupe.getRegion_groupe());
 		if (groupe.getImage() != null) {
 			img_view.setImage(FileUtils.convertByteToImage(groupe.getImage()));
@@ -407,17 +405,12 @@ public class FicheGroupeEditController {
 	private TextField tf_prenom_membre;
 	@FXML
 	private TextField tf_adress_cor;
-	ObservableList<String> spe_membre = FXCollections.observableArrayList("Pas de spécialité", "Choriste", "Soliste",
-			"Musicien", "Chanteur");
 	@FXML
-	private ComboBox<String> cmbox_spe_membre = new ComboBox<>(spe_membre);
-	ObservableList<String> instru_membre = FXCollections.observableArrayList();
+	private ComboBox<String> cmbox_spe_membre = new ComboBox<>(Res_listes.spe_membre);
 	@FXML
-	private ComboBox<String> cmbox_instru_membre = new ComboBox<>(instru_membre);
-	ObservableList<String> respon_membre = FXCollections.observableArrayList("Pas de responsabilité", "Chauffeur",
-			"Habilleur", "dirigeant", "trésorier", "etc...");
+	private ComboBox<String> cmbox_instru_membre = new ComboBox<>(Res_listes.instru_membre);
 	@FXML
-	private ComboBox<String> cmbox_respon_membre = new ComboBox<>(respon_membre);
+	private ComboBox<String> cmbox_respon_membre = new ComboBox<>(Res_listes.respon_membre);
 	@FXML
 	private TextField tf_tel_cor;
 	@FXML
