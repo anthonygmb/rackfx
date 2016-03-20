@@ -84,6 +84,8 @@ public class FicheGroupeEditController {
 		INSTANCE_FICHE_GROUPE_CONTROLLER = this;
 
 		imageOrigine = new Image("file:src/img/cd_music.png");
+		instru_membre.addAll(CRUD.getAll("Instrument"));
+		pays_groupe.addAll(CRUD.getAll("Pays"));
 
 		/* formatte la combobox pour qu'elle affiche le texte voulu */
 		cmbox_membre.setButtonCell(new ListCell<Personne>() {
@@ -262,43 +264,7 @@ public class FicheGroupeEditController {
 	private TextField tf_carac_groupe;
 	@FXML
 	private TextField tf_region_groupe;
-	private ObservableList<String> pays_groupe = FXCollections.observableArrayList("Afghanistan", "Afrique du Sud",
-			"Akrotiri", "Albanie", "Algérie", "Allemagne", "Andorre", "Angola", "Anguilla", "Antarctique",
-			"Antigua-et-Barbuda", "Antilles néerlandaises", "Arabie saoudite", "Arctic Ocean", "Argentine", "Arménie",
-			"Aruba", "Ashmore and Cartier Islands", "Atlantic Ocean", "Australie", "Autriche", "Azerbaïdjan", "Bahamas",
-			"Bahreïn", "Bangladesh", "Barbade", "Belau", "Belgique", "Belize", "Bénin", "Bermudes", "Bhoutan",
-			"Biélorussie", "Birmanie", "Bolivie", "Bosnie-Herzégovine", "Botswana", "Brésil", "Brunei", "Bulgarie",
-			"Burkina Faso", "Burundi", "Cambodge", "Cameroun", "Canada", "Cap-Vert", "Chili", "Chine", "Chypre",
-			"Clipperton Island", "Colombie", "Comores", "Congo", "Coral Sea Islands", "Corée du Nord", "Corée du Sud",
-			"Costa Rica", "Côte d'Ivoire", "Croatie", "Cuba", "Danemark", "Dhekelia", "Djibouti", "Dominique", "Égypte",
-			"Émirats arabes unis", "Équateur", "Érythrée", "Espagne", "Estonie", "États-Unis", "Éthiopie",
-			"ex-République yougoslave de Macédoine", "Finlande", "France", "Gabon", "Gambie", "Gaza Strip", "Géorgie",
-			"Ghana", "Gibraltar", "Grèce", "Grenade", "Groenland", "Guam", "Guatemala", "Guernsey", "Guinée",
-			"Guinée équatoriale", "Guinée-Bissao", "Guyana", "Haïti", "Honduras", "Hong Kong", "Hongrie", "Ile Bouvet",
-			"Ile Christmas", "Ile Norfolk", "Iles Cayman", "Iles Cook", "Iles des Cocos (Keeling)", "Iles Falkland",
-			"Iles Féroé", "Iles Fidji", "Iles Géorgie du Sud et Sandwich du Sud", "Iles Heard et McDonald",
-			"Iles Marshall", "Iles Pitcairn", "Iles Salomon", "Iles Svalbard et Jan Mayen", "Iles Turks-et-Caicos",
-			"Iles Vierges américaines", "Iles Vierges britanniques", "Inde", "Indian Ocean", "Indonésie", "Iran",
-			"Iraq", "Irlande", "Islande", "Israël", "Italie", "Jamaïque", "Jan Mayen", "Japon", "Jersey", "Jordanie",
-			"Kazakhstan", "Kenya", "Kirghizistan", "Kiribati", "Koweït", "Laos", "Lesotho", "Lettonie", "Liban",
-			"Liberia", "Libye", "Liechtenstein", "Lituanie", "Luxembourg", "Macao", "Madagascar", "Malaisie", "Malawi",
-			"Maldives", "Mali", "Malte", "Man, Isle of", "Mariannes du Nord", "Maroc", "Maurice", "Mauritanie",
-			"Mayotte", "Mexique", "Micronésie", "Moldavie", "Monaco", "Monde", "Mongolie", "Monténégro", "Montserrat",
-			"Mozambique", "Namibie", "Nauru", "Navassa Island", "Népal", "Nicaragua", "Niger", "Nigeria", "Nioué",
-			"Norvège", "Nouvelle-Calédonie", "Nouvelle-Zélande", "Oman", "Ouganda", "Ouzbékistan", "Pacific Ocean",
-			"Pakistan", "Panama", "Papouasie-Nouvelle-Guinée", "Paracel Islands", "Paraguay", "Pays-Bas", "Pérou",
-			"Philippines", "Pologne", "Polynésie française", "Porto Rico", "Portugal", "Qatar",
-			"République centrafricaine", "République démocratique du Congo", "République dominicaine",
-			"République tchèque", "Roumanie", "Royaume-Uni", "Russie", "Rwanda", "Sahara occidental",
-			"Saint-Christophe-et-Niévès", "Sainte-Hélène", "Sainte-Lucie", "Saint-Marin", "Saint-Pierre-et-Miquelon",
-			"Saint-Siège", "Saint-Vincent-et-les-Grenadines", "Salvador", "Samoa", "Samoa américaines",
-			"Sao Tomé-et-Principe", "Sénégal", "Serbie", "Seychelles", "Sierra Leone", "Singapour", "Slovaquie",
-			"Slovénie", "Somalie", "Soudan", "Southern Ocean", "Spratly Islands", "Sri Lanka", "Suède", "Suisse",
-			"Suriname", "Swaziland", "Syrie", "Tadjikistan", "Taïwan", "Tanzanie", "Tchad",
-			"Terres australes françaises", "Territoire britannique de l'Océan Indien", "Thaïlande", "Timor Oriental",
-			"Togo", "Tokélaou", "Tonga", "Trinité-et-Tobago", "Tunisie", "Turkménistan", "Turquie", "Tuvalu", "Ukraine",
-			"Union européenne", "Uruguay", "Vanuatu", "Venezuela", "Viêt Nam", "Wake Island", "Wallis-et-Futuna",
-			"West Bank", "Yémen", "Zambie", "Zimbabwe");
+	private ObservableList<String> pays_groupe = FXCollections.observableArrayList();
 	@FXML
 	private ComboBox<String> cmbox_pays_groupe = new ComboBox<>(pays_groupe);
 	@FXML
@@ -445,8 +411,7 @@ public class FicheGroupeEditController {
 			"Musicien", "Chanteur");
 	@FXML
 	private ComboBox<String> cmbox_spe_membre = new ComboBox<>(spe_membre);
-	ObservableList<String> instru_membre = FXCollections.observableArrayList("Pas d'instrument", "Guitare", "Basse",
-			"Saxophone", "violon", "cornemuse", "etc...");
+	ObservableList<String> instru_membre = FXCollections.observableArrayList();
 	@FXML
 	private ComboBox<String> cmbox_instru_membre = new ComboBox<>(instru_membre);
 	ObservableList<String> respon_membre = FXCollections.observableArrayList("Pas de responsabilité", "Chauffeur",

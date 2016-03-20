@@ -311,15 +311,6 @@ public final class MainViewController {
 			@SuppressWarnings("unchecked")
 			List<Organisateur> result5 = hibQuery.list();
 
-			// qb =
-			// fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Representation.class).get();
-			// query =
-			// qb.keyword().onFields("heure_debut").matching(cst_tf_search.getText()).createQuery();
-			// hibQuery = fullTextSession.createFullTextQuery(query,
-			// Representation.class);
-			// @SuppressWarnings("unchecked")
-			// List<Representation> result6 = hibQuery.list();
-
 			if (!result1.isEmpty()) {
 				Label ctgr_groupe = new Label(" GROUPES:");
 				vb_link.getChildren().add(ctgr_groupe);
@@ -404,27 +395,6 @@ public final class MainViewController {
 					vb_link.getChildren().add(link_organisateur);
 				}
 			}
-
-			// if (result6.isEmpty()) {
-			// Line ligne = new Line(0, 0, 588, 0);
-			// Label ctgr_representation = new Label(" REPRESENTATIONS:");
-			// vb_link.getChildren().add(ligne);
-			// vb_link.getChildren().add(ctgr_representation);
-			// for (Representation representation : result6) {
-			// Hyperlink link_representation = new
-			// Hyperlink(representation.getNom_Groupe() +
-			// representation.getTitre());
-			// link_representation.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// MainApp.getInstance().showFicheEventEditDialog(representation.getRencontre(),
-			// true, 1);
-			// }
-			// });
-			// vb_link.getChildren().add(link_representation);
-			// }
-			// }
 
 			tx.commit();
 			s.close();

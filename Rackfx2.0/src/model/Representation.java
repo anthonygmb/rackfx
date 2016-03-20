@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.ObjectProperty;
@@ -20,7 +18,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 @Entity
-@Indexed
 public class Representation {
 
 	private long repreId;
@@ -56,7 +53,6 @@ public class Representation {
 
 	// =================================================================================================
 	@NotNull
-	@Field
 	public Time getHeure_debut() {
 		return heure_debut.get();
 	}
