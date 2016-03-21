@@ -35,6 +35,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -440,6 +441,7 @@ public final class MainViewController {
 	private ObservableList<Representation> repreDataTri = FXCollections.observableArrayList();
 	private ObservableList<Rencontre> rencontreDataTri = FXCollections.observableArrayList();
 	private Date auj = new Date();
+	private Image imageOrigine = new Image("file:src/img/cd_music.png");
 
 	/**
 	 * Appelé quand l'utilisateur clique sur le bouton Nouveau de l'onglet
@@ -531,7 +533,11 @@ public final class MainViewController {
 			lb_nb_titre.setText(String.valueOf(CRUD.count("Titre", "groupeId", String.valueOf(groupe.getGroupeId()))));
 			lb_nb_event_futur.setText(String.valueOf(rencontreDataF));
 			lb_nb_event_passe.setText(String.valueOf(rencontreDataP));
-			img_view_main.setImage(FileUtils.convertByteToImage(groupe.getImage()));
+			if (groupe.getImage() != null) {
+				img_view_main.setImage(FileUtils.convertByteToImage(groupe.getImage()));
+			} else {
+				img_view_main.setImage(imageOrigine);
+			}
 		} else {
 			lb_nom_groupe.setText("");
 			lb_carac_groupe.setText("");
