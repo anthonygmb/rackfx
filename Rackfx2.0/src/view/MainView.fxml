@@ -31,7 +31,7 @@
 											</effect>
 										</Label>
 										<Label fx:id="copyright" layoutX="325.0" layoutY="487.0" text="(c) Copyright Rack contributors 2015. All rights reserved. Version 1.0" AnchorPane.bottomAnchor="24.0" />
-                              <CustomTextField fx:id="cst_tf_search" layoutX="350.0" layoutY="146.0" onAction="#searchBar" prefHeight="26.0" prefWidth="400.0" promptText="                                     Rechercher" />
+                              <CustomTextField fx:id="cst_tf_search" layoutX="350.0" layoutY="146.0" onAction="#searchBar" onKeyPressed="#searchBar" onKeyReleased="#searchBar" onKeyTyped="#searchBar" prefHeight="26.0" prefWidth="400.0" promptText="                                     Rechercher" />
                               <VBox fx:id="vb_link" layoutX="254.0" layoutY="203.0" prefHeight="263.0" prefWidth="591.0" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="255.0" />
 									</children>
 								</AnchorPane>
