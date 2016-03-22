@@ -57,8 +57,8 @@ public class FicheEventEditController {
 	}
 
 	/**
-	 * Méthode initialize appellé automatiquement après que
-	 * le fxml est été chargé.
+	 * Méthode initialize appellé automatiquement après que le fxml est été
+	 * chargé.
 	 */
 	@FXML
 	private void initialize() {
@@ -361,11 +361,11 @@ public class FicheEventEditController {
 				&& Validateur.valideDate(dt_debut_event.getValue(), dt_fin_event.getValue())) {
 			if (dialogStage.getTitle().equals("Nouvelle rencontre *")) {
 				geleTab(true);
+				CRUD.saveOrUpdate(rencontre);
 				MainApp.getInstance().getRencontreData().add(rencontre);
-				CRUD.save(rencontre);
 				MainViewController.getInstance().tv_planif.getSelectionModel().selectLast();
 			} else {
-				CRUD.update(rencontre);
+				CRUD.saveOrUpdate(rencontre);
 				MainViewController.getInstance().showEventDetails(rencontre);
 				MainApp.getInstance().getRencontreData().setAll(CRUD.getAll("Rencontre"));
 			}
@@ -517,10 +517,10 @@ public class FicheEventEditController {
 				if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
 					organisateur.setRencontre(rencontre);
 					rencontre.getListe_orga().add(organisateur);
-					CRUD.save(organisateur);
+					CRUD.saveOrUpdate(organisateur);
 					cmbox_orga.getItems().add(organisateur);
 				} else {
-					CRUD.update(organisateur);
+					CRUD.saveOrUpdate(organisateur);
 					cmbox_orga.getItems().set(cmbox_orga.getSelectionModel().getSelectedIndex(), organisateur);
 				}
 				annulerOrganisateur();
@@ -651,15 +651,15 @@ public class FicheEventEditController {
 		if (Validateur.validator(representation)
 				&& Validateur.valideTime(ltp_h_deb_prog.getLocalTime(), ltp_h_fin_prog.getLocalTime())) {
 			if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
-				tbv_prog.getItems().add(representation);
 				representation.setRencontre(rencontre);
 				rencontre.getListe_repre().add(representation);
 				representation.setGroupe(cmbox_groupe_event.getSelectionModel().getSelectedItem());
 				cmbox_groupe_event.getSelectionModel().getSelectedItem().getListe_representation().add(representation);
-				CRUD.save(representation);
+				CRUD.saveOrUpdate(representation);
+				tbv_prog.getItems().add(representation);
 			} else {
+				CRUD.saveOrUpdate(representation);
 				tbv_prog.getItems().set(tbv_prog.getSelectionModel().getSelectedIndex(), representation);
-				CRUD.update(representation);
 			}
 			annulerProg();
 		}

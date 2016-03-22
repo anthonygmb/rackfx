@@ -717,7 +717,7 @@ public final class MainViewController {
 		try {
 			/* validation des contraintes */
 			if (Validateur.validator(user)) {
-				CRUD.save(user);
+				CRUD.saveOrUpdate(user);
 				tv_admin.getItems().add(user);
 				annulerUser();
 			}

@@ -86,6 +86,20 @@ public class FicheGroupeEditController {
 
 		imageOrigine = new Image("file:src/img/cd_music.png");
 
+		img_view.imageProperty().addListener(new ChangeListener<Image>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Image> observable, Image oldValue, Image newValue) {
+				if (!img_view.getImage().toString().equals(imageOrigine.toString())) {
+					bt_import_img.setDisable(true);
+					bt_supp_img.setDisable(false);
+				} else {
+					bt_import_img.setDisable(false);
+					bt_supp_img.setDisable(true);
+				}
+			}
+		});
+
 		/* formatte la combobox pour qu'elle affiche le texte voulu */
 		cmbox_membre.setButtonCell(new ListCell<Personne>() {
 			@Override
@@ -277,7 +291,6 @@ public class FicheGroupeEditController {
 	private ImageView img_view;
 	private Groupe groupe;
 	private final FileChooser fileChooser = new FileChooser();
-	private boolean importe = false;
 	private File file;
 
 	/**
@@ -302,10 +315,8 @@ public class FicheGroupeEditController {
 		tf_region_groupe.setText(groupe.getRegion_groupe());
 		if (groupe.getImage() != null) {
 			img_view.setImage(FileUtils.convertByteToImage(groupe.getImage()));
-			importe = true;
 		} else {
 			img_view.setImage(imageOrigine);
-			importe = false;
 		}
 		btn_creer_groupe.setText((modif) ? "Appliquer" : "Créer");
 		loadChildren();
@@ -324,19 +335,19 @@ public class FicheGroupeEditController {
 			groupe.setPays_groupe(cmbox_pays_groupe.getSelectionModel().getSelectedItem().toString());
 		}
 		groupe.setRegion_groupe(tf_region_groupe.getText());
-		if (importe) {
+		if (!img_view.getImage().toString().equals(imageOrigine.toString()) && groupe.getImage() == null) {
 			groupe.setImage(FileUtils.convertFileToByte(file));
 		}
 		try {
 			/* validation des contraintes */
 			if (Validateur.validator(groupe)) {
 				if (dialogStage.getTitle().equals("Nouveau groupe *")) {
-					CRUD.save(groupe);
+					CRUD.saveOrUpdate(groupe);
 					geleTab(true);
 					MainApp.getInstance().getGroupeData().add(groupe);
 					MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
 				} else {
-					CRUD.update(groupe);
+					CRUD.saveOrUpdate(groupe);
 					MainViewController.getInstance().showGroupeDetails(groupe);
 					int index = MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedIndex();
 					MainApp.getInstance().getGroupeData().setAll(CRUD.getAll("Groupe"));
@@ -374,7 +385,6 @@ public class FicheGroupeEditController {
 		file = fileChooser.showOpenDialog(dialogStage);
 		if (file != null) {
 			img_view.setImage(FileUtils.convertFileToImage(file));
-			importe = true;
 		}
 	}
 
@@ -383,7 +393,7 @@ public class FicheGroupeEditController {
 	 */
 	@FXML
 	private void supprimerImage() {
-		if (importe) {
+		if (!img_view.getImage().toString().equals(imageOrigine.toString())) {
 			img_view.setImage(imageOrigine);
 			groupe.setImage(null);
 		}
@@ -613,10 +623,10 @@ public class FicheGroupeEditController {
 				if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
 					personne.setGroupe(groupe);
 					groupe.getListe_personne().add(personne);
-					CRUD.save(personne);
+					CRUD.saveOrUpdate(personne);
 					cmbox_membre.getItems().add(personne);
 				} else {
-					CRUD.update(personne);
+					CRUD.saveOrUpdate(personne);
 					cmbox_membre.getItems().set(cmbox_membre.getSelectionModel().getSelectedIndex(), personne);
 				}
 				annulerPersonne();
@@ -784,13 +794,13 @@ public class FicheGroupeEditController {
 		/* validation des contraintes */
 		if (Validateur.validator(titre)) {
 			if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
-				tbv_titre.getItems().add(titre);
 				titre.setGroupe(groupe);
 				groupe.getListe_titre().add(titre);
-				CRUD.save(titre);
+				CRUD.saveOrUpdate(titre);
+				tbv_titre.getItems().add(titre);
 			} else {
+				CRUD.saveOrUpdate(titre);
 				tbv_titre.getItems().set(tbv_titre.getSelectionModel().getSelectedIndex(), titre);
-				CRUD.update(titre);
 			}
 			annulerTitre();
 		}

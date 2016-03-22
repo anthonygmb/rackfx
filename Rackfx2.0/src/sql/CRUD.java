@@ -64,27 +64,14 @@ public abstract class CRUD {
 	}
 
 	/**
-	 * Methode de création d'entité hibernate
+	 * Methode de création ou de mise à jour d'entité hibernate
 	 * 
 	 * @param obj
 	 */
-	public static <T> void save(T obj) {
+	public static <T> void saveOrUpdate(T obj) {
 		Session s = HibernateSetUp.getSession();
 		s.beginTransaction();
-		s.save(obj);
-		s.getTransaction().commit();
-		s.close();
-	}
-
-	/**
-	 * Methode de mise à jour d'entité hibernate
-	 * 
-	 * @param obj
-	 */
-	public static <T> void update(T obj) {
-		Session s = HibernateSetUp.getSession();
-		s.beginTransaction();
-		s.update(obj);
+		s.saveOrUpdate(obj);
 		s.getTransaction().commit();
 		s.close();
 	}
