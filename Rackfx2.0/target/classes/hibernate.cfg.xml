@@ -30,16 +30,7 @@
 		<!-- <property name="hibernate.format_sql">true</property> -->
 		<!-- <property name="use_sql_comments">true</property> -->
 
-		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">update</property>
-		
-		<!-- validate: valide le schéma, aucune modification n’est faite sur la 
-			structure de la base ; -->
-		<!-- update: met à jour le schéma existant ; -->
-		<!-- create: crée le schéma en supprimant les données préalablement existantes 
-			; -->
-		<!-- create-drop: même comportement que create avec suppression du schéma 
-			en fin de session. -->
 
 		<property name="hibernate.search.default.directory_provider">filesystem</property>
 		<property name="hibernate.search.default.indexBase">/home/anthony/Git_repository/rackfx/Rackfx2.0/indexes</property>
