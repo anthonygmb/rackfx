@@ -109,7 +109,7 @@
 																<Button fx:id="btn_supp_groupe" mnemonicParsing="false" onAction="#supprimerGroupe" prefHeight="24.0" prefWidth="151.0" styleClass="lion" text="Supprimer" />
 															</buttons>
 														</ButtonBar>
-                                          <ImageView fx:id="img_view_main" fitHeight="250.0" fitWidth="250.0" layoutX="521.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="90.0" AnchorPane.rightAnchor="30.0">
+                                          <ImageView fx:id="img_view_main" fitHeight="250.0" fitWidth="250.0" layoutX="478.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
                                              <effect>
                                                 <DropShadow />
                                              </effect>

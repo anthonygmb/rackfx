@@ -138,6 +138,7 @@ public final class MainApp extends Application {
 			stageGroupe.setTitle((modif) ? groupe.getNom_groupe() : "Nouveau groupe *");
 			stageGroupe.initModality(Modality.WINDOW_MODAL);
 			stageGroupe.initOwner(primaryStage);
+//			stageGroupe.initStyle(StageStyle.UNDECORATED);
 			Scene scene = new Scene(page);
 			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
 			stageGroupe.setScene(scene);
