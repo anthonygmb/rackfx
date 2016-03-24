@@ -2,14 +2,12 @@ package controller;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -527,7 +525,8 @@ public class FicheEventEditController {
 			}
 			/* test de doublons */
 		} catch (Exception e) {
-			Validateur.showPopup("Cet organisateur existe déjà");
+			Validateur.showPopup(AlertType.WARNING, "Attention", "Doublon détecté", "Cet organisateur existe déjà")
+					.showAndWait();
 		}
 	}
 
@@ -558,13 +557,9 @@ public class FicheEventEditController {
 	@FXML
 	private void supprimerOrganisateur() {
 		int selectedIndex = cmbox_orga.getSelectionModel().getSelectedIndex();
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation d'action");
-		alert.setHeaderText("Confirmation de suppression");
-		alert.setContentText("Voulez-vous supprimer cet organisateur ?");
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
+		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
+				"Confirmation de suppression", "Voulez-vous supprimer cet organisateur ?").showAndWait();
+		if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 			CRUD.delete(cmbox_orga.getSelectionModel().getSelectedItem());
 			cmbox_orga.getItems().remove(selectedIndex);
 			annulerOrganisateur();
@@ -687,13 +682,9 @@ public class FicheEventEditController {
 	@FXML
 	private void supprimerProg() {
 		int selectedIndex = tbv_prog.getSelectionModel().getSelectedIndex();
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation d'action");
-		alert.setHeaderText("Confirmation de suppression");
-		alert.setContentText("Voulez-vous supprimer cette représentation ?");
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
+		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
+				"Confirmation de suppression", "Voulez-vous supprimer cette représentation ?").showAndWait();
+		if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 			CRUD.delete(tbv_prog.getSelectionModel().getSelectedItem());
 			tbv_prog.getItems().remove(selectedIndex);
 			annulerProg();

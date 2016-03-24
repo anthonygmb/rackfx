@@ -61,7 +61,6 @@ public class User {
 
 	// =================================================================================================
 	@NotEmpty
-	@Length(min = 8)
 	public String getMot_de_passe() {
 		return mot_de_passe.get();
 	}

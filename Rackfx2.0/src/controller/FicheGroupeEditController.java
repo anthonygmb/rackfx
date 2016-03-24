@@ -6,14 +6,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -329,6 +327,9 @@ public class FicheGroupeEditController {
 	 */
 	@FXML
 	private void creerModifierGroupe() {
+		if (MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem() == null) {
+			groupe = new Groupe();
+		}
 		groupe.setNom_groupe(tf_nom_groupe.getText());
 		groupe.setCarac_groupe(tf_carac_groupe.getText());
 		if (!cmbox_pays_groupe.getSelectionModel().isEmpty()) {
@@ -359,7 +360,8 @@ public class FicheGroupeEditController {
 			}
 			/* test de doublons */
 		} catch (Exception e) {
-			Validateur.showPopup("Ce groupe existe déjà");
+			Validateur.showPopup(AlertType.WARNING, "Attention", "Doublon détecté", "Ce groupe existe déjà")
+					.showAndWait();
 		}
 	}
 
@@ -633,7 +635,8 @@ public class FicheGroupeEditController {
 			}
 			/* test de doublons */
 		} catch (Exception e) {
-			Validateur.showPopup("Cette personne existe déjà");
+			Validateur.showPopup(AlertType.WARNING, "Attention", "Doublon détecté", "Cette personne existe déjà")
+					.showAndWait();
 		}
 	}
 
@@ -666,13 +669,9 @@ public class FicheGroupeEditController {
 	@FXML
 	private void supprimerPersonne() {
 		int selectedIndex = cmbox_membre.getSelectionModel().getSelectedIndex();
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation d'action");
-		alert.setHeaderText("Confirmation de suppression");
-		alert.setContentText("Voulez-vous supprimer ce membre ?");
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
+		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
+				"Confirmation de suppression", "Voulez-vous supprimer ce membre ?").showAndWait();
+		if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 			CRUD.delete(cmbox_membre.getSelectionModel().getSelectedItem());
 			cmbox_membre.getItems().remove(selectedIndex);
 			annulerPersonne();
@@ -831,13 +830,9 @@ public class FicheGroupeEditController {
 	@FXML
 	private void supprimerTitre() {
 		int selectedIndex = tbv_titre.getSelectionModel().getSelectedIndex();
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation d'action");
-		alert.setHeaderText("Confirmation de suppression");
-		alert.setContentText("Voulez-vous supprimer ce titre ?");
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
+		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
+				"Confirmation de suppression", "Voulez-vous supprimer ce titre ?").showAndWait();
+		if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 			CRUD.delete(tbv_titre.getSelectionModel().getSelectedItem());
 			tbv_titre.getItems().remove(selectedIndex);
 			annulerTitre();

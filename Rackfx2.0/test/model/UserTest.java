@@ -37,7 +37,7 @@ public class UserTest {
 		assertEquals(2, constraintViolations.size());
 		assertEquals("ne peut pas être vide", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
 	 * Test controllant que les attributs NotNull ne peuvent pas etre null
 	 * Attributs: droit_auth
@@ -49,11 +49,10 @@ public class UserTest {
 		assertEquals(1, constraintViolations.size());
 		assertEquals("ne peut pas être nul", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs limités à minimum 6 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: login
+	 * Test controllant que les attributs limités à minimum 6 caractères ne
+	 * peuvent pas dépasser cette limite Attributs: login
 	 */
 	@Test
 	public void min6Size() {
@@ -62,24 +61,10 @@ public class UserTest {
 		assertEquals(1, constraintViolations.size());
 		assertEquals("la taille doit être entre 6 et 25", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs limités à minimum 8 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: mot_de_passe
-	 */
-	@Test
-	public void min8Size() {
-		User user = new User("testEtTest", "test", "test");
-		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
-		assertEquals(1, constraintViolations.size());
-		assertEquals("la taille doit être entre 8 et 2147483647", constraintViolations.iterator().next().getMessage());
-	}
-	
-	/**
-	 * Test controllant que les attributs limités à 25 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: login
+	 * Test controllant que les attributs limités à 25 caractères ne peuvent pas
+	 * dépasser cette limite Attributs: login
 	 */
 	@Test
 	public void max25Size() {
@@ -88,7 +73,7 @@ public class UserTest {
 		assertEquals(1, constraintViolations.size());
 		assertEquals("la taille doit être entre 6 et 25", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
 	 * Test qui certifie qu'un bean crée en respectant les contraintes est
 	 * valide

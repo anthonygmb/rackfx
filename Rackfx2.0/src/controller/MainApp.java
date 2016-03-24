@@ -9,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -19,6 +21,7 @@ import model.Rencontre;
 import model.User;
 import sql.CRUD;
 import sql.HibernateSetUp;
+import utilities.Validateur;
 
 public final class MainApp extends Application {
 
@@ -87,14 +90,19 @@ public final class MainApp extends Application {
 		this.primaryStage.setTitle("RackFx");
 		this.primaryStage.getIcons().add(new Image("file:src/img/mediator.png"));
 		initRootLayout();
-		
-		primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
+
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
 			public void handle(WindowEvent event) {
-				HibernateSetUp.shutdown();
+				MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Quitter",
+						"Confirmation de fermeture", "Etes-vous sûr de vouloir quitter ?").showAndWait();
+				if (MainViewController.getInstance().result.get() == ButtonType.OK) {
+					HibernateSetUp.shutdown();
+				} else {
+					event.consume();
+				}
 			}
-			
 		});
 	}
 

@@ -32,8 +32,10 @@ public class Validateur {
 	 * Méthode de validation des beans, cette méthode controle le format des
 	 * attributs passés dans le model.
 	 *
-	 * @param <T> the generic type
-	 * @param obj the obj
+	 * @param <T>
+	 *            the generic type
+	 * @param obj
+	 *            the obj
 	 * @return true si le model n'a pas problème de format
 	 */
 	public static <T> boolean validator(T obj) {
@@ -107,7 +109,7 @@ public class Validateur {
 			}
 		}
 		if (!result) {
-			showPopup(errorMessage);
+			showPopup(AlertType.ERROR, "Erreur", "Violation de contrainte", errorMessage).showAndWait();
 		}
 		return result;
 	}
@@ -115,29 +117,39 @@ public class Validateur {
 	/**
 	 * Méthode d'affichage de popup de messages d'erreurs.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	public static void showPopup(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
+	public static Alert showPopup(AlertType type, String titre, String headerText, String message) {
+
+		Alert alert = new Alert(type);
 		alert.initOwner(popup);
-		alert.setTitle("Erreur");
-		alert.setHeaderText("Erreur dans la saisie des données");
+		alert.setTitle(titre);
+		alert.setHeaderText(headerText);
 		alert.setContentText(message);
-		alert.showAndWait();
+		// if (alert.getAlertType() == AlertType.NONE) {
+		// PauseTransition pause = new PauseTransition(Duration.seconds(5));
+		// pause.setOnFinished(e -> alert.hide());
+		// pause.play();
+		// }
+		return alert;
 	}
 
 	/**
 	 * Valide date.
 	 *
-	 * @param dateDebut the date debut
-	 * @param dateFin the date fin
+	 * @param dateDebut
+	 *            the date debut
+	 * @param dateFin
+	 *            the date fin
 	 * @return true, if successful
 	 */
 	public static boolean valideDate(LocalDate dateDebut, LocalDate dateFin) {
 		if (dateDebut.isBefore(dateFin)) {
 			return true;
 		} else {
-			showPopup("La date de debut doit être avant la\ndate de fin");
+			showPopup(AlertType.ERROR, "Erreur", "Violation de contrainte",
+					"La date de debut doit être avant la\ndate de fin").showAndWait();
 			return false;
 		}
 	}
@@ -145,15 +157,18 @@ public class Validateur {
 	/**
 	 * Valide time.
 	 *
-	 * @param timeDebut the time debut
-	 * @param timeFin the time fin
+	 * @param timeDebut
+	 *            the time debut
+	 * @param timeFin
+	 *            the time fin
 	 * @return true, if successful
 	 */
 	public static boolean valideTime(LocalTime timeDebut, LocalTime timeFin) {
 		if (timeDebut.isBefore(timeFin)) {
 			return true;
 		} else {
-			showPopup("L'heure de debut doit être avant l'heure de fin");
+			showPopup(AlertType.ERROR, "Erreur", "Violation de contrainte",
+					"L'heure de debut doit être avant l'heure de fin").showAndWait();
 			return false;
 		}
 	}

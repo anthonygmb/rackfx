@@ -108,7 +108,7 @@ public class Representation {
 	}
 
 	// =================================================================================================
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "rencontreId", nullable = false)
 	public Rencontre getRencontre() {
 		return rencontre;

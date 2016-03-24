@@ -22,7 +22,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -68,6 +67,7 @@ public final class MainViewController {
 	public String login_admin = "root";
 	public String pwd_admin = "admin";
 	public String salt = "[B@49396ed";
+	public Optional<ButtonType> result;
 
 	/* Singleton */
 	/** Instance unique pré-initialisée */
@@ -471,12 +471,8 @@ public final class MainViewController {
 		if (selectedGroupe != null) {
 			MainApp.getInstance().showFicheGroupeEditDialog(selectedGroupe, true, 0);
 		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getInstance().getPrimaryStage());
-			alert.setTitle("Aucune sélection");
-			alert.setHeaderText("Aucun groupe selectionné");
-			alert.setContentText("Veuillez sélectionner un groupe dans la liste");
-			alert.showAndWait();
+			Validateur.showPopup(AlertType.WARNING, "Attention", "Aucun groupe selectionné",
+					"Veuillez sélectionner un groupe dans la liste").showAndWait();
 		}
 	}
 
@@ -490,13 +486,10 @@ public final class MainViewController {
 	@FXML
 	private void supprimerGroupe() throws SQLException {
 		int selectedIndex = tv_reper.getSelectionModel().getSelectedIndex();
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation d'action");
-		alert.setHeaderText("Confirmation de suppression");
-		alert.setContentText(
-				"Voulez-vous supprimer ce groupe ?\n\nN.B. tous les membres, titres et représentations\nlui appartenant seront également supprimé");
-
-		Optional<ButtonType> result = alert.showAndWait();
+		result = Validateur
+				.showPopup(AlertType.CONFIRMATION, "Confirmation d'action", "Confirmation de suppression",
+						"Voulez-vous supprimer ce groupe ?\n\nN.B. tous les membres, titres et représentations\nlui appartenant seront également supprimé")
+				.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());
 			tv_reper.getItems().remove(selectedIndex);
@@ -609,12 +602,8 @@ public final class MainViewController {
 		if (selectedRencontre != null) {
 			MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, true, 0);
 		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getInstance().getPrimaryStage());
-			alert.setTitle("Aucune sélection");
-			alert.setHeaderText("Aucune rencontre selectionnée");
-			alert.setContentText("Veuillez sélectionner une rencontre dans la liste");
-			alert.showAndWait();
+			Validateur.showPopup(AlertType.WARNING, "Attention", "Aucune rencontre selectionnée",
+					"Veuillez sélectionner une rencontre dans la liste").showAndWait();
 		}
 	}
 
@@ -627,13 +616,10 @@ public final class MainViewController {
 	@FXML
 	private void supprimerEvent() {
 		int selectedIndex = tv_planif.getSelectionModel().getSelectedIndex();
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation d'action");
-		alert.setHeaderText("Confirmation de suppression");
-		alert.setContentText(
-				"Voulez-vous supprimer cette rencontre ?\n\nN.B. tous les organisateurs et représentations\nlui appartenant seront également supprimé");
-
-		Optional<ButtonType> result = alert.showAndWait();
+		result = Validateur
+				.showPopup(AlertType.CONFIRMATION, "Confirmation d'action", "Confirmation de suppression",
+						"Voulez-vous supprimer cette rencontre ?\n\nN.B. tous les organisateurs et représentations\nlui appartenant seront également supprimé")
+				.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			CRUD.delete(tv_planif.getSelectionModel().getSelectedItem());
 			tv_planif.getItems().remove(selectedIndex);
@@ -723,7 +709,8 @@ public final class MainViewController {
 			}
 			/* test de doublons */
 		} catch (Exception e) {
-			Validateur.showPopup("Ce login existe déjà");
+			Validateur.showPopup(AlertType.WARNING, "Attention", "Doublon détecté", "Ce login existe déjà")
+					.showAndWait();
 		}
 	}
 
@@ -748,15 +735,12 @@ public final class MainViewController {
 	@FXML
 	private void supprimerUser() {
 		int selectedIndex = tv_admin.getSelectionModel().getSelectedIndex();
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation d'action");
-		alert.setHeaderText("Confirmation de suppression");
-
 		if (tv_admin.getSelectionModel().getSelectedItem().getLogin().equals(tf_login.getText())) {
-			alert.setContentText(
+			result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
+					"Confirmation de suppression",
 					"Attention, ce login est actuellement utilisé\n" + "Voulez-vous supprimer cet utilisateur ?\n"
-							+ "Après la suppression vous serez déconnecté\n" + "et ne pourrez plus vous connecter");
-			Optional<ButtonType> result = alert.showAndWait();
+							+ "Après la suppression vous serez déconnecté\n" + "et ne pourrez plus vous connecter")
+					.showAndWait();
 			if (result.get() == ButtonType.OK) {
 				CRUD.delete(tv_admin.getSelectionModel().getSelectedItem());
 				tv_admin.getItems().remove(selectedIndex);
@@ -764,8 +748,8 @@ public final class MainViewController {
 				deconnection();
 			}
 		} else {
-			alert.setContentText("Voulez-vous supprimer cet utilisateur ?");
-			Optional<ButtonType> result = alert.showAndWait();
+			result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
+					"Confirmation de suppression", "Voulez-vous supprimer cet utilisateur ?").showAndWait();
 			if (result.get() == ButtonType.OK) {
 				CRUD.delete(tv_admin.getSelectionModel().getSelectedItem());
 				tv_admin.getItems().remove(selectedIndex);
