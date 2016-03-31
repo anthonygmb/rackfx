@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LangueController">
+   <children>
+      <Pane prefHeight="150.0" prefWidth="400.0">
+         <children>
+            <Label fx:id="langue_lb" layoutX="113.0" layoutY="14.0" text="Veuillez choisir une langue" />
+            <ComboBox fx:id="langue_cmbbox" layoutX="65.0" layoutY="49.0" prefHeight="26.0" prefWidth="270.0" promptText="Langue" />
+            <ButtonBar layoutX="188.0" layoutY="96.0" prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button fx:id="langue_btn_valid" mnemonicParsing="false" onAction="#validerlangue" text="Valider" />
+                  <Button fx:id="langue_btn_annuler" mnemonicParsing="false" onAction="#annulerlangue" text="Annuler" />
+              </buttons>
+            </ButtonBar>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

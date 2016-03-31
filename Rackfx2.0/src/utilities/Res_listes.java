@@ -179,5 +179,8 @@ public class Res_listes {
 			"Soliste", "Musicien", "Chanteur");
 
 	public static ObservableList<String> respon_membre = FXCollections.observableArrayList("Pas de responsabilité",
-			"Chauffeur", "Habilleur", "dirigeant", "trésorier");
+			"Chauffeur", "Habilleur", "Dirigeant", "Trésorier");
+	
+	public static ObservableList<String> liste_langues = FXCollections.observableArrayList("Français",
+			"English", "Deutsch");
 }

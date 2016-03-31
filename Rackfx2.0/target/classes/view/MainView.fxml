@@ -245,21 +245,25 @@
          <top>
             <Pane fx:id="pane_bandeau" prefHeight="40.0" BorderPane.alignment="CENTER">
                <children>
-                  <MenuBar fx:id="mnb_menu" maxWidth="300.0" minWidth="300.0" prefHeight="40.0" prefWidth="300.0">
+                  <MenuBar maxWidth="300.0" minWidth="300.0" prefHeight="40.0" prefWidth="300.0">
                     <menus>
-                      <Menu mnemonicParsing="false" text="File">
+                      <Menu mnemonicParsing="false" text="Fichier">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="Close" />
+                          <MenuItem fx:id="menu_quitter" mnemonicParsing="false" onAction="#quitter" text="Quitter" />
                         </items>
                       </Menu>
-                      <Menu mnemonicParsing="false" text="Edit">
+                      <Menu mnemonicParsing="false" text="Edition">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="Delete" />
+                          <MenuItem fx:id="menu_copier" mnemonicParsing="false" text="Copier" />
+                              <MenuItem fx:id="menu_coller" mnemonicParsing="false" text="Coller" />
+                              <MenuItem fx:id="menu_couper" mnemonicParsing="false" text="Couper" />
                         </items>
                       </Menu>
-                      <Menu mnemonicParsing="false" text="Help">
+                      <Menu mnemonicParsing="false" text="Aide">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="About" />
+                          <MenuItem fx:id="menu_a_propos" mnemonicParsing="false" text="A propos" />
+                              <MenuItem fx:id="menu_langue" mnemonicParsing="false" onAction="#change_lang" text="Langue" />
+                              <MenuItem fx:id="menu_aide" mnemonicParsing="false" text="Aide" />
                         </items>
                       </Menu>
                     </menus>

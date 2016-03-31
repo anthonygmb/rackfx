@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import org.controlsfx.control.ToggleSwitch;
 import org.controlsfx.control.textfield.CustomTextField;
@@ -28,6 +30,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -68,6 +71,7 @@ public final class MainViewController {
 	public String pwd_admin = "admin";
 	public String salt = "[B@49396ed";
 	public Optional<ButtonType> result;
+	public String langue = "Français";
 
 	/* Singleton */
 	/** Instance unique pré-initialisée */
@@ -99,6 +103,8 @@ public final class MainViewController {
 	@FXML
 	private void initialize() throws InterruptedException {
 		INSTANCE_MAIN_VIEW_CONTROLLER = this;
+		
+		Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.FRANCE);//TODO
 
 		Session s = HibernateSetUp.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(s);
@@ -181,7 +187,7 @@ public final class MainViewController {
 	 */
 	@FXML
 	private void connection() {
-		if (btn_connect.getText().equals("Connection")) {
+		if (btn_connect.getText().equals("Connexion")) {
 			if (tf_login.getText().equals(login_admin) && pwf_mdp.getText().equals(pwd_admin)) {
 				connectAdmin = true;
 			}
@@ -202,8 +208,8 @@ public final class MainViewController {
 
 			/* Cas si l'utilisateur est connecté */
 			if (connectAdmin || connectUser) {
-				btn_connect.setText("Deconnection");
-				if (tf_login.getText().equals(login_admin) && btn_connect.getText().equals("Deconnection")) {
+				btn_connect.setText("Deconnexion");
+				if (tf_login.getText().equals(login_admin) && btn_connect.getText().equals("Deconnexion")) {
 					lb_connection.setText("Connecté en temps que [super admin] ");
 				} else {
 					if (connectUser) {
@@ -227,7 +233,7 @@ public final class MainViewController {
 				/* Cas si le login ou le mot de passe est faux */
 				pwf_mdp.setStyle("-fx-text-inner-color: dc320c;");
 				tf_login.setStyle("-fx-text-inner-color: dc320c;");
-				lb_connection.setText("Erreur de connection");
+				lb_connection.setText(Lang_bundle.getString("Erreur.de.connexion"));
 				lb_connection.setTextFill(Color.web("#dc320c"));
 				connectAdmin = false;
 			}
@@ -243,7 +249,7 @@ public final class MainViewController {
 		tab_administration.setDisable(true);
 		tabpane_onglets.getSelectionModel().select(0);
 		lb_connection.setText("");
-		btn_connect.setText("Connection");
+		btn_connect.setText("Connexion");
 		tf_login.setDisable(false);
 		pwf_mdp.setDisable(false);
 		tf_login.clear();
@@ -254,6 +260,61 @@ public final class MainViewController {
 		btn_new_event.setDisable(true);
 		btn_supp_groupe.setDisable(true);
 		btn_supp_event.setDisable(true);
+	}
+
+	/*
+	 * =========================================================================
+	 * MENU
+	 */
+
+	@FXML
+	private MenuItem menu_quitter;// TODO peut etre supprime
+	@FXML
+	private MenuItem menu_copier;// TODO
+	@FXML
+	private MenuItem menu_coller;// TODO
+	@FXML
+	private MenuItem menu_couper;// TODO
+	@FXML
+	private MenuItem menu_aide;// TODO
+	@FXML
+	private MenuItem menu_a_propos;// TODO
+	@FXML
+	private MenuItem menu_langue;// TODO
+	private ResourceBundle Lang_bundle;
+
+	/**
+	 * Methode de configuration de la langue du programme
+	 */
+	@FXML
+	private void change_lang() {
+		MainApp.getInstance().showLangueDialog();
+		switch (langue) {
+		case "Français":
+			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.FRANCE);
+			break;
+		case "English":
+			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.ENGLISH);
+			break;
+		case "Deutsch":
+			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.GERMAN);
+			break;
+		default:
+			break;
+		}
+	}
+
+	/**
+	 * Methode pour quitter l'application
+	 */
+	@FXML
+	private void quitter() {
+		result = Validateur.showPopup(AlertType.CONFIRMATION, "Quitter", "Confirmation de fermeture",
+				"Etes-vous sûr de vouloir quitter ?").showAndWait();
+		if (result.get() == ButtonType.OK) {
+			MainApp.getInstance().getPrimaryStage().close();
+			HibernateSetUp.shutdown();
+		}
 	}
 
 	/*

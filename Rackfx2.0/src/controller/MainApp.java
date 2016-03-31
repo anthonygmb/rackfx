@@ -208,6 +208,36 @@ public final class MainApp extends Application {
 	}
 
 	/**
+	 * Ouvre la fenetre de configuration de la langue du programme
+	 */
+	public void showLangueDialog() {
+		try {
+			/* charge le fichier fxml et crée un nouveau stage pour le popup */
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("../view/Langue.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			/* creation du stage dialog */
+			Stage stageLang = new Stage();
+			stageLang.setTitle("Langue");
+			stageLang.initModality(Modality.WINDOW_MODAL);
+			stageLang.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
+			stageLang.setScene(scene);
+			
+			LangueController controller2 = loader.getController();
+			controller2.setDialogStage(stageLang);
+
+			/* lance la dialogbox et attend que user ferme */
+			stageLang.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
 	 * Methode retournant le primaryStage.
 	 * 
 	 * @return primaryStage
