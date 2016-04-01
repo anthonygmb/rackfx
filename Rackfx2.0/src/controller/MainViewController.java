@@ -30,7 +30,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -104,7 +103,7 @@ public final class MainViewController {
 	private void initialize() throws InterruptedException {
 		INSTANCE_MAIN_VIEW_CONTROLLER = this;
 		
-		if (MainApp.getInstance().getParametresData().isEmpty()) {
+		if (MainApp.getInstance().getParametresData().isEmpty()) {//TODO
 			choise_lang("Français");
 		} else {
 			choise_lang(MainApp.getInstance().getParametresData().get(0).getLangue());
@@ -169,8 +168,8 @@ public final class MainViewController {
 	 * BANDEAU DE CONNECTION
 	 */
 
-	@FXML
-	private MenuBar mnb_menu;
+//	@FXML
+//	private MenuBar mnb_menu;
 	@FXML
 	public TextField tf_login;
 	@FXML
@@ -191,7 +190,7 @@ public final class MainViewController {
 	 */
 	@FXML
 	private void connection() {
-		if (btn_connect.getText().equals("Connexion")) {
+		if (btn_connect.getText().equals("Connexion")) {//TODO
 			if (tf_login.getText().equals(login_admin) && pwf_mdp.getText().equals(pwd_admin)) {
 				connectAdmin = true;
 			}
@@ -212,8 +211,8 @@ public final class MainViewController {
 
 			/* Cas si l'utilisateur est connecté */
 			if (connectAdmin || connectUser) {
-				btn_connect.setText("Deconnexion");
-				if (tf_login.getText().equals(login_admin) && btn_connect.getText().equals("Deconnexion")) {
+				btn_connect.setText("Deconnexion");//TODO
+				if (tf_login.getText().equals(login_admin) && btn_connect.getText().equals("Deconnexion")) {//TODO
 					lb_connection.setText(Lang_bundle.getString("Connecté.en.temps.que.[super.admin]"));
 				} else {
 					if (connectUser) {
@@ -253,7 +252,7 @@ public final class MainViewController {
 		tab_administration.setDisable(true);
 		tabpane_onglets.getSelectionModel().select(0);
 		lb_connection.setText("");
-		btn_connect.setText("Connexion");
+		btn_connect.setText("Connexion");//TODO
 		tf_login.setDisable(false);
 		pwf_mdp.setDisable(false);
 		tf_login.clear();
@@ -271,22 +270,9 @@ public final class MainViewController {
 	 * MENU
 	 */
 
-	@FXML
-	private MenuItem menu_quitter;// TODO peut etre supprime
-	@FXML
-	private MenuItem menu_copier;// TODO
-	@FXML
-	private MenuItem menu_coller;// TODO
-	@FXML
-	private MenuItem menu_couper;// TODO
-	@FXML
-	private MenuItem menu_aide;// TODO
-	@FXML
-	private MenuItem menu_a_propos;// TODO
-	@FXML
-	private MenuItem menu_langue;// TODO
-	private ResourceBundle Lang_bundle;
+	public ResourceBundle Lang_bundle;
 	private Parametres param;
+	public boolean lang_modif = false;
 
 	/**
 	 * Methode de configuration de la langue du programme
@@ -301,15 +287,17 @@ public final class MainViewController {
 		}
 		MainApp.getInstance().showLangueDialog(param);
 		choise_lang(MainApp.getInstance().getParametresData().get(0).getLangue());
-		MainApp.getInstance().getPrimaryStage().close();
-		MainApp.getInstance().start(MainApp.getInstance().getPrimaryStage());
+		if (lang_modif) {
+			MainApp.getInstance().getPrimaryStage().close();
+			MainApp.getInstance().start(MainApp.getInstance().getPrimaryStage());
+		}
 	}
 	
 	/**
 	 * Methode pour appliquer le choix de la langue et redémarrer l'application
 	 * @param langue
 	 */
-	private void choise_lang(String langue) {
+	public void choise_lang(String langue) {
 		switch (langue) {
 		case "Français":
 			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.FRANCE);
@@ -328,8 +316,8 @@ public final class MainViewController {
 	 */
 	@FXML
 	private void quitter() {
-		result = Validateur.showPopup(AlertType.CONFIRMATION, "Quitter", "Confirmation de fermeture",
-				"Etes-vous sûr de vouloir quitter ?").showAndWait();
+		result = Validateur.showPopup(AlertType.CONFIRMATION, Lang_bundle.getString("Quitter"), Lang_bundle.getString("Confirmation.de.fermeture"),
+				Lang_bundle.getString("Etes-vous.sûr.de.vouloir.quitter.?")).showAndWait();
 		if (result.get() == ButtonType.OK) {
 			MainApp.getInstance().getPrimaryStage().close();
 			HibernateSetUp.shutdown();
@@ -340,14 +328,14 @@ public final class MainViewController {
 	 * =========================================================================
 	 * ONGLET ACCUEIL
 	 */
-	@FXML
-	private Tab tab_accueil;
+//	@FXML
+//	private Tab tab_accueil;
 	@FXML
 	public CustomTextField cst_tf_search;
 	@FXML
 	private VBox vb_link = new VBox();
-	@FXML
-	private AnchorPane anchor_accueil;
+//	@FXML
+//	private AnchorPane anchor_accueil;
 
 	@FXML
 	private void searchBar() {
@@ -393,7 +381,7 @@ public final class MainViewController {
 			List<Organisateur> result5 = hibQuery.list();
 
 			if (!result1.isEmpty()) {
-				Label ctgr_groupe = new Label(" GROUPES:");
+				Label ctgr_groupe = new Label(Lang_bundle.getString("Ctgr.groupe"));
 				vb_link.getChildren().add(ctgr_groupe);
 				for (Groupe groupe : result1) {
 					Hyperlink link_groupe = new Hyperlink(groupe.getNom_groupe());
@@ -409,7 +397,7 @@ public final class MainViewController {
 			}
 			if (!result2.isEmpty()) {
 				Line ligne = new Line(0, 0, 588, 0);
-				Label ctgr_personne = new Label(" PERSONNES:");
+				Label ctgr_personne = new Label(Lang_bundle.getString("Ctgr.personne"));
 				vb_link.getChildren().add(ligne);
 				vb_link.getChildren().add(ctgr_personne);
 				for (Personne personne : result2) {
@@ -426,7 +414,7 @@ public final class MainViewController {
 			}
 			if (!result3.isEmpty()) {
 				Line ligne = new Line(0, 0, 588, 0);
-				Label ctgr_titre = new Label(" TITRES:");
+				Label ctgr_titre = new Label(Lang_bundle.getString("Ctgr.titre"));
 				vb_link.getChildren().add(ligne);
 				vb_link.getChildren().add(ctgr_titre);
 				for (Titre titre : result3) {
@@ -443,7 +431,7 @@ public final class MainViewController {
 			}
 			if (!result4.isEmpty()) {
 				Line ligne = new Line(0, 0, 588, 0);
-				Label ctgr_rencontre = new Label(" RENCONTRES:");
+				Label ctgr_rencontre = new Label(Lang_bundle.getString("Ctgr.rencontre"));
 				vb_link.getChildren().add(ligne);
 				vb_link.getChildren().add(ctgr_rencontre);
 				for (Rencontre rencontre : result4) {
@@ -461,7 +449,7 @@ public final class MainViewController {
 			}
 			if (!result5.isEmpty()) {
 				Line ligne = new Line(0, 0, 588, 0);
-				Label ctgr_organisateur = new Label(" ORGANISATEURS:");
+				Label ctgr_organisateur = new Label(Lang_bundle.getString("Ctgr.organisateur"));
 				vb_link.getChildren().add(ligne);
 				vb_link.getChildren().add(ctgr_organisateur);
 				for (Organisateur organisateur : result5) {
@@ -476,7 +464,6 @@ public final class MainViewController {
 					vb_link.getChildren().add(link_organisateur);
 				}
 			}
-
 			tx.commit();
 			s.close();
 		}
@@ -486,8 +473,10 @@ public final class MainViewController {
 	 * =========================================================================
 	 * ONGLET REPERTOIRE
 	 */
-	@FXML
-	private Tab tab_repertoire;
+	
+	//TODO aucun contenu dans la table
+//	@FXML
+//	private Tab tab_repertoire;
 	@FXML
 	public TableView<Groupe> tv_reper;
 	@FXML
@@ -502,8 +491,8 @@ public final class MainViewController {
 	private Label lb_pays_groupe;
 	@FXML
 	public Button btn_new_groupe;
-	@FXML
-	private Button btn_edit_groupe;
+//	@FXML
+//	private Button btn_edit_groupe;
 	@FXML
 	public Button btn_supp_groupe;
 	@FXML
@@ -514,8 +503,8 @@ public final class MainViewController {
 	private Label lb_nb_event_futur;
 	@FXML
 	private Label lb_nb_event_passe;
-	@FXML
-	private GridPane gridpane_lb_reper;
+//	@FXML
+//	private GridPane gridpane_lb_reper;
 	@FXML
 	private ImageView img_view_main;
 	private ObservableList<Representation> repreDataTri = FXCollections.observableArrayList();
@@ -551,8 +540,8 @@ public final class MainViewController {
 		if (selectedGroupe != null) {
 			MainApp.getInstance().showFicheGroupeEditDialog(selectedGroupe, true, 0);
 		} else {
-			Validateur.showPopup(AlertType.WARNING, "Attention", "Aucun groupe selectionné",
-					"Veuillez sélectionner un groupe dans la liste").showAndWait();
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"), Lang_bundle.getString("Aucun.item.selectionne"),
+					Lang_bundle.getString("Veuillez.selectionner.un.item")).showAndWait();
 		}
 	}
 
@@ -567,8 +556,8 @@ public final class MainViewController {
 	private void supprimerGroupe() throws SQLException {
 		int selectedIndex = tv_reper.getSelectionModel().getSelectedIndex();
 		result = Validateur
-				.showPopup(AlertType.CONFIRMATION, "Confirmation d'action", "Confirmation de suppression",
-						"Voulez-vous supprimer ce groupe ?\n\nN.B. tous les membres, titres et représentations\nlui appartenant seront également supprimé")
+				.showPopup(AlertType.CONFIRMATION, Lang_bundle.getString("Confirmation.d'action"), Lang_bundle.getString("Confirmation.de.suppression"),
+						Lang_bundle.getString("Confirmation.groupe.supp"))
 				.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			CRUD.delete(tv_reper.getSelectionModel().getSelectedItem());
@@ -627,8 +616,8 @@ public final class MainViewController {
 	 * =========================================================================
 	 * ONGLET PLANIFICATION
 	 */
-	@FXML
-	private Tab tab_planification;
+//	@FXML
+//	private Tab tab_planification;
 	@FXML
 	public TableView<Rencontre> tv_planif;
 	@FXML
@@ -647,8 +636,8 @@ public final class MainViewController {
 	private Label lb_nb_pers;
 	@FXML
 	public Button btn_new_event;
-	@FXML
-	private Button btn_edit_event;
+//	@FXML
+//	private Button btn_edit_event;
 	@FXML
 	public Button btn_supp_event;
 	@FXML
@@ -682,8 +671,8 @@ public final class MainViewController {
 		if (selectedRencontre != null) {
 			MainApp.getInstance().showFicheEventEditDialog(selectedRencontre, true, 0);
 		} else {
-			Validateur.showPopup(AlertType.WARNING, "Attention", "Aucune rencontre selectionnée",
-					"Veuillez sélectionner une rencontre dans la liste").showAndWait();
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"), Lang_bundle.getString("Aucun.item.selectionne"),
+					Lang_bundle.getString("Veuillez.selectionner.un.item")).showAndWait();
 		}
 	}
 
@@ -697,8 +686,8 @@ public final class MainViewController {
 	private void supprimerEvent() {
 		int selectedIndex = tv_planif.getSelectionModel().getSelectedIndex();
 		result = Validateur
-				.showPopup(AlertType.CONFIRMATION, "Confirmation d'action", "Confirmation de suppression",
-						"Voulez-vous supprimer cette rencontre ?\n\nN.B. tous les organisateurs et représentations\nlui appartenant seront également supprimé")
+				.showPopup(AlertType.CONFIRMATION, Lang_bundle.getString("Confirmation.d'action"), Lang_bundle.getString("Confirmation.de.suppression"),
+						Lang_bundle.getString("Confirmation.rencontre.supp"))
 				.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			CRUD.delete(tv_planif.getSelectionModel().getSelectedItem());
@@ -746,12 +735,12 @@ public final class MainViewController {
 	private TableColumn<User, String> col_mdp;
 	@FXML
 	private TableColumn<User, String> col_droits;
-	@FXML
-	private Button btn_admin_creer;
-	@FXML
-	private Button btn_admin_annuler;
-	@FXML
-	private Button btn_admin_supp;
+//	@FXML
+//	private Button btn_admin_creer;
+//	@FXML
+//	private Button btn_admin_annuler;
+//	@FXML
+//	private Button btn_admin_supp;
 	@FXML
 	private TextField tf_admin_login;
 	@FXML
@@ -789,7 +778,7 @@ public final class MainViewController {
 			}
 			/* test de doublons */
 		} catch (Exception e) {
-			Validateur.showPopup(AlertType.WARNING, "Attention", "Doublon détecté", "Ce login existe déjà")
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"), Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Ce.login.existe.deja"))
 					.showAndWait();
 		}
 	}
@@ -816,10 +805,8 @@ public final class MainViewController {
 	private void supprimerUser() {
 		int selectedIndex = tv_admin.getSelectionModel().getSelectedIndex();
 		if (tv_admin.getSelectionModel().getSelectedItem().getLogin().equals(tf_login.getText())) {
-			result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
-					"Confirmation de suppression",
-					"Attention, ce login est actuellement utilisé\n" + "Voulez-vous supprimer cet utilisateur ?\n"
-							+ "Après la suppression vous serez déconnecté\n" + "et ne pourrez plus vous connecter")
+			result = Validateur.showPopup(AlertType.CONFIRMATION, Lang_bundle.getString("Confirmation.d'action"), Lang_bundle.getString("Confirmation.de.suppression"),
+					Lang_bundle.getString("Login.deja.utilise"))
 					.showAndWait();
 			if (result.get() == ButtonType.OK) {
 				CRUD.delete(tv_admin.getSelectionModel().getSelectedItem());
@@ -828,8 +815,7 @@ public final class MainViewController {
 				deconnection();
 			}
 		} else {
-			result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
-					"Confirmation de suppression", "Voulez-vous supprimer cet utilisateur ?").showAndWait();
+			result = Validateur.showPopup(AlertType.CONFIRMATION, Lang_bundle.getString("Confirmation.d'action"), Lang_bundle.getString("Confirmation.de.suppression"), Lang_bundle.getString("Voulez-vous.supprimer.utilisateur.?")).showAndWait();
 			if (result.get() == ButtonType.OK) {
 				CRUD.delete(tv_admin.getSelectionModel().getSelectedItem());
 				tv_admin.getItems().remove(selectedIndex);

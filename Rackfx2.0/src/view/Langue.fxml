@@ -7,16 +7,21 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LangueController">
    <children>
-      <Pane prefHeight="150.0" prefWidth="400.0">
+      <Pane fx:id="pane_lang" prefHeight="200.0" prefWidth="400.0">
          <children>
-            <Label fx:id="langue_lb" layoutX="113.0" layoutY="14.0" text="Veuillez choisir une langue" />
-            <ComboBox fx:id="langue_cmbbox" layoutX="65.0" layoutY="49.0" prefHeight="26.0" prefWidth="270.0" promptText="Langue" />
-            <ButtonBar layoutX="188.0" layoutY="96.0" prefHeight="40.0" prefWidth="200.0">
-              <buttons>
-                <Button fx:id="langue_btn_valid" mnemonicParsing="false" onAction="#validerlangue" text="Valider" />
-                  <Button fx:id="langue_btn_annuler" mnemonicParsing="false" onAction="#annulerlangue" text="Annuler" />
-              </buttons>
-            </ButtonBar>
+            <AnchorPane fx:id="anchor_lang" prefHeight="200.0" prefWidth="400.0">
+               <children>
+                  <Label fx:id="langue_lb" alignment="CENTER" text="Veuillez choisir une langue" textAlignment="CENTER" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0" />
+                  <Label fx:id="langue_lb2" alignment="CENTER" text="Le changement de langue entrainera le redémarrage de l'application" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="32.0" />
+                  <ComboBox fx:id="langue_cmbbox" prefHeight="26.0" prefWidth="270.0" promptText="Langue" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="100.0" />
+                  <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                    <buttons>
+                      <Button fx:id="langue_btn_valid" mnemonicParsing="false" onAction="#validerlangue" text="Valider" />
+                        <Button fx:id="langue_btn_annuler" mnemonicParsing="false" onAction="#annulerlangue" text="Annuler" />
+                    </buttons>
+                  </ButtonBar>
+               </children>
+            </AnchorPane>
          </children>
       </Pane>
    </children>

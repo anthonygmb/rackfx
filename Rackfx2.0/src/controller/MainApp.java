@@ -31,7 +31,7 @@ public final class MainApp extends Application {
 	private ObservableList<Groupe> groupeData = FXCollections.observableArrayList();
 	private ObservableList<Rencontre> rencontreData = FXCollections.observableArrayList();
 	private ObservableList<User> userData = FXCollections.observableArrayList();
-	private ObservableList<Parametres> parametresData = FXCollections.observableArrayList();//TODO
+	private ObservableList<Parametres> parametresData = FXCollections.observableArrayList();// TODO
 	public final LocalTime def_time = LocalTime.of(0, 0);
 
 	/* Singleton */
@@ -50,7 +50,7 @@ public final class MainApp extends Application {
 		getGroupeData().addAll(CRUD.getAll("Groupe"));
 		getRencontreData().addAll(CRUD.getAll("Rencontre"));
 		getUserData().addAll(CRUD.getAll("User"));
-		getParametresData().addAll(CRUD.getAll("Parametres"));//TODO
+		getParametresData().addAll(CRUD.getAll("Parametres"));// TODO
 		INSTANCE_MAINAPP = this;
 	}
 
@@ -80,12 +80,13 @@ public final class MainApp extends Application {
 	public ObservableList<User> getUserData() {
 		return userData;
 	}
-	
+
 	/**
 	 * Retournent les données dans une observableList de parametres.
+	 * 
 	 * @return
 	 */
-	public ObservableList<Parametres> getParametresData() {//TODO
+	public ObservableList<Parametres> getParametresData() {// TODO
 		return parametresData;
 	}
 
@@ -106,8 +107,13 @@ public final class MainApp extends Application {
 
 			@Override
 			public void handle(WindowEvent event) {
-				MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Quitter",
-						"Confirmation de fermeture", "Etes-vous sûr de vouloir quitter ?").showAndWait();
+				MainViewController.getInstance().result = Validateur
+						.showPopup(
+								AlertType.CONFIRMATION, MainViewController.getInstance().Lang_bundle
+										.getString("Quitter"),
+						MainViewController.getInstance().Lang_bundle.getString("Confirmation.de.fermeture"),
+						MainViewController.getInstance().Lang_bundle.getString("Etes-vous.sûr.de.vouloir.quitter.?"))
+						.showAndWait();
 				if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 					HibernateSetUp.shutdown();
 				} else {
@@ -236,7 +242,7 @@ public final class MainApp extends Application {
 			Scene scene = new Scene(page);
 			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
 			stageLang.setScene(scene);
-			
+
 			LangueController controller2 = loader.getController();
 			controller2.setDialogStage(stageLang);
 			controller2.setParametres(param);
@@ -247,8 +253,7 @@ public final class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * Methode retournant le primaryStage.
 	 * 

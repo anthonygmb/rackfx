@@ -196,7 +196,7 @@
 }
 
 #anchor_info_groupe, #anchor_membre, #anchor_titre, #anchor_event_f,
-	#anchor_event_p, #anchor_infos_event, #anchor_orga, #anchor_prog {
+	#anchor_event_p, #anchor_infos_event, #anchor_orga, #anchor_prog, #anchor_lang {
 	-fx-background-color: #353C42;
 	-fx-border-color: #ED4949 transparent transparent transparent;
 	-fx-border-width: 3px;
