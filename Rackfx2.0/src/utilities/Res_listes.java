@@ -182,5 +182,5 @@ public class Res_listes {
 			"Chauffeur", "Habilleur", "Dirigeant", "Trésorier");
 	
 	public static ObservableList<String> liste_langues = FXCollections.observableArrayList("Français",
-			"English", "Deutsch");
+			"English");
 }

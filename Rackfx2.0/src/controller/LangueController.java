@@ -1,13 +1,13 @@
 package controller;
 
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
-
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.Parametres;
+import sql.CRUD;
 import utilities.Res_listes;
-import javafx.scene.control.ComboBox;
 
 public class LangueController {
 	private Stage dialogStage;
@@ -19,6 +19,7 @@ public class LangueController {
 	private Button langue_btn_valid;
 	@FXML
 	private Button langue_btn_annuler;
+	Parametres param;
 
 	@FXML
 	private void initialize() {
@@ -34,6 +35,11 @@ public class LangueController {
 		this.dialogStage = dialogStage;
 	}
 	
+	public void setParametres(Parametres param) {
+		this.param = param;
+		langue_cmbbox.getSelectionModel().select(param.getLangue());
+	}
+	
 	/**
 	 * Methode d'annulation de changement de langue
 	 */
@@ -47,8 +53,12 @@ public class LangueController {
 	 */
 	@FXML
 	private void validerlangue() {
-		MainViewController.getInstance().langue = langue_cmbbox.getSelectionModel().getSelectedItem();
+		if (langue_cmbbox.getSelectionModel().getSelectedItem() == null) {
+			param = new Parametres();
+		}
+		param.setLangue(langue_cmbbox.getSelectionModel().getSelectedItem());
+		MainApp.getInstance().getParametresData().add(param);
+		CRUD.saveOrUpdate(param);
 		dialogStage.close();
-	}
-	
+	}	
 }

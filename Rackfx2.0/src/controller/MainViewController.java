@@ -46,6 +46,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.Groupe;
 import model.Organisateur;
+import model.Parametres;
 import model.Personne;
 import model.Rencontre;
 import model.Representation;
@@ -71,7 +72,6 @@ public final class MainViewController {
 	public String pwd_admin = "admin";
 	public String salt = "[B@49396ed";
 	public Optional<ButtonType> result;
-	public String langue = "Français";
 
 	/* Singleton */
 	/** Instance unique pré-initialisée */
@@ -104,7 +104,11 @@ public final class MainViewController {
 	private void initialize() throws InterruptedException {
 		INSTANCE_MAIN_VIEW_CONTROLLER = this;
 		
-		Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.FRANCE);//TODO
+		if (MainApp.getInstance().getParametresData().isEmpty()) {
+			choise_lang("Français");
+		} else {
+			choise_lang(MainApp.getInstance().getParametresData().get(0).getLangue());
+		}
 
 		Session s = HibernateSetUp.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(s);
@@ -210,12 +214,12 @@ public final class MainViewController {
 			if (connectAdmin || connectUser) {
 				btn_connect.setText("Deconnexion");
 				if (tf_login.getText().equals(login_admin) && btn_connect.getText().equals("Deconnexion")) {
-					lb_connection.setText("Connecté en temps que [super admin] ");
+					lb_connection.setText(Lang_bundle.getString("Connecté.en.temps.que.[super.admin]"));
 				} else {
 					if (connectUser) {
-						lb_connection.setText("Connecté en temps que [user] ");
+						lb_connection.setText(Lang_bundle.getString("Connecté.en.temps.que.[user]"));
 					} else {
-						lb_connection.setText("Connecté en temps que [admin] ");
+						lb_connection.setText(Lang_bundle.getString("Connecté.en.temps.que.[admin]"));
 					}
 				}
 				lb_connection.setTextFill(Color.web("#DEFFFF"));
@@ -282,13 +286,30 @@ public final class MainViewController {
 	@FXML
 	private MenuItem menu_langue;// TODO
 	private ResourceBundle Lang_bundle;
+	private Parametres param;
 
 	/**
 	 * Methode de configuration de la langue du programme
+	 * Redémarre le programme pour prendre en compte les modifications.
 	 */
 	@FXML
 	private void change_lang() {
-		MainApp.getInstance().showLangueDialog();
+		if (MainApp.getInstance().getParametresData().isEmpty()) {
+			param = new Parametres();
+		} else {
+			param = MainApp.getInstance().getParametresData().get(0);
+		}
+		MainApp.getInstance().showLangueDialog(param);
+		choise_lang(MainApp.getInstance().getParametresData().get(0).getLangue());
+		MainApp.getInstance().getPrimaryStage().close();
+		MainApp.getInstance().start(MainApp.getInstance().getPrimaryStage());
+	}
+	
+	/**
+	 * Methode pour appliquer le choix de la langue et redémarrer l'application
+	 * @param langue
+	 */
+	private void choise_lang(String langue) {
 		switch (langue) {
 		case "Français":
 			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.FRANCE);
@@ -296,14 +317,12 @@ public final class MainViewController {
 		case "English":
 			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.ENGLISH);
 			break;
-		case "Deutsch":
-			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.GERMAN);
-			break;
 		default:
+			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.FRANCE);
 			break;
 		}
 	}
-
+	
 	/**
 	 * Methode pour quitter l'application
 	 */

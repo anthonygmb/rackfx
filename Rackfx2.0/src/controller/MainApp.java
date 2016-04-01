@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.Groupe;
+import model.Parametres;
 import model.Rencontre;
 import model.User;
 import sql.CRUD;
@@ -30,6 +31,7 @@ public final class MainApp extends Application {
 	private ObservableList<Groupe> groupeData = FXCollections.observableArrayList();
 	private ObservableList<Rencontre> rencontreData = FXCollections.observableArrayList();
 	private ObservableList<User> userData = FXCollections.observableArrayList();
+	private ObservableList<Parametres> parametresData = FXCollections.observableArrayList();//TODO
 	public final LocalTime def_time = LocalTime.of(0, 0);
 
 	/* Singleton */
@@ -48,6 +50,7 @@ public final class MainApp extends Application {
 		getGroupeData().addAll(CRUD.getAll("Groupe"));
 		getRencontreData().addAll(CRUD.getAll("Rencontre"));
 		getUserData().addAll(CRUD.getAll("User"));
+		getParametresData().addAll(CRUD.getAll("Parametres"));//TODO
 		INSTANCE_MAINAPP = this;
 	}
 
@@ -76,6 +79,14 @@ public final class MainApp extends Application {
 	 */
 	public ObservableList<User> getUserData() {
 		return userData;
+	}
+	
+	/**
+	 * Retournent les données dans une observableList de parametres.
+	 * @return
+	 */
+	public ObservableList<Parametres> getParametresData() {//TODO
+		return parametresData;
 	}
 
 	/**
@@ -210,7 +221,7 @@ public final class MainApp extends Application {
 	/**
 	 * Ouvre la fenetre de configuration de la langue du programme
 	 */
-	public void showLangueDialog() {
+	public void showLangueDialog(Parametres param) {
 		try {
 			/* charge le fichier fxml et crée un nouveau stage pour le popup */
 			FXMLLoader loader = new FXMLLoader();
@@ -228,6 +239,7 @@ public final class MainApp extends Application {
 			
 			LangueController controller2 = loader.getController();
 			controller2.setDialogStage(stageLang);
+			controller2.setParametres(param);
 
 			/* lance la dialogbox et attend que user ferme */
 			stageLang.showAndWait();

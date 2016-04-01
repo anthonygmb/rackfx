@@ -18,9 +18,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -33,9 +31,9 @@ public class Titre {
 	private StringProperty titre;
 	private StringProperty annee;
 	private ObjectProperty<Time> duree;
-	private StringProperty genre;
-	private BooleanProperty reprise_titre;
-	private StringProperty auteur;
+	private String genre;
+	private Boolean reprise_titre;
+	private String auteur;
 	private Groupe groupe;
 
 	public Titre() {
@@ -46,9 +44,9 @@ public class Titre {
 		this.titre = new SimpleStringProperty(titre);
 		this.annee = new SimpleStringProperty(annee);
 		this.duree = new SimpleObjectProperty<Time>(duree);
-		this.genre = new SimpleStringProperty(genre);
-		this.reprise_titre = new SimpleBooleanProperty(reprise_titre);
-		this.auteur = new SimpleStringProperty(auteur);
+		this.genre = genre;
+		this.reprise_titre = reprise_titre;
+		this.auteur = auteur;
 	}
 
 	// =================================================================================================
@@ -114,44 +112,32 @@ public class Titre {
 	// =================================================================================================
 	@Length(max = 50)
 	public String getGenre() {
-		return genre.get();
+		return genre;
 	}
 
 	public void setGenre(String genre) {
-		this.genre.set(genre);
-	}
-
-	public StringProperty genreProperty() {
-		return genre;
+		this.genre = genre;
 	}
 
 	// =================================================================================================
 	@NotNull
 	public Boolean getReprise_titre() {
-		return reprise_titre.get();
+		return reprise_titre;
 	}
 
 	public void setReprise_titre(Boolean reprise_titre) {
-		this.reprise_titre.set(reprise_titre);
-	}
-
-	public BooleanProperty reprise_titreProperty() {
-		return reprise_titre;
+		this.reprise_titre = reprise_titre;
 	}
 
 	// =================================================================================================
 	@NotEmpty
 	@Length(max = 100)
 	public String getAuteur() {
-		return auteur.get();
+		return auteur;
 	}
 
 	public void setAuteur(String auteur) {
-		this.auteur.set(auteur);
-	}
-
-	public StringProperty auteurProperty() {
-		return auteur;
+		this.auteur = auteur;
 	}
 
 	// =================================================================================================

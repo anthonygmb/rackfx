@@ -22,9 +22,7 @@ import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -36,11 +34,11 @@ public class Rencontre {
 	private long rencontreId;
 	private StringProperty nom_renc;
 	private StringProperty ville_renc;
-	private StringProperty lieu_renc;
+	private String lieu_renc;
 	private ObjectProperty<Date> date_deb_renc;
 	private ObjectProperty<Date> date_fin_renc;
-	private StringProperty periodicite_renc;
-	private LongProperty nb_pers_attendues;
+	private String periodicite_renc;
+	private Long nb_pers_attendues;
 	private Set<Organisateur> liste_orga = new HashSet<Organisateur>();
 	private Set<Representation> liste_repre = new HashSet<Representation>();
 
@@ -52,11 +50,11 @@ public class Rencontre {
 			String periodicite_renc, long nb_pers_attendues) {
 		this.nom_renc = new SimpleStringProperty(nom_renc);
 		this.ville_renc = new SimpleStringProperty(ville_renc);
-		this.lieu_renc = new SimpleStringProperty(lieu_renc);
+		this.lieu_renc = lieu_renc;
 		this.date_deb_renc = new SimpleObjectProperty<Date>(date_deb_renc);
 		this.date_fin_renc = new SimpleObjectProperty<Date>(date_fin_renc);
-		this.periodicite_renc = new SimpleStringProperty(periodicite_renc);
-		this.nb_pers_attendues = new SimpleLongProperty(nb_pers_attendues);
+		this.periodicite_renc = periodicite_renc;
+		this.nb_pers_attendues = nb_pers_attendues;
 	}
 
 	// =================================================================================================
@@ -106,15 +104,11 @@ public class Rencontre {
 	// =================================================================================================
 	@Length(max = 80)
 	public String getLieu_renc() {
-		return lieu_renc.get();
+		return lieu_renc;
 	}
 
 	public void setLieu_renc(String lieu_renc) {
-		this.lieu_renc.set(lieu_renc);
-	}
-
-	public StringProperty lieu_rencProperty() {
-		return lieu_renc;
+		this.lieu_renc = lieu_renc;
 	}
 
 	// =================================================================================================
@@ -149,29 +143,21 @@ public class Rencontre {
 	// =================================================================================================
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getPeriodicite_renc() {
-		return periodicite_renc.get();
+		return periodicite_renc;
 	}
 
 	public void setPeriodicite_renc(String periodicite_renc) {
-		this.periodicite_renc.set(periodicite_renc);
-	}
-
-	public StringProperty periodicite_rencProperty() {
-		return periodicite_renc;
+		this.periodicite_renc = periodicite_renc;
 	}
 
 	// =================================================================================================
 	@Max(value = 10000)
 	public Long getNb_pers_attendues() {
-		return nb_pers_attendues.get();
+		return nb_pers_attendues;
 	}
 
 	public void setNb_pers_attendues(Long nb_pers_attendues) {
-		this.nb_pers_attendues.set(nb_pers_attendues);
-	}
-
-	public LongProperty nb_pers_attenduesProperty() {
-		return nb_pers_attendues;
+		this.nb_pers_attendues = nb_pers_attendues;
 	}
 
 	// =================================================================================================

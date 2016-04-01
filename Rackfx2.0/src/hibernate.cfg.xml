@@ -45,6 +45,7 @@
 		<mapping class="model.Titre" />
 		<mapping class="model.Representation" />
 		<mapping class="model.User" />
+		<mapping class="model.Parametres" />
 
 	</session-factory>
 

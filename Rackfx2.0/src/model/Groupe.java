@@ -45,9 +45,9 @@ public class Groupe {
 
 	private long groupeId;
 	private StringProperty nom_groupe;
-	private StringProperty carac_groupe;
-	private StringProperty pays_groupe;
-	private StringProperty region_groupe;
+	private String carac_groupe;
+	private String pays_groupe;
+	private String region_groupe;
 	private Set<Personne> liste_personne = new HashSet<Personne>();
 	private Set<Titre> liste_titre = new HashSet<Titre>();
 	private Set<Representation> liste_representation = new HashSet<Representation>();
@@ -59,9 +59,9 @@ public class Groupe {
 
 	public Groupe(String nomGroupe, String carac_groupe, String pays_groupe, String region_groupe) {
 		this.nom_groupe = new SimpleStringProperty(nomGroupe);
-		this.carac_groupe = new SimpleStringProperty(carac_groupe);
-		this.pays_groupe = new SimpleStringProperty(pays_groupe);
-		this.region_groupe = new SimpleStringProperty(region_groupe);
+		this.carac_groupe = carac_groupe;
+		this.pays_groupe = pays_groupe;
+		this.region_groupe = region_groupe;
 	}
 
 	// =================================================================================================
@@ -90,49 +90,37 @@ public class Groupe {
 		this.nom_groupe.set(nom_groupe);
 	}
 
-	public StringProperty nom_groupeProperty() {
+	public final StringProperty nom_groupeProperty() {
 		return nom_groupe;
 	}
 
 	// =================================================================================================
 	@Length(max = 50)
 	public String getCarac_groupe() {
-		return carac_groupe.get();
+		return carac_groupe;
 	}
 
 	public void setCarac_groupe(String carac_groupe) {
-		this.carac_groupe.set(carac_groupe);
-	}
-
-	public StringProperty carac_groupeProperty() {
-		return carac_groupe;
+		this.carac_groupe = carac_groupe;
 	}
 
 	// =================================================================================================
 	public String getPays_groupe() {
-		return pays_groupe.get();
+		return pays_groupe;
 	}
 
 	public void setPays_groupe(String pays_groupe) {
-		this.pays_groupe.set(pays_groupe);
-	}
-
-	public StringProperty pays_groupeProperty() {
-		return pays_groupe;
+		this.pays_groupe = pays_groupe;
 	}
 
 	// =================================================================================================
 	@Length(max = 50)
 	public String getRegion_groupe() {
-		return region_groupe.get();
+		return region_groupe;
 	}
 
 	public void setRegion_groupe(String region_groupe) {
-		this.region_groupe.set(region_groupe);
-	}
-
-	public StringProperty region_groupeProperty() {
-		return region_groupe;
+		this.region_groupe = region_groupe;
 	}
 
 	// =================================================================================================
