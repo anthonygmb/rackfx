@@ -282,7 +282,7 @@
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin></PasswordField>
-                        <Button fx:id="btn_connect" mnemonicParsing="false" onAction="#connection" onKeyPressed="#connection" prefHeight="26.0" prefWidth="118.0" text="%btn.connect">
+                        <Button fx:id="btn_connect" mnemonicParsing="false" onAction="#connection" onKeyPressed="#connection" prefHeight="26.0" prefWidth="118.0" text="%Connexion">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

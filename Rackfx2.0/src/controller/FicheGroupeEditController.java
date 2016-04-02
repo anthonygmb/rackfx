@@ -47,6 +47,7 @@ public class FicheGroupeEditController {
 	 * =========================================================================
 	 * GENERAL
 	 */
+
 	@FXML
 	private TabPane tp_fiche_groupe;
 	private Stage dialogStage;
@@ -230,7 +231,7 @@ public class FicheGroupeEditController {
 	 * 
 	 * @param modif
 	 */
-	public void geleTab(boolean modif) {
+	protected void geleTab(boolean modif) {
 		if (!modif) {
 			tab_membres_groupe.setDisable(true);
 			tab_titres_groupe.setDisable(true);
@@ -249,7 +250,7 @@ public class FicheGroupeEditController {
 	 *
 	 * @param dialogStage
 	 */
-	public void setDialogStage(Stage dialogStage) {
+	protected void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
 
@@ -267,8 +268,7 @@ public class FicheGroupeEditController {
 	 * =========================================================================
 	 * ONGLET INFORMATIONS
 	 */
-	@FXML
-	private Tab tab_infos_groupe;
+
 	@FXML
 	private TextField tf_nom_groupe;
 	@FXML
@@ -279,8 +279,6 @@ public class FicheGroupeEditController {
 	private ComboBox<String> cmbox_pays_groupe = new ComboBox<>(Res_listes.pays_groupe);
 	@FXML
 	private Button btn_creer_groupe;
-	@FXML
-	private Button btn_annuler_groupe;
 	@FXML
 	private Button bt_import_img;
 	@FXML
@@ -299,7 +297,7 @@ public class FicheGroupeEditController {
 	 * @param modif
 	 * @param tab
 	 */
-	public void setGroupe(Groupe groupe, boolean modif, int tab) {
+	protected void setGroupe(Groupe groupe, boolean modif, int tab) {
 		tp_fiche_groupe.getSelectionModel().select(tab);
 		this.groupe = groupe;
 		tf_nom_groupe.setText(groupe.getNom_groupe());
@@ -345,13 +343,13 @@ public class FicheGroupeEditController {
 				if (dialogStage.getTitle().equals("Nouveau groupe *")) {
 					CRUD.saveOrUpdate(groupe);
 					geleTab(true);
-					MainApp.getInstance().getGroupeData().add(groupe);
+					MainApp.getInstance().groupeData.add(groupe);
 					MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
 				} else {
 					CRUD.saveOrUpdate(groupe);
 					MainViewController.getInstance().showGroupeDetails(groupe);
 					int index = MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedIndex();
-					MainApp.getInstance().getGroupeData().setAll(CRUD.getAll("Groupe"));
+					MainApp.getInstance().groupeData.setAll(CRUD.getAll("Groupe"));
 					MainViewController.getInstance().tv_reper.getSelectionModel().select(index);
 				}
 				dialogStage.setTitle(groupe.getNom_groupe());
@@ -405,6 +403,7 @@ public class FicheGroupeEditController {
 	 * =========================================================================
 	 * ONGLET MEMBRES
 	 */
+
 	@FXML
 	private Tab tab_membres_groupe;
 	@FXML
@@ -438,8 +437,6 @@ public class FicheGroupeEditController {
 	private ComboBox<Personne> cmbox_membre = new ComboBox<>(personneData);
 	@FXML
 	private Button btn_creer_membre;
-	@FXML
-	private Button btn_annuler_membre;
 	@FXML
 	private Button btn_supp_membre;
 	private Personne personne;
@@ -508,7 +505,7 @@ public class FicheGroupeEditController {
 	 * renseigne la fenetre d'édition de la personne.
 	 */
 	@FXML
-	public void setPersonne() {
+	protected void setPersonne() {
 		if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
 			annulerPersonne();
 		} else {
@@ -682,12 +679,11 @@ public class FicheGroupeEditController {
 	 * =========================================================================
 	 * ONGLET TITRES
 	 */
+
 	@FXML
 	private Tab tab_titres_groupe;
 	@FXML
 	private Button btn_creer_titre;
-	@FXML
-	private Button btn_annuler_titre;
 	@FXML
 	private Button btn_supp_titre;
 	private ObservableList<Titre> titreData = FXCollections.observableArrayList();
@@ -734,7 +730,7 @@ public class FicheGroupeEditController {
 	 * Renseigne la fenetre d'édition du titre.
 	 */
 	@FXML
-	public void setTitre() {
+	protected void setTitre() {
 		if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
 			annulerTitre();
 		} else {
@@ -843,11 +839,12 @@ public class FicheGroupeEditController {
 	 * =========================================================================
 	 * ONGLET EVENTS FUTURS
 	 */
+	
 	@FXML
 	private Tab tab_event_f_groupe;
 	private ObservableList<Rencontre> rencontreDataF = FXCollections.observableArrayList();
 	@FXML
-	public TableView<Rencontre> tbv_event_f = new TableView<>(rencontreDataF);
+	protected TableView<Rencontre> tbv_event_f = new TableView<>(rencontreDataF);
 	@FXML
 	private TableColumn<Rencontre, String> col_event_event_f;
 	@FXML
@@ -884,6 +881,7 @@ public class FicheGroupeEditController {
 	 * =========================================================================
 	 * ONGLET EVENTS PASSES
 	 */
+	
 	@FXML
 	private Tab tab_event_p_groupe;
 	private ObservableList<Rencontre> rencontreDataP = FXCollections.observableArrayList();

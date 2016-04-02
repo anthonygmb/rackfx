@@ -2,6 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -26,13 +28,13 @@ import utilities.Validateur;
 
 public final class MainApp extends Application {
 
-	private Stage primaryStage;
-	private AnchorPane rootLayout;
-	private ObservableList<Groupe> groupeData = FXCollections.observableArrayList();
-	private ObservableList<Rencontre> rencontreData = FXCollections.observableArrayList();
-	private ObservableList<User> userData = FXCollections.observableArrayList();
-	private ObservableList<Parametres> parametresData = FXCollections.observableArrayList();// TODO
-	public final LocalTime def_time = LocalTime.of(0, 0);
+	protected Stage primaryStage;
+	protected ObservableList<Groupe> groupeData = FXCollections.observableArrayList();
+	protected ObservableList<Rencontre> rencontreData = FXCollections.observableArrayList();
+	protected ObservableList<User> userData = FXCollections.observableArrayList();
+	protected ObservableList<Parametres> parametresData = FXCollections.observableArrayList();
+	protected final LocalTime def_time = LocalTime.of(0, 0);
+	protected ResourceBundle Lang_bundle;
 
 	/* Singleton */
 	/** Instance unique pré-initialisée */
@@ -47,47 +49,43 @@ public final class MainApp extends Application {
 	 * Constructeur
 	 */
 	public MainApp() {
-		getGroupeData().addAll(CRUD.getAll("Groupe"));
-		getRencontreData().addAll(CRUD.getAll("Rencontre"));
-		getUserData().addAll(CRUD.getAll("User"));
-		getParametresData().addAll(CRUD.getAll("Parametres"));// TODO
+		groupeData.addAll(CRUD.getAll("Groupe"));
+		rencontreData.addAll(CRUD.getAll("Rencontre"));
+		userData.addAll(CRUD.getAll("User"));
+		parametresData.addAll(CRUD.getAll("Parametres"));
+
+		if (parametresData.isEmpty()) {
+			choise_lang("Français");
+		} else {
+			choise_lang(parametresData.get(0).getLangue());
+		}
+
 		INSTANCE_MAINAPP = this;
 	}
 
 	/**
-	 * Retournent les données dans une observableList de groupes.
+	 * Methode pour appliquer le choix de la langue et redémarrer l'application
 	 * 
-	 * @return groupeData
+	 * @param langue
 	 */
-	public ObservableList<Groupe> getGroupeData() {
-		return groupeData;
+	protected void choise_lang(String langue) {
+		switch (langue) {
+		case "Français":
+			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.FRANCE);
+			break;
+		case "English":
+			Lang_bundle = ResourceBundle.getBundle("bundles.lang", Locale.ENGLISH);
+			break;
+		}
 	}
 
 	/**
-	 * Retournent les données dans une observableList de rencontres.
+	 * Méthode principale.
 	 * 
-	 * @return rencontreData
+	 * @param args
 	 */
-	public ObservableList<Rencontre> getRencontreData() {
-		return rencontreData;
-	}
-
-	/**
-	 * Retournent les données dans une observableList de users.
-	 * 
-	 * @return userData
-	 */
-	public ObservableList<User> getUserData() {
-		return userData;
-	}
-
-	/**
-	 * Retournent les données dans une observableList de parametres.
-	 * 
-	 * @return
-	 */
-	public ObservableList<Parametres> getParametresData() {// TODO
-		return parametresData;
+	public static void main(String[] args) {
+		launch(args);
 	}
 
 	/**
@@ -102,18 +100,13 @@ public final class MainApp extends Application {
 		this.primaryStage.setTitle("RackFx");
 		this.primaryStage.getIcons().add(new Image("file:src/img/mediator.png"));
 		initRootLayout();
-
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
 			public void handle(WindowEvent event) {
-				MainViewController.getInstance().result = Validateur
-						.showPopup(
-								AlertType.CONFIRMATION, MainViewController.getInstance().Lang_bundle
-										.getString("Quitter"),
-						MainViewController.getInstance().Lang_bundle.getString("Confirmation.de.fermeture"),
-						MainViewController.getInstance().Lang_bundle.getString("Etes-vous.sûr.de.vouloir.quitter.?"))
-						.showAndWait();
+				MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION,
+						Lang_bundle.getString("Quitter"), Lang_bundle.getString("Confirmation.de.fermeture"),
+						Lang_bundle.getString("Etes-vous.sûr.de.vouloir.quitter.?")).showAndWait();
 				if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 					HibernateSetUp.shutdown();
 				} else {
@@ -126,12 +119,9 @@ public final class MainApp extends Application {
 	/**
 	 * Methode d'initialisation du rootLayout avec le menu.
 	 */
-	public void initRootLayout() {
+	protected void initRootLayout() {
 		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("../view/MainView.fxml"));
-			rootLayout = (AnchorPane) loader.load();
-			Scene scene = new Scene(rootLayout);
+			Scene scene = new Scene(FXMLLoader.load(MainApp.class.getResource("../view/MainView.fxml"), Lang_bundle));
 			scene.getStylesheets().add(getClass().getResource("../view/style/mainview.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -151,23 +141,16 @@ public final class MainApp extends Application {
 	 * @param tab
 	 * @return true si l'utilisateur valide, sinon false.
 	 */
-	public void showFicheGroupeEditDialog(Groupe groupe, boolean modif, int tab) {
+	protected void showFicheGroupeEditDialog(Groupe groupe, boolean modif, int tab) {
 		try {
-			/* charge le fichier fxml et crée un nouveau stage pour le popup */
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("../view/FicheGroupeEdit.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-
-			/* creation du stage dialog */
+			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("../view/FicheGroupeEdit.fxml"), Lang_bundle);
 			Stage stageGroupe = new Stage();
-			stageGroupe.setTitle((modif) ? groupe.getNom_groupe() : "Nouveau groupe *");
+			stageGroupe.setTitle((modif) ? groupe.getNom_groupe() : Lang_bundle.getString("Nouveau.groupe"));
 			stageGroupe.initModality(Modality.WINDOW_MODAL);
 			stageGroupe.initOwner(primaryStage);
-			Scene scene = new Scene(page);
+			Scene scene = new Scene((AnchorPane) loader.load());
 			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
 			stageGroupe.setScene(scene);
-
-			/* met le groupe dans le controller */
 			if (!modif) {
 				MainViewController.getInstance().tv_reper.getSelectionModel().clearSelection();
 			}
@@ -175,7 +158,6 @@ public final class MainApp extends Application {
 			controller.setDialogStage(stageGroupe);
 			controller.setGroupe(groupe, modif, tab);
 			controller.geleTab(modif);
-			/* lance la dialogbox et attend que user ferme */
 			stageGroupe.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -192,32 +174,23 @@ public final class MainApp extends Application {
 	 * @param modifGroupe
 	 * @return true si l'utilisateur valide, sinon false.
 	 */
-	public void showFicheEventEditDialog(Rencontre rencontre, boolean modif, int tab) {
+	protected void showFicheEventEditDialog(Rencontre rencontre, boolean modif, int tab) {
 		try {
-			/* charge le fichier fxml et crée un nouveau stage pour le popup */
-			FXMLLoader loader2 = new FXMLLoader();
-			loader2.setLocation(MainApp.class.getResource("../view/FicheEventEdit.fxml"));
-			AnchorPane page2 = (AnchorPane) loader2.load();
-
-			/* creation du stage dialog */
+			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("../view/FicheEventEdit.fxml"), Lang_bundle);
 			Stage stageEvent = new Stage();
-			stageEvent.setTitle((modif) ? rencontre.getNom_renc() : "Nouvelle rencontre *");
+			stageEvent.setTitle((modif) ? rencontre.getNom_renc() : Lang_bundle.getString("Nouvelle.rencontre"));
 			stageEvent.initModality(Modality.WINDOW_MODAL);
 			stageEvent.initOwner(primaryStage);
-			Scene scene2 = new Scene(page2);
+			Scene scene2 = new Scene((AnchorPane) loader.load());
 			scene2.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
 			stageEvent.setScene(scene2);
-
-			/* met la rencontre dans le controller */
 			if (!modif) {
 				MainViewController.getInstance().tv_planif.getSelectionModel().clearSelection();
 			}
-			FicheEventEditController controller2 = loader2.getController();
+			FicheEventEditController controller2 = loader.getController();
 			controller2.setDialogStage(stageEvent);
 			controller2.setEvent(rencontre, modif, tab);
 			controller2.geleTab(modif);
-
-			/* lance la dialogbox et attend que user ferme */
 			stageEvent.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -227,49 +200,22 @@ public final class MainApp extends Application {
 	/**
 	 * Ouvre la fenetre de configuration de la langue du programme
 	 */
-	public void showLangueDialog(Parametres param) {
+	protected void showLangueDialog(Parametres param) {
 		try {
-			/* charge le fichier fxml et crée un nouveau stage pour le popup */
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("../view/Langue.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-
-			/* creation du stage dialog */
+			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("../view/Langue.fxml"), Lang_bundle);
+			Scene scene = new Scene((AnchorPane) loader.load());
+			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
 			Stage stageLang = new Stage();
-			stageLang.setTitle("Langue");
+			stageLang.setTitle(Lang_bundle.getString("Menu.aide.langue"));
 			stageLang.initModality(Modality.WINDOW_MODAL);
 			stageLang.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
 			stageLang.setScene(scene);
-
 			LangueController controller2 = loader.getController();
 			controller2.setDialogStage(stageLang);
 			controller2.setParametres(param);
-
-			/* lance la dialogbox et attend que user ferme */
 			stageLang.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Methode retournant le primaryStage.
-	 * 
-	 * @return primaryStage
-	 */
-
-	public Stage getPrimaryStage() {
-		return primaryStage;
-	}
-
-	/**
-	 * Méthode principale.
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		launch(args);
 	}
 }

@@ -13,7 +13,7 @@
 	<children>
 		<TabPane fx:id="tp_fiche_groupe" layoutX="80.0" prefHeight="500.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<tabs>
-				<Tab fx:id="tab_infos_groupe" text="Informations">
+				<Tab text="Informations">
 					<content>
 						<AnchorPane fx:id="anchor_info_groupe" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 							<children>
@@ -61,7 +61,7 @@
 								<ButtonBar layoutX="215.0" layoutY="413.0" prefHeight="40.0" prefWidth="271.0" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="21.0">
 									<buttons>
 										<Button fx:id="btn_creer_groupe" defaultButton="true" mnemonicParsing="false" onAction="#creerModifierGroupe" text="Créer" />
-										<Button fx:id="btn_annuler_groupe" cancelButton="true" mnemonicParsing="false" onAction="#annulerGroupe" text="Annuler" />
+										<Button cancelButton="true" mnemonicParsing="false" onAction="#annulerGroupe" text="Annuler" />
 									</buttons>
 									<padding>
 										<Insets right="10.0" />
@@ -169,7 +169,7 @@
 								<ButtonBar layoutX="196.0" layoutY="402.0" prefHeight="40.0" prefWidth="422.0" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="21.0">
 									<buttons>
 										<Button fx:id="btn_creer_membre" defaultButton="true" mnemonicParsing="false" onAction="#creerModifierPersonne" text="Créer" />
-										<Button fx:id="btn_annuler_membre" cancelButton="true" mnemonicParsing="false" onAction="#annulerPersonne" text="Annuler" />
+										<Button cancelButton="true" mnemonicParsing="false" onAction="#annulerPersonne" text="Annuler" />
 										<Button fx:id="btn_supp_membre" mnemonicParsing="false" onAction="#supprimerPersonne" text="Supprimer" />
 									</buttons>
 									<padding>
@@ -225,7 +225,7 @@
 								<ButtonBar prefHeight="40.0" prefWidth="380.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
 									<buttons>
 										<Button fx:id="btn_creer_titre" defaultButton="true" mnemonicParsing="false" onAction="#creerModifierTitre" text="Créer" />
-										<Button fx:id="btn_annuler_titre" cancelButton="true" mnemonicParsing="false" onAction="#annulerTitre" text="Annuler" />
+										<Button cancelButton="true" mnemonicParsing="false" onAction="#annulerTitre" text="Annuler" />
 										<Button fx:id="btn_supp_titre" mnemonicParsing="false" onAction="#supprimerTitre" text="Supprimer" />
 									</buttons>
 									<padding>

@@ -203,7 +203,7 @@ public class FicheEventEditController {
 			}
 		});
 
-		cmbox_groupe_event.setItems(MainApp.getInstance().getGroupeData());
+		cmbox_groupe_event.setItems(MainApp.getInstance().groupeData);
 		cmbox_groupe_event.valueProperty().addListener(new ChangeListener<Groupe>() {
 			@Override
 			public void changed(ObservableValue<? extends Groupe> observable, Groupe oldValue, Groupe newValue) {
@@ -360,12 +360,12 @@ public class FicheEventEditController {
 			if (dialogStage.getTitle().equals("Nouvelle rencontre *")) {
 				geleTab(true);
 				CRUD.saveOrUpdate(rencontre);
-				MainApp.getInstance().getRencontreData().add(rencontre);
+				MainApp.getInstance().rencontreData.add(rencontre);
 				MainViewController.getInstance().tv_planif.getSelectionModel().selectLast();
 			} else {
 				CRUD.saveOrUpdate(rencontre);
 				MainViewController.getInstance().showEventDetails(rencontre);
-				MainApp.getInstance().getRencontreData().setAll(CRUD.getAll("Rencontre"));
+				MainApp.getInstance().rencontreData.setAll(CRUD.getAll("Rencontre"));
 			}
 			dialogStage.setTitle(rencontre.getNom_renc());
 			btn_creer_event.setText("Appliquer");
@@ -590,7 +590,7 @@ public class FicheEventEditController {
 	@FXML
 	private TableColumn<Representation, Time> col_fin_prog;
 	@FXML
-	private ComboBox<Groupe> cmbox_groupe_event = new ComboBox<>(MainApp.getInstance().getGroupeData());
+	private ComboBox<Groupe> cmbox_groupe_event = new ComboBox<>(MainApp.getInstance().groupeData);
 	private ObservableList<Titre> titreData2 = FXCollections.observableArrayList();
 	@FXML
 	private ComboBox<Titre> cmbox_titre_event = new ComboBox<>(titreData2);
@@ -609,7 +609,7 @@ public class FicheEventEditController {
 			annulerProg();
 		} else {
 			representation = tbv_prog.getSelectionModel().getSelectedItem();
-			for (Groupe groupeIt : MainApp.getInstance().getGroupeData()) {
+			for (Groupe groupeIt : MainApp.getInstance().groupeData) {
 				if (representation.getNom_Groupe().equals(groupeIt.getNom_groupe())) {
 					cmbox_groupe_event.getSelectionModel().select(groupeIt);
 				}

@@ -11,13 +11,13 @@
          <children>
             <AnchorPane fx:id="anchor_lang" prefHeight="200.0" prefWidth="400.0">
                <children>
-                  <Label fx:id="langue_lb" alignment="CENTER" text="Veuillez choisir une langue" textAlignment="CENTER" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0" />
-                  <Label fx:id="langue_lb2" alignment="CENTER" text="Le changement de langue entrainera le redémarrage de l'application" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="32.0" />
-                  <ComboBox fx:id="langue_cmbbox" prefHeight="26.0" prefWidth="270.0" promptText="Langue" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="100.0" />
-                  <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                  <Label alignment="CENTER" text="%Veuillez.choisir.une.langue" textAlignment="CENTER" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0" />
+                  <Label alignment="CENTER" text="%Le.changement.de.langue" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="32.0" />
+                  <ComboBox fx:id="langue_cmbbox" prefHeight="26.0" prefWidth="270.0" promptText="%Menu.aide.langue" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="100.0" />
+                  <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
                     <buttons>
-                      <Button fx:id="langue_btn_valid" mnemonicParsing="false" onAction="#validerlangue" text="Valider" />
-                        <Button fx:id="langue_btn_annuler" mnemonicParsing="false" onAction="#annulerlangue" text="Annuler" />
+                      <Button mnemonicParsing="false" onAction="#validerlangue" text="%valider" />
+                        <Button mnemonicParsing="false" onAction="#annulerlangue" text="%btn.annuler" />
                     </buttons>
                   </ButtonBar>
                </children>
