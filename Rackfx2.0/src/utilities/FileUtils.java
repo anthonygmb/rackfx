@@ -6,14 +6,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 
+import controller.MainApp;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 
 public class FileUtils {
+	
+	private static ResourceBundle Lang_bundle;
+	
+	@PostConstruct
+	private void initialize() {
+		this.Lang_bundle = MainApp.getInstance().Lang_bundle;
+	}
 
 	/**
 	 * Convert file to image.
@@ -28,8 +38,8 @@ public class FileUtils {
 			BufferedImage bufferedImage = ImageIO.read(file);
 			image = SwingFXUtils.toFXImage(bufferedImage, null);
 		} catch (Exception e) {
-			Validateur.showPopup(AlertType.ERROR, "Erreur", "Erreur de format",
-					"Le format de ce fichier n'est pas reconnu").showAndWait();
+			Validateur.showPopup(AlertType.ERROR, Lang_bundle.getString("Erreur"), Lang_bundle.getString("Erreur.de.format"),
+					Lang_bundle.getString("Le.format.de.ce.fichier.n'est.pas.reconnu")).showAndWait();
 		}
 		return image;
 	}

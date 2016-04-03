@@ -19,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
@@ -61,6 +62,9 @@ public class FicheGroupeEditController {
 	private ObservableList<Rencontre> rencontreDataTri = FXCollections.observableArrayList();
 	private Image imageOrigine;
 	private ResourceBundle Lang_bundle;
+	private Label vide1;
+	private Label vide2;
+	private Label vide3;
 
 	/**
 	 * Constructeur.
@@ -226,6 +230,13 @@ public class FicheGroupeEditController {
 		col_ville_event_p.setCellValueFactory(cellData -> cellData.getValue().ville_rencProperty());
 		col_deb_event_p.setCellValueFactory(cellData -> cellData.getValue().date_deb_rencProperty());
 		col_fin_event_p.setCellValueFactory(cellData -> cellData.getValue().date_fin_rencProperty());
+
+		vide1 = new Label(Lang_bundle.getString("vide"));
+		vide2 = new Label(Lang_bundle.getString("vide"));
+		vide3 = new Label(Lang_bundle.getString("vide"));
+		tbv_titre.setPlaceholder(vide1);
+		tbv_event_f.setPlaceholder(vide2);
+		tbv_event_p.setPlaceholder(vide3);
 	}
 
 	/**
@@ -510,7 +521,7 @@ public class FicheGroupeEditController {
 	 * renseigne la fenetre d'édition de la personne.
 	 */
 	@FXML
-	protected void setPersonne() {
+	private void setPersonne() {
 		if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
 			annulerPersonne();
 		} else {
@@ -737,7 +748,7 @@ public class FicheGroupeEditController {
 	 * Renseigne la fenetre d'édition du titre.
 	 */
 	@FXML
-	protected void setTitre() {
+	private void setTitre() {
 		if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
 			annulerTitre();
 		} else {
@@ -852,7 +863,7 @@ public class FicheGroupeEditController {
 	private Tab tab_event_f_groupe;
 	private ObservableList<Rencontre> rencontreDataF = FXCollections.observableArrayList();
 	@FXML
-	protected TableView<Rencontre> tbv_event_f = new TableView<>(rencontreDataF);
+	private TableView<Rencontre> tbv_event_f = new TableView<>(rencontreDataF);
 	@FXML
 	private TableColumn<Rencontre, String> col_event_event_f;
 	@FXML

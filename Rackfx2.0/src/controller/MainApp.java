@@ -34,7 +34,7 @@ public final class MainApp extends Application {
 	protected ObservableList<User> userData = FXCollections.observableArrayList();
 	protected ObservableList<Parametres> parametresData = FXCollections.observableArrayList();
 	protected final LocalTime def_time = LocalTime.of(0, 0);
-	protected ResourceBundle Lang_bundle;
+	public ResourceBundle Lang_bundle;
 
 	/* Singleton */
 	/** Instance unique pré-initialisée */

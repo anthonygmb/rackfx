@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
@@ -30,6 +32,7 @@ import model.Rencontre;
 import model.Representation;
 import model.Titre;
 import sql.CRUD;
+import utilities.Res_listes;
 import utilities.Validateur;
 
 public class FicheEventEditController {
@@ -44,6 +47,8 @@ public class FicheEventEditController {
 	private String NbPers;
 	private String telNumber = "";
 	private String faxNumber = "";
+	private ResourceBundle Lang_bundle;
+	private Label vide1;
 
 	/* Singleton */
 	/** Instance unique pré-initialisée */
@@ -61,6 +66,7 @@ public class FicheEventEditController {
 	@FXML
 	private void initialize() {
 		INSTANCE_FICHE_EVENT_CONTROLLER = this;
+		this.Lang_bundle = MainApp.getInstance().Lang_bundle;
 
 		cmbox_orga.setButtonCell(new ListCell<Organisateur>() {
 			@Override
@@ -234,6 +240,9 @@ public class FicheEventEditController {
 			btn_creer_orga.setDisable(false);
 			btn_creer_prog.setDisable(false);
 		}
+
+		vide1 = new Label(Lang_bundle.getString("vide"));
+		tbv_prog.setPlaceholder(vide1);
 	}
 
 	/**
@@ -242,7 +251,7 @@ public class FicheEventEditController {
 	 * 
 	 * @param modif
 	 */
-	public void geleTab(boolean modif) {
+	protected void geleTab(boolean modif) {
 		if (!modif) {
 			tab_orga_event.setDisable(true);
 			tab_prog_event.setDisable(true);
@@ -257,7 +266,7 @@ public class FicheEventEditController {
 	 *
 	 * @param dialogStage
 	 */
-	public void setDialogStage(Stage dialogStage) {
+	protected void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
 
@@ -275,14 +284,11 @@ public class FicheEventEditController {
 	 * =========================================================================
 	 * ONGLET INFORMATIONS
 	 */
-	@FXML
-	private Tab tab_infos_event;
+
 	@FXML
 	private TextField tf_ville_event;
-	ObservableList<String> perio_event = FXCollections.observableArrayList("Annuel", "Semestriel", "Trimestriel",
-			"Bimensuel", "Mensuel", "Hebdomadaire", "Journalier");
 	@FXML
-	private ComboBox<String> cmbox_perio_event = new ComboBox<>();
+	private ComboBox<String> cmbox_perio_event = new ComboBox<>(Res_listes.perio_event);
 	@FXML
 	private TextField tf_nom_event;
 	@FXML
@@ -295,8 +301,6 @@ public class FicheEventEditController {
 	private TextField tf_nb_pers_event;
 	@FXML
 	private Button btn_creer_event;
-	@FXML
-	private Button btn_annuler_event;
 	private Rencontre rencontre;
 
 	/**
@@ -306,7 +310,7 @@ public class FicheEventEditController {
 	 * @param rencontre
 	 * @param modif
 	 */
-	public void setEvent(Rencontre rencontre, boolean modif, int tab) {
+	protected void setEvent(Rencontre rencontre, boolean modif, int tab) {
 		tp_fiche_event.getSelectionModel().select(tab);
 		this.rencontre = rencontre;
 		tf_nom_event.setText(rencontre.getNom_renc());
@@ -331,8 +335,8 @@ public class FicheEventEditController {
 		} else {
 			cmbox_perio_event.getSelectionModel().select(rencontre.getPeriodicite_renc());
 		}
-		cmbox_perio_event.getItems().addAll(perio_event);
-		btn_creer_event.setText((modif) ? "Appliquer" : "Créer");
+		cmbox_perio_event.getItems().addAll(Res_listes.perio_event);
+		btn_creer_event.setText((modif) ? Lang_bundle.getString("Appliquer") : Lang_bundle.getString("Creer"));
 		loadChildren();
 	}
 
@@ -357,7 +361,7 @@ public class FicheEventEditController {
 		/* validation des contraintes */
 		if (Validateur.validator(rencontre)
 				&& Validateur.valideDate(dt_debut_event.getValue(), dt_fin_event.getValue())) {
-			if (dialogStage.getTitle().equals("Nouvelle rencontre *")) {
+			if (dialogStage.getTitle().equals(Lang_bundle.getString("Nouvelle.rencontre"))) {
 				geleTab(true);
 				CRUD.saveOrUpdate(rencontre);
 				MainApp.getInstance().rencontreData.add(rencontre);
@@ -368,7 +372,7 @@ public class FicheEventEditController {
 				MainApp.getInstance().rencontreData.setAll(CRUD.getAll("Rencontre"));
 			}
 			dialogStage.setTitle(rencontre.getNom_renc());
-			btn_creer_event.setText("Appliquer");
+			btn_creer_event.setText(Lang_bundle.getString("Appliquer"));
 			loadChildren();
 		}
 	}
@@ -412,8 +416,6 @@ public class FicheEventEditController {
 	@FXML
 	private Button btn_creer_orga;
 	@FXML
-	private Button btn_annuler_orga;
-	@FXML
 	private Button btn_supp_orga;
 	private Organisateur organisateur;
 
@@ -448,7 +450,7 @@ public class FicheEventEditController {
 			annulerOrganisateur();
 		} else {
 			organisateur = cmbox_orga.getSelectionModel().getSelectedItem();
-			if (organisateur.getCivi_orga().equals("Monsieur")) {
+			if (organisateur.getCivi_orga().equals(Lang_bundle.getString("Monsieur"))) {
 				ckbox_mr_civi_orga.setSelected(true);
 				ckbox_mme_civi_orga.setSelected(false);
 			} else {
@@ -473,7 +475,7 @@ public class FicheEventEditController {
 			}
 
 			tf_mail_orga.setText(organisateur.getMail_orga());
-			btn_creer_orga.setText("Appliquer");
+			btn_creer_orga.setText(Lang_bundle.getString("Appliquer"));
 			btn_supp_orga.setDisable((MainViewController.getInstance().connectAdmin) ? false : true);
 		}
 	}
@@ -525,7 +527,8 @@ public class FicheEventEditController {
 			}
 			/* test de doublons */
 		} catch (Exception e) {
-			Validateur.showPopup(AlertType.WARNING, "Attention", "Doublon détecté", "Cet organisateur existe déjà")
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"),
+					Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Cet.organisateur.existe.deja"))
 					.showAndWait();
 		}
 	}
@@ -547,7 +550,7 @@ public class FicheEventEditController {
 		ckbox_mme_civi_orga.setSelected(false);
 		cmbox_orga.getSelectionModel().clearSelection();
 		btn_supp_orga.setDisable(true);
-		btn_creer_orga.setText("Créer");
+		btn_creer_orga.setText(Lang_bundle.getString("Creer"));
 	}
 
 	/**
@@ -557,8 +560,9 @@ public class FicheEventEditController {
 	@FXML
 	private void supprimerOrganisateur() {
 		int selectedIndex = cmbox_orga.getSelectionModel().getSelectedIndex();
-		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
-				"Confirmation de suppression", "Voulez-vous supprimer cet organisateur ?").showAndWait();
+		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION,
+				Lang_bundle.getString("Confirmation.d'action"), Lang_bundle.getString("Confirmation.de.suppression"),
+				Lang_bundle.getString("Voulez-vous.supprimer.cet.organisateur.?")).showAndWait();
 		if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 			CRUD.delete(cmbox_orga.getSelectionModel().getSelectedItem());
 			cmbox_orga.getItems().remove(selectedIndex);
@@ -575,12 +579,10 @@ public class FicheEventEditController {
 	@FXML
 	private Button btn_creer_prog;
 	@FXML
-	private Button btn_annuler_prog;
-	@FXML
 	private Button btn_supp_prog;
 	private ObservableList<Representation> repreData = FXCollections.observableArrayList();
 	@FXML
-	public TableView<Representation> tbv_prog = new TableView<>(repreData);
+	private TableView<Representation> tbv_prog = new TableView<>(repreData);
 	@FXML
 	private TableColumn<Representation, String> col_groupe_prog;
 	@FXML
@@ -604,7 +606,7 @@ public class FicheEventEditController {
 	 * Renseigne la fenetre d'édition de la représentation.
 	 */
 	@FXML
-	public void setProg() {
+	private void setProg() {
 		if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 			annulerProg();
 		} else {
@@ -621,7 +623,7 @@ public class FicheEventEditController {
 			}
 			ltp_h_deb_prog.setLocalTime(representation.getHeure_debut().toLocalTime());
 			ltp_h_fin_prog.setLocalTime(representation.getHeure_fin().toLocalTime());
-			btn_creer_prog.setText("Appliquer");
+			btn_creer_prog.setText(Lang_bundle.getString("Appliquer"));
 			btn_supp_prog.setDisable((MainViewController.getInstance().connectAdmin) ? false : true);
 		}
 	}
@@ -672,7 +674,7 @@ public class FicheEventEditController {
 		ltp_h_fin_prog.setLocalTime(MainApp.getInstance().def_time);
 		btn_supp_prog.setDisable(true);
 		tbv_prog.getSelectionModel().clearSelection();
-		btn_creer_prog.setText("Créer");
+		btn_creer_prog.setText(Lang_bundle.getString("Creer"));
 	}
 
 	/**
@@ -682,8 +684,9 @@ public class FicheEventEditController {
 	@FXML
 	private void supprimerProg() {
 		int selectedIndex = tbv_prog.getSelectionModel().getSelectedIndex();
-		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
-				"Confirmation de suppression", "Voulez-vous supprimer cette représentation ?").showAndWait();
+		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION,
+				Lang_bundle.getString("Confirmation.d'action"), Lang_bundle.getString("Confirmation.de.suppression"),
+				Lang_bundle.getString("Voulez-vous.supprimer.cette.representation.?")).showAndWait();
 		if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 			CRUD.delete(tbv_prog.getSelectionModel().getSelectedItem());
 			tbv_prog.getItems().remove(selectedIndex);

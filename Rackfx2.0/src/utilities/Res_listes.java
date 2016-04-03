@@ -180,7 +180,9 @@ public class Res_listes {
 
 	public static ObservableList<String> respon_membre = FXCollections.observableArrayList("Pas de responsabilité",
 			"Chauffeur", "Habilleur", "Dirigeant", "Trésorier");
-	
-	public static ObservableList<String> liste_langues = FXCollections.observableArrayList("Français",
-			"English");
+
+	public static ObservableList<String> liste_langues = FXCollections.observableArrayList("Français", "English");
+
+	public static ObservableList<String> perio_event = FXCollections.observableArrayList("Annuel", "Semestriel",
+			"Trimestriel", "Bimensuel", "Mensuel", "Hebdomadaire", "Journalier");
 }
