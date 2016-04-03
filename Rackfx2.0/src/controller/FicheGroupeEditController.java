@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -59,6 +60,7 @@ public class FicheGroupeEditController {
 	private ObservableList<Representation> repreDataTri = FXCollections.observableArrayList();
 	private ObservableList<Rencontre> rencontreDataTri = FXCollections.observableArrayList();
 	private Image imageOrigine;
+	private ResourceBundle Lang_bundle;
 
 	/**
 	 * Constructeur.
@@ -82,6 +84,7 @@ public class FicheGroupeEditController {
 	@FXML
 	private void initialize() {
 		INSTANCE_FICHE_GROUPE_CONTROLLER = this;
+		this.Lang_bundle = MainApp.getInstance().Lang_bundle;
 
 		imageOrigine = new Image("file:src/img/cd_music.png");
 
@@ -314,7 +317,7 @@ public class FicheGroupeEditController {
 		} else {
 			img_view.setImage(imageOrigine);
 		}
-		btn_creer_groupe.setText((modif) ? "Appliquer" : "Créer");
+		btn_creer_groupe.setText((modif) ? Lang_bundle.getString("Appliquer") : Lang_bundle.getString("Creer"));
 		loadChildren();
 		loadRencontres();
 	}
@@ -340,7 +343,7 @@ public class FicheGroupeEditController {
 		try {
 			/* validation des contraintes */
 			if (Validateur.validator(groupe)) {
-				if (dialogStage.getTitle().equals("Nouveau groupe *")) {
+				if (dialogStage.getTitle().equals(Lang_bundle.getString("Nouveau.groupe"))) {
 					CRUD.saveOrUpdate(groupe);
 					geleTab(true);
 					MainApp.getInstance().groupeData.add(groupe);
@@ -353,12 +356,14 @@ public class FicheGroupeEditController {
 					MainViewController.getInstance().tv_reper.getSelectionModel().select(index);
 				}
 				dialogStage.setTitle(groupe.getNom_groupe());
-				btn_creer_groupe.setText("Appliquer");
+				btn_creer_groupe.setText(Lang_bundle.getString("Appliquer"));
 				loadChildren();
 			}
 			/* test de doublons */
 		} catch (Exception e) {
-			Validateur.showPopup(AlertType.WARNING, "Attention", "Doublon détecté", "Ce groupe existe déjà")
+			Validateur
+					.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"),
+							Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Ce.groupe.existe.deja"))
 					.showAndWait();
 		}
 	}
@@ -378,7 +383,7 @@ public class FicheGroupeEditController {
 	 */
 	@FXML
 	private void importerImagerGroupe() {
-		fileChooser.setTitle("Importer une image");
+		fileChooser.setTitle(Lang_bundle.getString("Importer.une.image"));
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
 				new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
@@ -560,7 +565,7 @@ public class FicheGroupeEditController {
 				ckbox_corres_membre.setSelected(false);
 				activeCorrespondant(false);
 			}
-			btn_creer_membre.setText("Appliquer");
+			btn_creer_membre.setText(Lang_bundle.getString("Appliquer"));
 			btn_supp_membre.setDisable((MainViewController.getInstance().connectAdmin) ? false : true);
 		}
 	}
@@ -632,7 +637,8 @@ public class FicheGroupeEditController {
 			}
 			/* test de doublons */
 		} catch (Exception e) {
-			Validateur.showPopup(AlertType.WARNING, "Attention", "Doublon détecté", "Cette personne existe déjà")
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"),
+					Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Cette.personne.existe.deja"))
 					.showAndWait();
 		}
 	}
@@ -656,7 +662,7 @@ public class FicheGroupeEditController {
 		activeCorrespondant(true);
 		cmbox_membre.getSelectionModel().clearSelection();
 		btn_supp_membre.setDisable(true);
-		btn_creer_membre.setText("Créer");
+		btn_creer_membre.setText(Lang_bundle.getString("Creer"));
 	}
 
 	/**
@@ -666,8 +672,9 @@ public class FicheGroupeEditController {
 	@FXML
 	private void supprimerPersonne() {
 		int selectedIndex = cmbox_membre.getSelectionModel().getSelectedIndex();
-		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
-				"Confirmation de suppression", "Voulez-vous supprimer ce membre ?").showAndWait();
+		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION,
+				Lang_bundle.getString("Confirmation.d'action"), Lang_bundle.getString("Confirmation.de.suppression"),
+				Lang_bundle.getString("Voulez-vous.supprimer.ce.membre.?")).showAndWait();
 		if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 			CRUD.delete(cmbox_membre.getSelectionModel().getSelectedItem());
 			cmbox_membre.getItems().remove(selectedIndex);
@@ -753,7 +760,7 @@ public class FicheGroupeEditController {
 				tf_auteur_titre.setText(MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem()
 						.getNom_groupe());
 			}
-			btn_creer_titre.setText("Appliquer");
+			btn_creer_titre.setText(Lang_bundle.getString("Appliquer"));
 			btn_supp_titre.setDisable((MainViewController.getInstance().connectAdmin) ? false : true);
 		}
 	}
@@ -816,7 +823,7 @@ public class FicheGroupeEditController {
 		tf_auteur_titre.clear();
 		btn_supp_titre.setDisable(true);
 		tbv_titre.getSelectionModel().clearSelection();
-		btn_creer_titre.setText("Créer");
+		btn_creer_titre.setText(Lang_bundle.getString("Creer"));
 	}
 
 	/**
@@ -826,8 +833,9 @@ public class FicheGroupeEditController {
 	@FXML
 	private void supprimerTitre() {
 		int selectedIndex = tbv_titre.getSelectionModel().getSelectedIndex();
-		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION, "Confirmation d'action",
-				"Confirmation de suppression", "Voulez-vous supprimer ce titre ?").showAndWait();
+		MainViewController.getInstance().result = Validateur.showPopup(AlertType.CONFIRMATION,
+				Lang_bundle.getString("Confirmation.d'action"), Lang_bundle.getString("Confirmation.de.suppression"),
+				Lang_bundle.getString("Voulez-vous.supprimer.ce.titre.?")).showAndWait();
 		if (MainViewController.getInstance().result.get() == ButtonType.OK) {
 			CRUD.delete(tbv_titre.getSelectionModel().getSelectedItem());
 			tbv_titre.getItems().remove(selectedIndex);
@@ -839,7 +847,7 @@ public class FicheGroupeEditController {
 	 * =========================================================================
 	 * ONGLET EVENTS FUTURS
 	 */
-	
+
 	@FXML
 	private Tab tab_event_f_groupe;
 	private ObservableList<Rencontre> rencontreDataF = FXCollections.observableArrayList();
@@ -881,7 +889,7 @@ public class FicheGroupeEditController {
 	 * =========================================================================
 	 * ONGLET EVENTS PASSES
 	 */
-	
+
 	@FXML
 	private Tab tab_event_p_groupe;
 	private ObservableList<Rencontre> rencontreDataP = FXCollections.observableArrayList();

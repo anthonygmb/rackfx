@@ -196,8 +196,24 @@
 }
 
 #anchor_info_groupe, #anchor_membre, #anchor_titre, #anchor_event_f,
-	#anchor_event_p, #anchor_infos_event, #anchor_orga, #anchor_prog, #anchor_lang {
+	#anchor_event_p, #anchor_infos_event, #anchor_orga, #anchor_prog, #anchor_pref {
 	-fx-background-color: #353C42;
 	-fx-border-color: #ED4949 transparent transparent transparent;
 	-fx-border-width: 3px;
+}
+
+.toggle-switch .label {
+	-fx-text-fill: #88939C;
+}
+
+.toggle-switch .thumb {
+	-fx-background-color: linear-gradient(#2C3237, #353C42);
+}
+
+.toggle-switch .thumb-area {
+	-fx-background-color: #88939C;
+}
+
+.toggle-switch:selected .thumb-area {
+	-fx-background-color: #20C05C;
 }

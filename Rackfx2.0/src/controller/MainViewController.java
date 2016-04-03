@@ -69,6 +69,9 @@ public final class MainViewController {
 	protected boolean connectAdmin = false;
 	protected boolean connectUser = false;
 	protected Optional<ButtonType> result;
+	private Label vide1;
+	private Label vide2;
+	private Label vide3;
 
 	/* Singleton */
 	/** Instance unique pré-initialisée */
@@ -155,6 +158,13 @@ public final class MainViewController {
 		btn_new_event.setDisable(true);
 		btn_supp_groupe.setDisable(true);
 		btn_supp_event.setDisable(true);
+
+		vide1 = new Label(Lang_bundle.getString("vide"));
+		vide2 = new Label(Lang_bundle.getString("vide"));
+		vide3 = new Label(Lang_bundle.getString("vide"));
+		tv_reper.setPlaceholder(vide1);
+		tv_planif.setPlaceholder(vide2);
+		tv_admin.setPlaceholder(vide3);
 	}
 
 	/*
@@ -446,7 +456,6 @@ public final class MainViewController {
 	 * ONGLET REPERTOIRE
 	 */
 
-	// TODO aucun contenu dans la table
 	@FXML
 	protected TableView<Groupe> tv_reper;
 	@FXML

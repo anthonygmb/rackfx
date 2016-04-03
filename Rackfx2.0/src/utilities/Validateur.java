@@ -14,6 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.Groupe;
 import model.Organisateur;
+import model.Parametres;
 import model.Personne;
 import model.Rencontre;
 import model.Representation;
@@ -107,11 +108,21 @@ public class Validateur {
 				}
 				result = false;
 			}
+		} else if (obj instanceof Parametres) {
+			Parametres param = (Parametres) obj;
+			Set<ConstraintViolation<Parametres>> constraintViolations = validator.validate(param);
+			if (constraintViolations.size() > 0) {
+				for (ConstraintViolation<Parametres> contraintes : constraintViolations) {
+					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
+				}
+				result = false;
+			}
 		}
 		if (!result) {
 			showPopup(AlertType.ERROR, "Erreur", "Violation de contrainte", errorMessage).showAndWait();
 		}
 		return result;
+
 	}
 
 	/**

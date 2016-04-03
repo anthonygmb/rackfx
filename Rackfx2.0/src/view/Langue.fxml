@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import org.controlsfx.control.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LangueController">
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LangueController">
    <children>
-      <Pane fx:id="pane_lang" prefHeight="200.0" prefWidth="400.0">
+      <Pane layoutX="-40.0" layoutY="-91.0" prefHeight="291.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane fx:id="anchor_lang" prefHeight="200.0" prefWidth="400.0">
+            <AnchorPane fx:id="anchor_pref" prefHeight="500.0" prefWidth="500.0">
                <children>
-                  <Label alignment="CENTER" text="%Veuillez.choisir.une.langue" textAlignment="CENTER" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0" />
-                  <Label alignment="CENTER" text="%Le.changement.de.langue" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="32.0" />
-                  <ComboBox fx:id="langue_cmbbox" prefHeight="26.0" prefWidth="270.0" promptText="%Menu.aide.langue" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="100.0" />
+                  <Label alignment="CENTER" layoutX="89.0" layoutY="29.0" text="%Menu.aide.langue" textAlignment="CENTER" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="29.0" />
+                  <Label alignment="CENTER" layoutX="86.0" layoutY="65.0" text="%Le.changement.de.langue" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="65.0" />
+                  <ComboBox fx:id="langue_cmbbox" layoutX="66.0" layoutY="129.0" prefHeight="26.0" prefWidth="270.0" promptText="%Menu.aide.langue" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="129.0" />
                   <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
                     <buttons>
                       <Button mnemonicParsing="false" onAction="#validerlangue" text="%valider" />
                         <Button mnemonicParsing="false" onAction="#annulerlangue" text="%btn.annuler" />
                     </buttons>
                   </ButtonBar>
+                  <Line endX="470.0" layoutX="200.0" layoutY="21.0" opacity="0.5" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <Line endX="470.0" layoutX="200.0" layoutY="192.0" opacity="0.5" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <Label alignment="CENTER" layoutX="221.0" layoutY="212.0" text="%Theme" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="89.0" />
+                  <Label alignment="CENTER" layoutX="26.0" layoutY="240.0" text="%Le.changement.de.theme" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="86.0" />
+                  <ToggleSwitch fx:id="ts_theme" layoutX="212.0" layoutY="309.0" />
+                  <Label alignment="CENTER_RIGHT" layoutX="148.0" layoutY="309.0" text="%Modena" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="300.0" />
+                  <Label layoutX="292.0" layoutY="309.0" text="%Dark" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="50.0" />
                </children>
             </AnchorPane>
          </children>

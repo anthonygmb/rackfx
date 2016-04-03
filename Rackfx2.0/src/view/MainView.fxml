@@ -250,6 +250,7 @@
                       <Menu mnemonicParsing="false" text="%Menu.fichier">
                         <items>
                           <MenuItem mnemonicParsing="false" onAction="#quitter" text="%Menu.fichier.quitter" />
+                              <MenuItem mnemonicParsing="false" onAction="#change_lang" text="%Preferences" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="%Menu.edition">
@@ -262,7 +263,6 @@
                       <Menu mnemonicParsing="false" text="%Menu.aide">
                         <items>
                           <MenuItem mnemonicParsing="false" text="%Menu.aide.a.propos" />
-                              <MenuItem mnemonicParsing="false" onAction="#change_lang" text="%Menu.aide.langue" />
                               <MenuItem mnemonicParsing="false" text="%Menu.aide.aide" />
                         </items>
                       </Menu>

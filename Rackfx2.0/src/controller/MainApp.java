@@ -206,7 +206,7 @@ public final class MainApp extends Application {
 			Scene scene = new Scene((AnchorPane) loader.load());
 			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
 			Stage stageLang = new Stage();
-			stageLang.setTitle(Lang_bundle.getString("Menu.aide.langue"));
+			stageLang.setTitle(Lang_bundle.getString("Preferences"));
 			stageLang.initModality(Modality.WINDOW_MODAL);
 			stageLang.initOwner(primaryStage);
 			stageLang.setScene(scene);
