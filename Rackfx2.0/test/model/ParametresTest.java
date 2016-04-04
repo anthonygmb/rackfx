@@ -31,9 +31,9 @@ public class ParametresTest {
 	 */
 	@Test
 	public void notEmptyTest() {
-		Parametres param = new Parametres(null);
+		Parametres param = new Parametres(null, null);
 		Set<ConstraintViolation<Parametres>> constraintViolations = validator.validate(param);
-		assertEquals(1, constraintViolations.size());
+		assertEquals(2, constraintViolations.size());
 		assertEquals("ne peut pas être vide", constraintViolations.iterator().next().getMessage());
 	}
 
@@ -43,7 +43,7 @@ public class ParametresTest {
 	 */
 	@Test
 	public void valid() {
-		Parametres param = new Parametres("test");
+		Parametres param = new Parametres("test", "test");
 		Set<ConstraintViolation<Parametres>> constraintViolations = validator.validate(param);
 		assertEquals(0, constraintViolations.size());
 	}

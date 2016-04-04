@@ -1,5 +1,7 @@
 package controller;
 
+import org.controlsfx.control.ToggleSwitch;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
@@ -12,6 +14,8 @@ public class LangueController {
 
 	@FXML
 	private ComboBox<String> langue_cmbbox = new ComboBox<>(Res_listes.liste_langues);
+	@FXML
+	private ToggleSwitch ts_theme;
 	private Parametres param;
 	private Stage dialogStage;
 
@@ -47,7 +51,16 @@ public class LangueController {
 	 */
 	public void setParametres(Parametres param) {
 		this.param = param;
-		langue_cmbbox.getSelectionModel().select(param.getLangue());
+		if (param.getLangue() == null) {
+			langue_cmbbox.getSelectionModel().selectFirst();
+		} else {
+			langue_cmbbox.getSelectionModel().select(param.getLangue());
+		}
+		if (param.getTheme() != null && param.getTheme().equals("Dark")) {
+			ts_theme.setSelected(true);
+		} else {
+			ts_theme.setSelected(false);
+		}
 	}
 
 	/**
@@ -63,10 +76,12 @@ public class LangueController {
 	 */
 	@FXML
 	private void validerlangue() {
-		if (langue_cmbbox.getSelectionModel().getSelectedItem() == null) {
-			param = new Parametres();
-		}
 		param.setLangue(langue_cmbbox.getSelectionModel().getSelectedItem());
+		if (ts_theme.isSelected()) {
+			param.setTheme("Dark");
+		} else {
+			param.setTheme("Modena");
+		}
 		/* validation des contraintes */
 		if (Validateur.validator(param)) {
 			if (MainApp.getInstance().parametresData.isEmpty()) {

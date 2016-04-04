@@ -14,11 +14,12 @@ public class Parametres {
 	private String theme;
 
 	public Parametres() {
-		this(null);
+		this(null, null);
 	}
 
-	public Parametres(String langue) {
+	public Parametres(String langue, String theme) {
 		this.langue = langue;
+		this.theme = theme;
 	}
 
 	// =================================================================================================

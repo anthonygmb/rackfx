@@ -122,7 +122,9 @@ public final class MainApp extends Application {
 	protected void initRootLayout() {
 		try {
 			Scene scene = new Scene(FXMLLoader.load(MainApp.class.getResource("../view/MainView.fxml"), Lang_bundle));
-			scene.getStylesheets().add(getClass().getResource("../view/style/mainview.css").toExternalForm());
+			if (!parametresData.isEmpty() && parametresData.get(0).getTheme().equals("Dark")) {
+				scene.getStylesheets().add(getClass().getResource("../view/style/mainview.css").toExternalForm());
+			}
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {
@@ -149,7 +151,9 @@ public final class MainApp extends Application {
 			stageGroupe.initModality(Modality.WINDOW_MODAL);
 			stageGroupe.initOwner(primaryStage);
 			Scene scene = new Scene((AnchorPane) loader.load());
-			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
+			if (!parametresData.isEmpty() && parametresData.get(0).getTheme().equals("Dark")) {
+				scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
+			}
 			stageGroupe.setScene(scene);
 			if (!modif) {
 				MainViewController.getInstance().tv_reper.getSelectionModel().clearSelection();
@@ -182,7 +186,9 @@ public final class MainApp extends Application {
 			stageEvent.initModality(Modality.WINDOW_MODAL);
 			stageEvent.initOwner(primaryStage);
 			Scene scene2 = new Scene((AnchorPane) loader.load());
-			scene2.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
+			if (!parametresData.isEmpty() && parametresData.get(0).getTheme().equals("Dark")) {
+				scene2.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
+			}
 			stageEvent.setScene(scene2);
 			if (!modif) {
 				MainViewController.getInstance().tv_planif.getSelectionModel().clearSelection();
@@ -204,7 +210,9 @@ public final class MainApp extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("../view/Langue.fxml"), Lang_bundle);
 			Scene scene = new Scene((AnchorPane) loader.load());
-			scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
+			if (!parametresData.isEmpty() && parametresData.get(0).getTheme().equals("Dark")) {
+				scene.getStylesheets().add(getClass().getResource("../view/style/fiche.css").toExternalForm());
+			}
 			Stage stageLang = new Stage();
 			stageLang.setTitle(Lang_bundle.getString("Preferences"));
 			stageLang.initModality(Modality.WINDOW_MODAL);
