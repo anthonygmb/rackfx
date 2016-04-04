@@ -11,6 +11,7 @@ public class Parametres {
 
 	private long parametresId;
 	private String langue;
+	private String theme;
 
 	public Parametres() {
 		this(null);
@@ -40,5 +41,15 @@ public class Parametres {
 
 	public void setLangue(String langue) {
 		this.langue = langue;
+	}
+
+	// =================================================================================================
+	@NotEmpty
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 }

@@ -2,13 +2,16 @@ package utilities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import controller.MainApp;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -26,8 +29,14 @@ import model.User;
  */
 public class Validateur {
 
-	/** The popup. */
 	private static Stage popup;
+	private static ResourceBundle Lang_bundle;
+
+	@SuppressWarnings("static-access")
+	@PostConstruct
+	private void initialize() {
+		this.Lang_bundle = MainApp.getInstance().Lang_bundle;
+	}
 
 	/**
 	 * Méthode de validation des beans, cette méthode controle le format des
@@ -119,8 +128,9 @@ public class Validateur {
 			}
 		}
 		if (!result) {
-			showPopup(AlertType.ERROR, "Erreur", "Violation de contrainte", errorMessage).showAndWait();
-		}
+			showPopup(AlertType.ERROR, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"), errorMessage).showAndWait();
+		} // TODO message erreur en anglais
 		return result;
 
 	}
@@ -159,8 +169,9 @@ public class Validateur {
 		if (dateDebut.isBefore(dateFin)) {
 			return true;
 		} else {
-			showPopup(AlertType.ERROR, "Erreur", "Violation de contrainte",
-					"La date de debut doit être avant la\ndate de fin").showAndWait();
+			showPopup(AlertType.ERROR, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"),
+					Lang_bundle.getString("La.date.de.debut.doit.etre.avant.la.date.de.fin")).showAndWait();
 			return false;
 		}
 	}
@@ -178,8 +189,9 @@ public class Validateur {
 		if (timeDebut.isBefore(timeFin)) {
 			return true;
 		} else {
-			showPopup(AlertType.ERROR, "Erreur", "Violation de contrainte",
-					"L'heure de debut doit être avant l'heure de fin").showAndWait();
+			showPopup(AlertType.ERROR, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"),
+					Lang_bundle.getString("L'heure.de.debut.doit.etre.avant.l'heure.de.fin")).showAndWait();
 			return false;
 		}
 	}

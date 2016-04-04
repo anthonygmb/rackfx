@@ -3,6 +3,7 @@ package utilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+//TODO a traduire
 public class Res_listes {
 	public static ObservableList<String> pays_groupe = FXCollections.observableArrayList("Afghanistan",
 			"Afrique du Sud", "Akrotiri", "Albanie", "Algérie", "Allemagne", "Andorre", "Angola", "Anguilla",
