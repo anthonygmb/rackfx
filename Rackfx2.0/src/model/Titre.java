@@ -66,7 +66,7 @@ public class Titre {
 	@NotEmpty
 	@Length(max = 100)
 	@Field
-	@Analyzer(definition = "customanalyzer")
+	@Analyzer(definition = "ngram")
 	public String getTitre() {
 		return titre.get();
 	}
@@ -82,7 +82,7 @@ public class Titre {
 	// =================================================================================================
 	@Size(max = 4)
 	@Field
-	@Analyzer(definition = "customanalyzer")
+	@Analyzer(definition = "ngram")
 	public String getAnnee() {
 		return annee.get();
 	}

@@ -80,7 +80,7 @@ public class Personne {
 	@NotEmpty
 	@Length(max = 50)
 	@Field
-	@Analyzer(definition = "customanalyzer")
+	@Analyzer(definition = "ngram")
 	public String getNom_membre() {
 		return nom_membre;
 	}
@@ -93,7 +93,7 @@ public class Personne {
 	@NotEmpty
 	@Length(max = 50)
 	@Field
-	@Analyzer(definition = "customanalyzer")
+	@Analyzer(definition = "ngram")
 	public String getPrenom_membre() {
 		return prenom_membre;
 	}

@@ -14,7 +14,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
@@ -36,8 +39,11 @@ import javafx.beans.property.StringProperty;
 
 @Entity
 @Indexed
-@AnalyzerDef(name = "customanalyzer", tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class) , filters = {
-		@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+@AnalyzerDef(name = "ngram", tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class) , filters = {
+		@TokenFilterDef(factory = StandardFilterFactory.class), @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+		@TokenFilterDef(factory = StopFilterFactory.class),
+		@TokenFilterDef(factory = NGramFilterFactory.class, params = { @Parameter(name = "minGramSize", value = "3"),
+				@Parameter(name = "maxGramSize", value = "3") }),
 		@TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
 				@Parameter(name = "language", value = "English") }) })
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "nom_groupe") )
@@ -81,7 +87,7 @@ public class Groupe {
 	@NotEmpty
 	@Length(max = 50)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
-	@Analyzer(definition = "customanalyzer")
+	@Analyzer(definition = "ngram")
 	public String getNom_groupe() {
 		return nom_groupe.get();
 	}

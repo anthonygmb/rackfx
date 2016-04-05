@@ -324,6 +324,7 @@ public final class MainViewController {
 		vb_link.getChildren().clear();
 
 		if (!cst_tf_search.getText().equals("")) {
+			try {
 			Session s = HibernateSetUp.getSession();
 			FullTextSession fullTextSession = Search.getFullTextSession(s);
 			Transaction tx = fullTextSession.beginTransaction();
@@ -448,6 +449,9 @@ public final class MainViewController {
 			}
 			tx.commit();
 			s.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 	}
 
