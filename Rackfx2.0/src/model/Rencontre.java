@@ -163,7 +163,7 @@ public class Rencontre {
 
 	// =================================================================================================
 	@IndexedEmbedded
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "rencontre")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "rencontre")
 	public Set<Organisateur> getListe_orga() {
 		return liste_orga;
 	}
@@ -174,7 +174,7 @@ public class Rencontre {
 
 	// =================================================================================================
 	@IndexedEmbedded
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "rencontre")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "rencontre")
 	public Set<Representation> getListe_repre() {
 		return liste_repre;
 	}

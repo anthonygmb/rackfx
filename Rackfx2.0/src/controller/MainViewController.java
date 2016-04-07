@@ -82,9 +82,6 @@ public final class MainViewController {
 		return INSTANCE_MAIN_VIEW_CONTROLLER;
 	}
 
-	/**
-	 * Constructeur appelé après la méthode <code>initialize</code>
-	 */
 	public MainViewController() {
 	}
 

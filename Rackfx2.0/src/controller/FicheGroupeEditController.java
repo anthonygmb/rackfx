@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.NotificationPane;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -377,6 +380,12 @@ public class FicheGroupeEditController {
 							Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Ce.groupe.existe.deja"))
 					.showAndWait();
 		}
+//		WebView webView = new WebView();
+//		NotificationPane notif = new NotificationPane(webView);
+//		tab_membres_groupe.setContent(notif);
+//		notif.setText("Le groupe " + groupe +" a bien été créer");
+//		notif.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
+//		notif.show("Le groupe " + groupe +" a bien été créer");
 	}
 
 	/**

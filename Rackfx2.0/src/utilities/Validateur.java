@@ -132,7 +132,6 @@ public class Validateur {
 					Lang_bundle.getString("Violation.de.contrainte"), errorMessage).showAndWait();
 		} // TODO message erreur en anglais
 		return result;
-
 	}
 
 	/**
