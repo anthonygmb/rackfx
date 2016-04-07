@@ -10,9 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
@@ -30,12 +28,12 @@ public class Personne {
 	private long personneId;
 	private String nom_membre;
 	private String prenom_membre;
-	private String civi_membre;
+	private boolean civi_membre;
 	private Date date_naiss_membre;
 	private String spe_membre;
 	private String instru_membre;
 	private String respon_membre;
-	private Boolean correspondant;
+	private boolean correspondant;
 	private String adresse_cor;
 	private String tel_cor;
 	private String fax_cor;
@@ -43,10 +41,10 @@ public class Personne {
 	private Groupe groupe;
 
 	public Personne() {
-		this(null, null, null, null, null, null, null, false, null, null, null, null);
+		this(null, null, false, null, null, null, null, false, null, null, null, null);
 	}
 
-	public Personne(String nom_membre, String prenom_membre, String civi_membre, Date date_naiss_membre,
+	public Personne(String nom_membre, String prenom_membre, boolean civi_membre, Date date_naiss_membre,
 			String spe_membre, String instru_membre, String respon_membre, boolean correspondant, String adresse_cor,
 			String tel_cor, String fax_cor, String mail_cor) {
 		this.nom_membre = nom_membre;
@@ -103,12 +101,11 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@NotEmpty
-	public String getCivi_membre() {
+	public boolean getCivi_membre() {
 		return civi_membre;
 	}
 
-	public void setCivi_membre(String civi_membre) {
+	public void setCivi_membre(boolean civi_membre) {
 		this.civi_membre = civi_membre;
 	}
 
@@ -123,6 +120,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	@Length(max = 50)
 	public String getSpe_membre() {
 		return spe_membre;
 	}
@@ -132,6 +130,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	@Length(max = 50)
 	public String getInstru_membre() {
 		return instru_membre;
 	}
@@ -141,6 +140,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
+	@Length(max = 50)
 	public String getRespon_membre() {
 		return respon_membre;
 	}
@@ -150,12 +150,11 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@NotNull
-	public Boolean getCorrespondant() {
+	public boolean getCorrespondant() {
 		return correspondant;
 	}
 
-	public void setCorrespondant(Boolean correspondant) {
+	public void setCorrespondant(boolean correspondant) {
 		this.correspondant = correspondant;
 	}
 
@@ -170,7 +169,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@Size(max = 13)
+	@Length(max = 13)
 	public String getTel_cor() {
 		return tel_cor;
 	}
@@ -180,7 +179,7 @@ public class Personne {
 	}
 
 	// =================================================================================================
-	@Size(max = 13)
+	@Length(max = 13)
 	public String getFax_cor() {
 		return fax_cor;
 	}
@@ -191,6 +190,7 @@ public class Personne {
 
 	// =================================================================================================
 	@Email
+	@Length(max = 50)
 	public String getMail_cor() {
 		return mail_cor;
 	}

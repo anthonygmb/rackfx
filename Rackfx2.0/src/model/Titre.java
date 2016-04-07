@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
@@ -32,7 +31,7 @@ public class Titre {
 	private StringProperty annee;
 	private ObjectProperty<Time> duree;
 	private String genre;
-	private Boolean reprise_titre;
+	private boolean reprise_titre;
 	private String auteur;
 	private Groupe groupe;
 
@@ -80,7 +79,7 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@Size(max = 4)
+	@Length(max = 4)
 	@Field
 	@Analyzer(definition = "ngram")
 	public String getAnnee() {
@@ -120,12 +119,11 @@ public class Titre {
 	}
 
 	// =================================================================================================
-	@NotNull
-	public Boolean getReprise_titre() {
+	public boolean getReprise_titre() {
 		return reprise_titre;
 	}
 
-	public void setReprise_titre(Boolean reprise_titre) {
+	public void setReprise_titre(boolean reprise_titre) {
 		this.reprise_titre = reprise_titre;
 	}
 

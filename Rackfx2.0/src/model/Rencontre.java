@@ -141,6 +141,7 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
+	@Length(max = 13)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getPeriodicite_renc() {
 		return periodicite_renc;

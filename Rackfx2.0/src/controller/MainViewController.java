@@ -450,7 +450,7 @@ public final class MainViewController {
 			tx.commit();
 			s.close();
 			} catch (Exception e) {
-				// TODO: handle exception
+				/* Ommition de l'erreur de recherche sur un seul caractère */
 			}
 		}
 	}

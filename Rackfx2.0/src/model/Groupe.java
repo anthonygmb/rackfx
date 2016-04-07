@@ -111,6 +111,7 @@ public class Groupe {
 	}
 
 	// =================================================================================================
+	@Length(max = 50)
 	public String getPays_groupe() {
 		return pays_groupe;
 	}

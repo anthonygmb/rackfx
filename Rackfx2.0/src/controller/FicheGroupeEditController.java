@@ -529,7 +529,7 @@ public class FicheGroupeEditController {
 			tf_nom_membre.setText(personne.getNom_membre());
 			tf_prenom_membre.setText(personne.getPrenom_membre());
 			dtp_date_naiss_membre.setValue(personne.getDate_naiss_membre().toLocalDate());
-			if (personne.getCivi_membre().equals("Monsieur")) {
+			if (personne.getCivi_membre() == true) {
 				ckbox_mr_civi_membre.setSelected(true);
 				ckbox_mme_civi_membre.setSelected(false);
 			} else {
@@ -596,9 +596,9 @@ public class FicheGroupeEditController {
 		personne.setPrenom_membre(tf_prenom_membre.getText());
 		personne.setDate_naiss_membre(java.sql.Date.valueOf(dtp_date_naiss_membre.getValue()));
 		if (ckbox_mr_civi_membre.isSelected()) {
-			personne.setCivi_membre("Monsieur");
+			personne.setCivi_membre(true);
 		} else {
-			personne.setCivi_membre("Madamme");
+			personne.setCivi_membre(false);
 		}
 		if (cmbox_spe_membre.getSelectionModel().getSelectedItem() == null) {
 			personne.setSpe_membre("");

@@ -65,6 +65,19 @@ public class RencontreTest {
 	}
 	
 	/**
+	 * Test controllant que les attributs limités à 13 caractères
+	 * ne peuvent pas dépasser cette limite
+	 * Attributs: periodicite_renc
+	 */
+	@Test
+	public void max13Length() {
+		Rencontre rencontre = new Rencontre("test", "test", "test", Date.valueOf("2020-01-01"), Date.valueOf("2020-01-01"), phraseOver50, 1000);
+		Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
+		assertEquals(1, constraintViolations.size());
+		assertEquals("la taille doit être entre 0 et 13", constraintViolations.iterator().next().getMessage());
+	}
+	
+	/**
 	 * Test controllant que les attributs limités ne peuvent pas depasser une valeur
 	 * Attributs: nb_pers_attendues
 	 */

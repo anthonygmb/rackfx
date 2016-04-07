@@ -12,8 +12,6 @@ import javax.validation.ValidatorFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import model.Organisateur;
-
 public class OrganisateurTest {
 
 	private static Validator validator;
@@ -34,71 +32,69 @@ public class OrganisateurTest {
 	 */
 	@Test
 	public void notEmptyTest() {
-		Organisateur orga = new Organisateur(null, null, null, null, null, null, null, null);
+		Organisateur orga = new Organisateur(null, null, false, null, null, null, null, null);
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
-		assertEquals(5, constraintViolations.size());
+		assertEquals(4, constraintViolations.size());
 		assertEquals("ne peut pas être vide", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs limités à 50 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: nom_orga, prenom_orga, entreprise_orga
+	 * Test controllant que les attributs limités à 50 caractères ne peuvent pas
+	 * dépasser cette limite Attributs: nom_orga, prenom_orga, entreprise_orga
 	 */
 	@Test
 	public void max50Length() {
-		Organisateur orga = new Organisateur(phraseOver50, phraseOver50, "test", null, "test", null, null, phraseOver50);
+		Organisateur orga = new Organisateur(phraseOver50, phraseOver50, false, null, "test", null,
+				"azertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcv@gmail.com", phraseOver50);
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
-		assertEquals(3, constraintViolations.size());
+		assertEquals(4, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 50", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs limités à 100 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: adresse_entreprise_orga
+	 * Test controllant que les attributs limités à 100 caractères ne peuvent
+	 * pas dépasser cette limite Attributs: adresse_entreprise_orga
 	 */
 	@Test
 	public void max100Length() {
-		Organisateur orga = new Organisateur("test", "test", "test", phraseOver50.concat(phraseOver50), "test", null, null, "test");
+		Organisateur orga = new Organisateur("test", "test", false, phraseOver50.concat(phraseOver50), "test", null,
+				null, "test");
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(1, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 100", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs limités à 13 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: tel_orga, fax_orga
+	 * Test controllant que les attributs limités à 13 caractères ne peuvent pas
+	 * dépasser cette limite Attributs: tel_orga, fax_orga
 	 */
 	@Test
-	public void max13Size() {
-		Organisateur orga = new Organisateur("test", "test", "test", "test", phraseOver50, phraseOver50, null, "test");
+	public void max13Length() {
+		Organisateur orga = new Organisateur("test", "test", false, "test", phraseOver50, phraseOver50, null, "test");
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(2, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 13", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs formattés en email
-	 * respectent ce format
-	 * Attributs: mail_orga
+	 * Test controllant que les attributs formattés en email respectent ce
+	 * format Attributs: mail_orga
 	 */
 	@Test
 	public void emailTest() {
-		Organisateur orga = new Organisateur("test", "test", "test", null, "test", null, "testEmail", "test");
+		Organisateur orga = new Organisateur("test", "test", false, null, "test", null, "testEmail", "test");
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(1, constraintViolations.size());
 		assertEquals("Adresse email mal formée", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
 	 * Test qui certifie qu'un bean crée en respectant les contraintes est
 	 * valide
 	 */
 	@Test
 	public void valid() {
-		Organisateur orga = new Organisateur("test", "test", "test", "test", "test", "test", "test@email.com", "test");
+		Organisateur orga = new Organisateur("test", "test", false, "test", "test", "test", "test@email.com", "test");
 		Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(orga);
 		assertEquals(0, constraintViolations.size());
 	}

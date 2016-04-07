@@ -1,9 +1,6 @@
-/controller/
-/model/
-/sql/
-/utilities/
 /META-INF/
+/bundles/
 /img/
 /view/
-/bundle/
-/bundles/
+/controller/
+/model/

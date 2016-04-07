@@ -47,9 +47,9 @@ public class GroupeTest {
 	 */
 	@Test
 	public void max50Length() {
-		Groupe groupe = new Groupe(phraseOver50, phraseOver50, null, phraseOver50);
+		Groupe groupe = new Groupe(phraseOver50, phraseOver50, phraseOver50, phraseOver50);
 		Set<ConstraintViolation<Groupe>> constraintViolations = validator.validate(groupe);
-		assertEquals(3, constraintViolations.size());
+		assertEquals(4, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 50", constraintViolations.iterator().next().getMessage());
 	}
 

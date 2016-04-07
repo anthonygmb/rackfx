@@ -75,6 +75,18 @@ public class UserTest {
 	}
 
 	/**
+	 * Test controllant que les attributs limités à 15 caractères ne peuvent pas
+	 * dépasser cette limite Attributs: droit_auth
+	 */
+	@Test
+	public void titreMax15Length() {
+		User user = new User("testEtTest", "testEtTest", phraseOver50);
+		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+		assertEquals(1, constraintViolations.size());
+		assertEquals("la taille doit être entre 0 et 15", constraintViolations.iterator().next().getMessage());
+	}
+
+	/**
 	 * Test qui certifie qu'un bean crée en respectant les contraintes est
 	 * valide
 	 */

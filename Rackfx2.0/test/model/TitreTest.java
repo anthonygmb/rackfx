@@ -38,33 +38,32 @@ public class TitreTest {
 		assertEquals(2, constraintViolations.size());
 		assertEquals("ne peut pas être vide", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs limités à 100 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: titre, auteur
+	 * Test controllant que les attributs limités à 100 caractères ne peuvent
+	 * pas dépasser cette limite Attributs: titre, auteur
 	 */
 	@Test
 	public void titreMax100Length() {
-		Titre titre = new Titre(phraseOver50.concat(phraseOver50), null, Time.valueOf("01:01:01"), null, false, phraseOver50.concat(phraseOver50));
+		Titre titre = new Titre(phraseOver50.concat(phraseOver50), null, Time.valueOf("01:01:01"), null, false,
+				phraseOver50.concat(phraseOver50));
 		Set<ConstraintViolation<Titre>> constraintViolations = validator.validate(titre);
 		assertEquals(2, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 100", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs limités à 4 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: annee
+	 * Test controllant que les attributs limités à 4 caractères ne peuvent pas
+	 * dépasser cette limite Attributs: annee
 	 */
 	@Test
-	public void titreMax4Size() {
+	public void titreMax4Length() {
 		Titre titre = new Titre("test", phraseOver50, Time.valueOf("01:01:01"), null, false, "test");
 		Set<ConstraintViolation<Titre>> constraintViolations = validator.validate(titre);
 		assertEquals(1, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 4", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
 	 * Test controllant que les attributs NotNull ne peuvent pas etre null
 	 * Attributs: duree, reprise_titre
@@ -76,11 +75,10 @@ public class TitreTest {
 		assertEquals(1, constraintViolations.size());
 		assertEquals("ne peut pas être nul", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
-	 * Test controllant que les attributs limités à 50 caractères
-	 * ne peuvent pas dépasser cette limite
-	 * Attributs: genre
+	 * Test controllant que les attributs limités à 50 caractères ne peuvent pas
+	 * dépasser cette limite Attributs: genre
 	 */
 	@Test
 	public void titreMax50Length() {
@@ -89,7 +87,7 @@ public class TitreTest {
 		assertEquals(1, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 50", constraintViolations.iterator().next().getMessage());
 	}
-	
+
 	/**
 	 * Test qui certifie qu'un bean crée en respectant les contraintes est
 	 * valide

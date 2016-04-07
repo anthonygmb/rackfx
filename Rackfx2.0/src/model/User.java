@@ -75,6 +75,7 @@ public class User {
 
 	// =================================================================================================
 	@NotNull
+	@Length(max = 15)
 	public String getDroit_auth() {
 		return droit_auth.get();
 	}

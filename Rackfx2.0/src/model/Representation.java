@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javafx.beans.property.ObjectProperty;
@@ -81,6 +82,7 @@ public class Representation {
 
 	// =================================================================================================
 	@NotEmpty
+	@Length(max = 50)
 	public String getNom_Groupe() {
 		return nom_groupe.get();
 	}
@@ -95,6 +97,7 @@ public class Representation {
 
 	// =================================================================================================
 	@NotEmpty
+	@Length(max = 100)
 	public String getNom_Titre() {
 		return nom_titre.get();
 	}

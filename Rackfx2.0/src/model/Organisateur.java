@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -24,7 +23,7 @@ public class Organisateur {
 	private long orgaId;
 	private String nom_orga;
 	private String prenom_orga;
-	private String civi_orga;
+	private boolean civi_orga;
 	private String adresse_entreprise_orga;
 	private String tel_orga;
 	private String fax_orga;
@@ -33,10 +32,10 @@ public class Organisateur {
 	private Rencontre rencontre;
 
 	public Organisateur() {
-		this(null, null, null, null, null, null, null, null);
+		this(null, null, false, null, null, null, null, null);
 	}
 
-	public Organisateur(String nom_orga, String prenom_orga, String civi_orga, String adresse_entreprise_orga,
+	public Organisateur(String nom_orga, String prenom_orga, boolean civi_orga, String adresse_entreprise_orga,
 			String tel_orga, String fax_orga, String mail_orga, String entreprise_orga) {
 		this.nom_orga = nom_orga;
 		this.prenom_orga = prenom_orga;
@@ -85,12 +84,11 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
-	@NotEmpty
-	public String getCivi_orga() {
+	public boolean getCivi_orga() {
 		return civi_orga;
 	}
 
-	public void setCivi_orga(String civi_orga) {
+	public void setCivi_orga(boolean civi_orga) {
 		this.civi_orga = civi_orga;
 	}
 
@@ -106,7 +104,7 @@ public class Organisateur {
 
 	// =================================================================================================
 	@NotEmpty
-	@Size(max = 13)
+	@Length(max = 13)
 	public String getTel_orga() {
 		return tel_orga;
 	}
@@ -116,7 +114,7 @@ public class Organisateur {
 	}
 
 	// =================================================================================================
-	@Size(max = 13)
+	@Length(max = 13)
 	public String getFax_orga() {
 		return fax_orga;
 	}
@@ -127,6 +125,7 @@ public class Organisateur {
 
 	// =================================================================================================
 	@Email
+	@Length(max = 50)
 	public String getMail_orga() {
 		return mail_orga;
 	}

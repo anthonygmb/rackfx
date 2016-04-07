@@ -13,8 +13,6 @@ import javax.validation.ValidatorFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import model.Personne;
-
 public class PersonneTest {
 
 	private static Validator validator;
@@ -35,9 +33,9 @@ public class PersonneTest {
 	 */
 	@Test
 	public void notEmptyTest() {
-		Personne personne = new Personne(null, null, null, null, null, null, null, false, null, null, null, null);
+		Personne personne = new Personne(null, null, false, null, null, null, null, false, null, null, null, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
-		assertEquals(3, constraintViolations.size());
+		assertEquals(2, constraintViolations.size());
 		assertEquals("ne peut pas être vide", constraintViolations.iterator().next().getMessage());
 	}
 	
@@ -48,9 +46,9 @@ public class PersonneTest {
 	 */
 	@Test
 	public void max50Length() {
-		Personne personne = new Personne(phraseOver50, phraseOver50, "test", null, null, null, null, false, null, null, null, null);
+		Personne personne = new Personne(phraseOver50, phraseOver50, false, null, phraseOver50, phraseOver50, phraseOver50, false, null, null, null, "azertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcv@gmail.com");
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
-		assertEquals(2, constraintViolations.size());
+		assertEquals(6, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 50", constraintViolations.iterator().next().getMessage());
 	}
 	
@@ -61,7 +59,7 @@ public class PersonneTest {
 	 */
 	@Test
 	public void max100Length() {
-		Personne personne = new Personne("test", "test", "test", null, null, null, null, false, phraseOver50.concat(phraseOver50), null, null, null);
+		Personne personne = new Personne("test", "test", false, null, null, null, null, false, phraseOver50.concat(phraseOver50), null, null, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(1, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 100", constraintViolations.iterator().next().getMessage());
@@ -73,8 +71,8 @@ public class PersonneTest {
 	 * Attributs: tel_cor, fax_cor
 	 */
 	@Test
-	public void max13Size() {
-		Personne personne = new Personne("test", "test", "test", null, null, null, null, false, null, phraseOver50, phraseOver50, null);
+	public void max13Length() {
+		Personne personne = new Personne("test", "test", false, null, null, null, null, false, null, phraseOver50, phraseOver50, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(2, constraintViolations.size());
 		assertEquals("la taille doit être entre 0 et 13", constraintViolations.iterator().next().getMessage());
@@ -87,7 +85,7 @@ public class PersonneTest {
 	 */
 	@Test
 	public void emailTest() {
-		Personne personne = new Personne("test", "test", "test", null, null, null, null, false, null, null, null, "testEmail");
+		Personne personne = new Personne("test", "test", false, null, null, null, null, false, null, null, null, "testEmail");
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(1, constraintViolations.size());
 		assertEquals("Adresse email mal formée", constraintViolations.iterator().next().getMessage());
@@ -100,7 +98,7 @@ public class PersonneTest {
 	 */
 	@Test
 	public void dateTest() {
-		Personne personne = new Personne("test", "test", "test", Date.valueOf("2020-01-01"), null, null, null, false, null, null, null, null);
+		Personne personne = new Personne("test", "test", false, Date.valueOf("2020-01-01"), null, null, null, false, null, null, null, null);
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(1, constraintViolations.size());
 		assertEquals("doit être dans le passé", constraintViolations.iterator().next().getMessage());
@@ -112,7 +110,7 @@ public class PersonneTest {
 	 */
 	@Test
 	public void valid() {
-		Personne personne = new Personne("test", "test", "test", Date.valueOf("2010-01-01"), "test", "test", "test", false, "test", "test", "test", "test@email.com");
+		Personne personne = new Personne("test", "test", false, Date.valueOf("2010-01-01"), "test", "test", "test", false, "test", "test", "test", "test@email.com");
 		Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
 		assertEquals(0, constraintViolations.size());
 	}

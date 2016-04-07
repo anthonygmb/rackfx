@@ -450,7 +450,7 @@ public class FicheEventEditController {
 			annulerOrganisateur();
 		} else {
 			organisateur = cmbox_orga.getSelectionModel().getSelectedItem();
-			if (organisateur.getCivi_orga().equals(Lang_bundle.getString("Monsieur"))) {
+			if (organisateur.getCivi_orga() == true) {
 				ckbox_mr_civi_orga.setSelected(true);
 				ckbox_mme_civi_orga.setSelected(false);
 			} else {
@@ -492,9 +492,9 @@ public class FicheEventEditController {
 			organisateur = cmbox_orga.getSelectionModel().getSelectedItem();
 		}
 		if (ckbox_mr_civi_orga.isSelected()) {
-			organisateur.setCivi_orga("Monsieur");
+			organisateur.setCivi_orga(true);
 		} else {
-			organisateur.setCivi_orga("Madamme");
+			organisateur.setCivi_orga(false);
 		}
 		organisateur.setNom_orga(tf_nom_orga.getText());
 		organisateur.setPrenom_orga(tf_prenom_orga.getText());

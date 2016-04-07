@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -36,6 +37,7 @@ public class Parametres {
 
 	// =================================================================================================
 	@NotEmpty
+	@Length(max = 50)
 	public String getLangue() {
 		return langue;
 	}
@@ -46,6 +48,7 @@ public class Parametres {
 
 	// =================================================================================================
 	@NotEmpty
+	@Length(max = 13)
 	public String getTheme() {
 		return theme;
 	}
