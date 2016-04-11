@@ -18,10 +18,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate_Tools_509"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate-release-5.0.6.Final"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate-search-5.5.2.Final"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate-validator-5.2.2.Final"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
