@@ -5,6 +5,7 @@ import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -64,7 +65,7 @@ public class Personne {
 	// =================================================================================================
 	@Id
 	@DocumentId
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getPersonneId() {
 		return personneId;
 	}
