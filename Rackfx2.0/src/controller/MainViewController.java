@@ -360,7 +360,7 @@ public final class MainViewController {
 			@SuppressWarnings("unchecked")
 			List<Organisateur> result5 = hibQuery.list();
 
-			//taffer ici
+			//TODO taffer ici
 			if (!result1.isEmpty()) {
 				Label ctgr_groupe = new Label(Lang_bundle.getString("Ctgr.groupe"));
 				vb_link.getChildren().add(ctgr_groupe);
