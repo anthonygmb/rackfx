@@ -16,6 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.StopFilterFactory;
+import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 import org.apache.lucene.analysis.ngram.NGramFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardFilterFactory;
@@ -43,7 +44,7 @@ import javafx.beans.property.StringProperty;
 @AnalyzerDef(name = "ngram", tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class) , filters = {
 		@TokenFilterDef(factory = StandardFilterFactory.class), @TokenFilterDef(factory = LowerCaseFilterFactory.class),
 		@TokenFilterDef(factory = StopFilterFactory.class),
-		@TokenFilterDef(factory = NGramFilterFactory.class, params = { @Parameter(name = "minGramSize", value = "3"),
+		@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = { @Parameter(name = "minGramSize", value = "3"),
 				@Parameter(name = "maxGramSize", value = "3") }),
 		@TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
 				@Parameter(name = "language", value = "English") }) })
