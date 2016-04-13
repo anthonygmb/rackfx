@@ -30,7 +30,7 @@ import model.User;
 public class Validateur {
 
 	private static Stage popup;
-	private static ResourceBundle Lang_bundle;
+	private static ResourceBundle Lang_bundle;//TODO est null
 
 	@SuppressWarnings("static-access")
 	@PostConstruct
