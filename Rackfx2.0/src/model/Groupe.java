@@ -154,7 +154,6 @@ public class Groupe {
 	}
 
 	// =================================================================================================
-	@IndexedEmbedded
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "groupe")
 	public Set<Representation> getListe_representation() {
 		return liste_representation;

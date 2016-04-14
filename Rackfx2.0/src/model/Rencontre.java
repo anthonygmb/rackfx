@@ -174,7 +174,6 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@IndexedEmbedded
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "rencontre")
 	public Set<Representation> getListe_repre() {
 		return liste_repre;

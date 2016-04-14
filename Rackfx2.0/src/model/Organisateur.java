@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.Email;
@@ -50,6 +51,7 @@ public class Organisateur {
 
 	// =================================================================================================
 	@Id
+	@DocumentId
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getOrgaId() {
 		return orgaId;
