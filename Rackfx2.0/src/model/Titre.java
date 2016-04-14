@@ -11,10 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -65,7 +68,7 @@ public class Titre {
 	// =================================================================================================
 	@NotEmpty
 	@Length(max = 100)
-	@Field
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	@Analyzer(definition = "ngram")
 	public String getTitre() {
 		return titre.get();
@@ -81,7 +84,7 @@ public class Titre {
 
 	// =================================================================================================
 	@Length(max = 4)
-	@Field
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	@Analyzer(definition = "ngram")
 	public String getAnnee() {
 		return annee.get();

@@ -27,7 +27,6 @@ import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
@@ -132,7 +131,6 @@ public class Groupe {
 	}
 
 	// =================================================================================================
-	@IndexedEmbedded
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "groupe")
 	public Set<Personne> getListe_personne() {
 		return liste_personne;
@@ -143,7 +141,6 @@ public class Groupe {
 	}
 
 	// =================================================================================================
-	@IndexedEmbedded
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "groupe")
 	public Set<Titre> getListe_titre() {
 		return liste_titre;

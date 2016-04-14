@@ -10,9 +10,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -65,7 +69,8 @@ public class Organisateur {
 	// =================================================================================================
 	@NotEmpty
 	@Length(max = 50)
-	@Field
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Analyzer(definition = "ngram")
 	public String getNom_orga() {
 		return nom_orga;
 	}
@@ -77,7 +82,8 @@ public class Organisateur {
 	// =================================================================================================
 	@NotEmpty
 	@Length(max = 50)
-	@Field
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Analyzer(definition = "ngram")
 	public String getPrenom_orga() {
 		return prenom_orga;
 	}
@@ -140,7 +146,8 @@ public class Organisateur {
 	// =================================================================================================
 	@NotEmpty
 	@Length(max = 50)
-	@Field
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Analyzer(definition = "ngram")
 	public String getEntreprise_orga() {
 		return entreprise_orga;
 	}

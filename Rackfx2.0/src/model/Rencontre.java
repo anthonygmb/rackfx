@@ -15,10 +15,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -60,6 +61,7 @@ public class Rencontre {
 
 	// =================================================================================================
 	@Id
+	@DocumentId
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getRencontreId() {
 		return rencontreId;
@@ -74,6 +76,7 @@ public class Rencontre {
 	@NotEmpty
 	@Length(max = 80)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Analyzer(definition = "ngram")
 	public String getNom_renc() {
 		return nom_renc.get();
 	}
@@ -90,6 +93,7 @@ public class Rencontre {
 	@NotEmpty
 	@Length(max = 80)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Analyzer(definition = "ngram")
 	public String getVille_renc() {
 		return ville_renc.get();
 	}
@@ -115,6 +119,7 @@ public class Rencontre {
 	// =================================================================================================
 	@NotNull
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Analyzer(definition = "ngram")
 	public Date getDate_deb_renc() {
 		return date_deb_renc.get();
 	}
@@ -144,6 +149,7 @@ public class Rencontre {
 	// =================================================================================================
 	@Length(max = 13)
 	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Analyzer(definition = "ngram")
 	public String getPeriodicite_renc() {
 		return periodicite_renc;
 	}
@@ -163,7 +169,6 @@ public class Rencontre {
 	}
 
 	// =================================================================================================
-	@IndexedEmbedded
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "rencontre")
 	public Set<Organisateur> getListe_orga() {
 		return liste_orga;

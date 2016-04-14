@@ -13,10 +13,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Past;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -78,7 +81,7 @@ public class Personne {
 	// =================================================================================================
 	@NotEmpty
 	@Length(max = 50)
-	@Field
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	@Analyzer(definition = "ngram")
 	public String getNom_membre() {
 		return nom_membre;
@@ -91,7 +94,7 @@ public class Personne {
 	// =================================================================================================
 	@NotEmpty
 	@Length(max = 50)
-	@Field
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	@Analyzer(definition = "ngram")
 	public String getPrenom_membre() {
 		return prenom_membre;
