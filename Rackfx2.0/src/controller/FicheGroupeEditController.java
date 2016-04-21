@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.NotificationPane;
+import org.hibernate.exception.ConstraintViolationException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -356,36 +357,43 @@ public class FicheGroupeEditController {
 		}
 		try {
 			/* validation des contraintes */
-			if (Validateur.validator(groupe)) {
-				if (dialogStage.getTitle().equals(Lang_bundle.getString("Nouveau.groupe"))) {
-					CRUD.saveOrUpdate(groupe);
-					geleTab(true);
-					MainApp.getInstance().groupeData.add(groupe);
-					MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
-				} else {
-					CRUD.saveOrUpdate(groupe);
-					MainViewController.getInstance().showGroupeDetails(groupe);
-					int index = MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedIndex();
-					MainApp.getInstance().groupeData.setAll(CRUD.getAll("Groupe"));
-					MainViewController.getInstance().tv_reper.getSelectionModel().select(index);
-				}
-				dialogStage.setTitle(groupe.getNom_groupe());
-				btn_creer_groupe.setText(Lang_bundle.getString("Appliquer"));
-				loadChildren();
+			// if (Validateur.validator(groupe)) {
+			Validateur.validator(groupe);
+			if (dialogStage.getTitle().equals(Lang_bundle.getString("Nouveau.groupe"))) {
+				CRUD.saveOrUpdate(groupe);
+				geleTab(true);
+				MainApp.getInstance().groupeData.add(groupe);
+				MainViewController.getInstance().tv_reper.getSelectionModel().selectLast();
+			} else {
+				CRUD.saveOrUpdate(groupe);
+				MainViewController.getInstance().showGroupeDetails(groupe);
+				int index = MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedIndex();
+				MainApp.getInstance().groupeData.setAll(CRUD.getAll("Groupe"));
+				MainViewController.getInstance().tv_reper.getSelectionModel().select(index);
 			}
+			dialogStage.setTitle(groupe.getNom_groupe());
+			btn_creer_groupe.setText(Lang_bundle.getString("Appliquer"));
+			loadChildren();
+			// }
 			/* test de doublons */
-		} catch (Exception e) {
+		} catch (ConstraintViolationException e) {
 			Validateur
 					.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"),
 							Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Ce.groupe.existe.deja"))
 					.showAndWait();
+		} catch (javax.validation.ConstraintViolationException e) {
+			Validateur
+					.showPopup(AlertType.WARNING, Lang_bundle.getString("Erreur"),
+							Lang_bundle.getString("Violation.de.contrainte"), e.getMessage()
+							)
+					.showAndWait();
 		}
-//		WebView webView = new WebView();
-//		NotificationPane notif = new NotificationPane(webView);
-//		tab_membres_groupe.setContent(notif);
-//		notif.setText("Le groupe " + groupe +" a bien été créer");
-//		notif.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
-//		notif.show("Le groupe " + groupe +" a bien été créer");
+		// WebView webView = new WebView();
+		// NotificationPane notif = new NotificationPane(webView);
+		// tab_membres_groupe.setContent(notif);
+		// notif.setText("Le groupe " + groupe +" a bien été créer");
+		// notif.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
+		// notif.show("Le groupe " + groupe +" a bien été créer");
 	}
 
 	/**

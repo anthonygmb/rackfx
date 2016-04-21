@@ -35,91 +35,27 @@ public class Validateur {
 	 * @param obj
 	 *            the obj
 	 * @return true si le model n'a pas problème de format
+	 * @throws Exception 
 	 */
-	public static <T> boolean validator(T obj) {
+	public static <T> void validator(T obj) throws Exception {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Validator validator = factory.getValidator();
 		String errorMessage = "";
-		boolean result = true;
 
-		if (obj instanceof Groupe) {
-			Groupe groupe = (Groupe) obj;
-			Set<ConstraintViolation<Groupe>> constraintViolations = validator.validate(groupe);
-			if (constraintViolations.size() > 0) {
-				for (ConstraintViolation<Groupe> contraintes : constraintViolations) {
-					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
-				}
-				result = false;
+		Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj);
+		if (constraintViolations.size() > 0) {
+			for (ConstraintViolation<T> contraintes : constraintViolations) {
+				errorMessage += contraintes.getPropertyPath().toString().substring(0, 1).toUpperCase()
+						+ contraintes.getPropertyPath().toString().substring(1) + ": " + contraintes.getMessage()
+						+ "\n";
 			}
-		} else if (obj instanceof Personne) {
-			Personne personne = (Personne) obj;
-			Set<ConstraintViolation<Personne>> constraintViolations = validator.validate(personne);
-			if (constraintViolations.size() > 0) {
-				for (ConstraintViolation<Personne> contraintes : constraintViolations) {
-					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
-				}
-				result = false;
-			}
-		} else if (obj instanceof Titre) {
-			Titre titre = (Titre) obj;
-			Set<ConstraintViolation<Titre>> constraintViolations = validator.validate(titre);
-			if (constraintViolations.size() > 0) {
-				for (ConstraintViolation<Titre> contraintes : constraintViolations) {
-					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
-				}
-				result = false;
-			}
-		} else if (obj instanceof Rencontre) {
-			Rencontre rencontre = (Rencontre) obj;
-			Set<ConstraintViolation<Rencontre>> constraintViolations = validator.validate(rencontre);
-			if (constraintViolations.size() > 0) {
-				for (ConstraintViolation<Rencontre> contraintes : constraintViolations) {
-					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
-				}
-				result = false;
-			}
-		} else if (obj instanceof Organisateur) {
-			Organisateur organisateur = (Organisateur) obj;
-			Set<ConstraintViolation<Organisateur>> constraintViolations = validator.validate(organisateur);
-			if (constraintViolations.size() > 0) {
-				for (ConstraintViolation<Organisateur> contraintes : constraintViolations) {
-					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
-				}
-				result = false;
-			}
-		} else if (obj instanceof Representation) {
-			Representation representation = (Representation) obj;
-			Set<ConstraintViolation<Representation>> constraintViolations = validator.validate(representation);
-			if (constraintViolations.size() > 0) {
-				for (ConstraintViolation<Representation> contraintes : constraintViolations) {
-					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
-				}
-				result = false;
-			}
-		} else if (obj instanceof User) {
-			User user = (User) obj;
-			Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
-			if (constraintViolations.size() > 0) {
-				for (ConstraintViolation<User> contraintes : constraintViolations) {
-					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
-				}
-				result = false;
-			}
-		} else if (obj instanceof Parametres) {
-			Parametres param = (Parametres) obj;
-			Set<ConstraintViolation<Parametres>> constraintViolations = validator.validate(param);
-			if (constraintViolations.size() > 0) {
-				for (ConstraintViolation<Parametres> contraintes : constraintViolations) {
-					errorMessage += contraintes.getPropertyPath() + ": " + contraintes.getMessage() + "\n";
-				}
-				result = false;
-			}
+			throw new Exception(errorMessage);
 		}
-		if (!result) {
-			showPopup(AlertType.ERROR, MainApp.getInstance().Lang_bundle.getString("Erreur"),
-					MainApp.getInstance().Lang_bundle.getString("Violation.de.contrainte"), errorMessage).showAndWait();
-		} // TODO message erreur en anglais
-		return result;
+
+//		if (!result) {
+//			showPopup(AlertType.ERROR, MainApp.getInstance().Lang_bundle.getString("Erreur"),
+//					MainApp.getInstance().Lang_bundle.getString("Violation.de.contrainte"), errorMessage).showAndWait();
+//		} // TODO message erreur en anglais
 	}
 
 	/**

@@ -738,11 +738,11 @@ public final class MainViewController {
 		}
 		try {
 			/* validation des contraintes */
-			if (Validateur.validator(user)) {
+//			if (Validateur.validator(user)) {
 				CRUD.saveOrUpdate(user);
 				tv_admin.getItems().add(user);
 				annulerUser();
-			}
+//			}
 			/* test de doublons */
 		} catch (Exception e) {
 			Validateur
