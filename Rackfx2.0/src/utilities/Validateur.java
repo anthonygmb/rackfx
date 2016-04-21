@@ -13,31 +13,18 @@ import controller.MainApp;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import model.Groupe;
-import model.Organisateur;
-import model.Parametres;
-import model.Personne;
-import model.Rencontre;
-import model.Representation;
-import model.Titre;
-import model.User;
 
 public class Validateur {
 
 	private static Stage popup;
 
 	/**
-	 * Méthode de validation des beans, cette méthode controle le format des
-	 * attributs passés dans le model.
-	 *
-	 * @param <T>
-	 *            the generic type
+	 * Méthode de validation des beans
+	 * 
 	 * @param obj
-	 *            the obj
-	 * @return true si le model n'a pas problème de format
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public static <T> void validator(T obj) throws Exception {
+	public static <T> void validator(T obj) throws ValidateurExeption {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Validator validator = factory.getValidator();
 		String errorMessage = "";
@@ -49,75 +36,53 @@ public class Validateur {
 						+ contraintes.getPropertyPath().toString().substring(1) + ": " + contraintes.getMessage()
 						+ "\n";
 			}
-			throw new Exception(errorMessage);
+			throw new ValidateurExeption(errorMessage);
 		}
-
-//		if (!result) {
-//			showPopup(AlertType.ERROR, MainApp.getInstance().Lang_bundle.getString("Erreur"),
-//					MainApp.getInstance().Lang_bundle.getString("Violation.de.contrainte"), errorMessage).showAndWait();
-//		} // TODO message erreur en anglais
 	}
 
 	/**
 	 * Méthode d'affichage de popup de messages d'erreurs.
-	 *
+	 * 
+	 * @param type
+	 * @param titre
+	 * @param headerText
 	 * @param message
-	 *            the message
+	 * @return alert
 	 */
 	public static Alert showPopup(AlertType type, String titre, String headerText, String message) {
-
 		Alert alert = new Alert(type);
 		alert.initOwner(popup);
 		alert.setTitle(titre);
 		alert.setHeaderText(headerText);
 		alert.setContentText(message);
-		// if (alert.getAlertType() == AlertType.NONE) {
-		// PauseTransition pause = new PauseTransition(Duration.seconds(5));
-		// pause.setOnFinished(e -> alert.hide());
-		// pause.play();
-		// }
 		return alert;
 	}
 
 	/**
-	 * Valide date.
-	 *
+	 * Méthode pour vérifier si la date de début n'est pas avant la date de fin
+	 * 
 	 * @param dateDebut
-	 *            the date debut
 	 * @param dateFin
-	 *            the date fin
-	 * @return true, if successful
+	 * @throws Exception
 	 */
-	public static boolean valideDate(LocalDate dateDebut, LocalDate dateFin) {
-		if (dateDebut.isBefore(dateFin)) {
-			return true;
-		} else {
-			showPopup(AlertType.ERROR, MainApp.getInstance().Lang_bundle.getString("Erreur"),
-					MainApp.getInstance().Lang_bundle.getString("Violation.de.contrainte"),
-					MainApp.getInstance().Lang_bundle.getString("La.date.de.debut.doit.etre.avant.la.date.de.fin"))
-							.showAndWait();
-			return false;
+	public static void valideDate(LocalDate dateDebut, LocalDate dateFin) throws ValidateurExeption {
+		if (!dateDebut.isBefore(dateFin)) {
+			throw new ValidateurExeption(
+					MainApp.getInstance().Lang_bundle.getString("La.date.de.debut.doit.etre.avant.la.date.de.fin"));
 		}
 	}
 
 	/**
-	 * Valide time.
-	 *
+	 * Méthode pour vérifier si l'heure de début n'est pas avant l'heure de fin
+	 * 
 	 * @param timeDebut
-	 *            the time debut
 	 * @param timeFin
-	 *            the time fin
-	 * @return true, if successful
+	 * @throws Exception
 	 */
-	public static boolean valideTime(LocalTime timeDebut, LocalTime timeFin) {
-		if (timeDebut.isBefore(timeFin)) {
-			return true;
-		} else {
-			showPopup(AlertType.ERROR, MainApp.getInstance().Lang_bundle.getString("Erreur"),
-					MainApp.getInstance().Lang_bundle.getString("Violation.de.contrainte"),
-					MainApp.getInstance().Lang_bundle.getString("L'heure.de.debut.doit.etre.avant.l'heure.de.fin"))
-							.showAndWait();
-			return false;
+	public static void valideTime(LocalTime timeDebut, LocalTime timeFin) throws ValidateurExeption {
+		if (!timeDebut.isBefore(timeFin)) {
+			throw new ValidateurExeption(
+					MainApp.getInstance().Lang_bundle.getString("L'heure.de.debut.doit.etre.avant.l'heure.de.fin"));
 		}
 	}
 }

@@ -4,6 +4,8 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import org.hibernate.exception.ConstraintViolationException;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,6 +36,7 @@ import model.Titre;
 import sql.CRUD;
 import utilities.Res_listes;
 import utilities.Validateur;
+import utilities.ValidateurExeption;
 
 public class FicheEventEditController {
 
@@ -358,9 +361,9 @@ public class FicheEventEditController {
 		if (!cmbox_perio_event.getSelectionModel().isEmpty()) {
 			rencontre.setPeriodicite_renc(cmbox_perio_event.getSelectionModel().getSelectedItem().toString());
 		}
-		/* validation des contraintes */
-		if (Validateur.validator(rencontre)
-				&& Validateur.valideDate(dt_debut_event.getValue(), dt_fin_event.getValue())) {
+		try {
+			Validateur.validator(rencontre);
+			Validateur.valideDate(dt_debut_event.getValue(), dt_fin_event.getValue());
 			if (dialogStage.getTitle().equals(Lang_bundle.getString("Nouvelle.rencontre"))) {
 				geleTab(true);
 				CRUD.saveOrUpdate(rencontre);
@@ -374,6 +377,9 @@ public class FicheEventEditController {
 			dialogStage.setTitle(rencontre.getNom_renc());
 			btn_creer_event.setText(Lang_bundle.getString("Appliquer"));
 			loadChildren();
+		} catch (ValidateurExeption e) { /* si la validation a échoué */
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"), e.getMessage()).showAndWait();
 		}
 	}
 
@@ -512,24 +518,24 @@ public class FicheEventEditController {
 		}
 		organisateur.setMail_orga(tf_mail_orga.getText());
 		try {
-			/* validation des contraintes */
-			if (Validateur.validator(organisateur)) {
-				if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
-					organisateur.setRencontre(rencontre);
-					rencontre.getListe_orga().add(organisateur);
-					CRUD.saveOrUpdate(organisateur);
-					cmbox_orga.getItems().add(organisateur);
-				} else {
-					CRUD.saveOrUpdate(organisateur);
-					cmbox_orga.getItems().set(cmbox_orga.getSelectionModel().getSelectedIndex(), organisateur);
-				}
-				annulerOrganisateur();
+			Validateur.validator(organisateur);
+			if (cmbox_orga.getSelectionModel().getSelectedItem() == null) {
+				organisateur.setRencontre(rencontre);
+				rencontre.getListe_orga().add(organisateur);
+				CRUD.saveOrUpdate(organisateur);
+				cmbox_orga.getItems().add(organisateur);
+			} else {
+				CRUD.saveOrUpdate(organisateur);
+				cmbox_orga.getItems().set(cmbox_orga.getSelectionModel().getSelectedIndex(), organisateur);
 			}
-			/* test de doublons */
-		} catch (Exception e) {
+			annulerOrganisateur();
+		} catch (ConstraintViolationException e) { /* test de doublons */
 			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"),
 					Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Cet.organisateur.existe.deja"))
 					.showAndWait();
+		} catch (ValidateurExeption e) { /* si la validation a échoué */
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"), e.getMessage()).showAndWait();
 		}
 	}
 
@@ -644,9 +650,9 @@ public class FicheEventEditController {
 		representation.setHeure_debut(java.sql.Time.valueOf(ltp_h_deb_prog.getLocalTime()));
 		representation.setHeure_fin(java.sql.Time.valueOf(ltp_h_fin_prog.getLocalTime()));
 
-		/* validation des contraintes */
-		if (Validateur.validator(representation)
-				&& Validateur.valideTime(ltp_h_deb_prog.getLocalTime(), ltp_h_fin_prog.getLocalTime())) {
+		try {
+			Validateur.validator(representation);
+			Validateur.valideTime(ltp_h_deb_prog.getLocalTime(), ltp_h_fin_prog.getLocalTime());
 			if (tbv_prog.getSelectionModel().getSelectedItem() == null) {
 				representation.setRencontre(rencontre);
 				rencontre.getListe_repre().add(representation);
@@ -659,6 +665,9 @@ public class FicheEventEditController {
 				tbv_prog.getItems().set(tbv_prog.getSelectionModel().getSelectedIndex(), representation);
 			}
 			annulerProg();
+		} catch (ValidateurExeption e) { /* si la validation a échoué */
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"), e.getMessage()).showAndWait();
 		}
 	}
 

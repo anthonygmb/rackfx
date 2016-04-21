@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import org.controlsfx.control.NotificationPane;
 import org.hibernate.exception.ConstraintViolationException;
 
 import javafx.beans.value.ChangeListener;
@@ -32,7 +31,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -46,6 +44,7 @@ import sql.CRUD;
 import utilities.FileUtils;
 import utilities.Res_listes;
 import utilities.Validateur;
+import utilities.ValidateurExeption;
 
 public class FicheGroupeEditController {
 
@@ -356,8 +355,6 @@ public class FicheGroupeEditController {
 			groupe.setImage(FileUtils.convertFileToByte(file));
 		}
 		try {
-			/* validation des contraintes */
-			// if (Validateur.validator(groupe)) {
 			Validateur.validator(groupe);
 			if (dialogStage.getTitle().equals(Lang_bundle.getString("Nouveau.groupe"))) {
 				CRUD.saveOrUpdate(groupe);
@@ -374,26 +371,15 @@ public class FicheGroupeEditController {
 			dialogStage.setTitle(groupe.getNom_groupe());
 			btn_creer_groupe.setText(Lang_bundle.getString("Appliquer"));
 			loadChildren();
-			// }
-			/* test de doublons */
-		} catch (ConstraintViolationException e) {
+		} catch (ConstraintViolationException e) { /* test de doublons */
 			Validateur
 					.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"),
 							Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Ce.groupe.existe.deja"))
 					.showAndWait();
-		} catch (javax.validation.ConstraintViolationException e) {
-			Validateur
-					.showPopup(AlertType.WARNING, Lang_bundle.getString("Erreur"),
-							Lang_bundle.getString("Violation.de.contrainte"), e.getMessage()
-							)
-					.showAndWait();
+		} catch (ValidateurExeption e) { /* si la validation a échoué */
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"), e.getMessage()).showAndWait();
 		}
-		// WebView webView = new WebView();
-		// NotificationPane notif = new NotificationPane(webView);
-		// tab_membres_groupe.setContent(notif);
-		// notif.setText("Le groupe " + groupe +" a bien été créer");
-		// notif.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
-		// notif.show("Le groupe " + groupe +" a bien été créer");
 	}
 
 	/**
@@ -650,24 +636,24 @@ public class FicheGroupeEditController {
 			personne.setCorrespondant(false);
 		}
 		try {
-			/* validation des contraintes */
-			if (Validateur.validator(personne)) {
-				if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
-					personne.setGroupe(groupe);
-					groupe.getListe_personne().add(personne);
-					CRUD.saveOrUpdate(personne);
-					cmbox_membre.getItems().add(personne);
-				} else {
-					CRUD.saveOrUpdate(personne);
-					cmbox_membre.getItems().set(cmbox_membre.getSelectionModel().getSelectedIndex(), personne);
-				}
-				annulerPersonne();
+			Validateur.validator(personne);
+			if (cmbox_membre.getSelectionModel().getSelectedItem() == null) {
+				personne.setGroupe(groupe);
+				groupe.getListe_personne().add(personne);
+				CRUD.saveOrUpdate(personne);
+				cmbox_membre.getItems().add(personne);
+			} else {
+				CRUD.saveOrUpdate(personne);
+				cmbox_membre.getItems().set(cmbox_membre.getSelectionModel().getSelectedIndex(), personne);
 			}
-			/* test de doublons */
-		} catch (Exception e) {
+			annulerPersonne();
+		} catch (ConstraintViolationException e) { /* test de doublons */
 			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Attention"),
 					Lang_bundle.getString("Doublon.detecte"), Lang_bundle.getString("Cette.personne.existe.deja"))
 					.showAndWait();
+		} catch (ValidateurExeption e) { /* si la validation a échoué */
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"), e.getMessage()).showAndWait();
 		}
 	}
 
@@ -821,8 +807,8 @@ public class FicheGroupeEditController {
 			titre.setAuteur(
 					MainViewController.getInstance().tv_reper.getSelectionModel().getSelectedItem().getNom_groupe());
 		}
-		/* validation des contraintes */
-		if (Validateur.validator(titre)) {
+		try {
+			Validateur.validator(titre);
 			if (tbv_titre.getSelectionModel().getSelectedItem() == null) {
 				titre.setGroupe(groupe);
 				groupe.getListe_titre().add(titre);
@@ -833,6 +819,9 @@ public class FicheGroupeEditController {
 				tbv_titre.getItems().set(tbv_titre.getSelectionModel().getSelectedIndex(), titre);
 			}
 			annulerTitre();
+		} catch (ValidateurExeption e) { /* si la validation a échoué */
+			Validateur.showPopup(AlertType.WARNING, Lang_bundle.getString("Erreur"),
+					Lang_bundle.getString("Violation.de.contrainte"), e.getMessage()).showAndWait();
 		}
 	}
 
